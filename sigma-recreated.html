@@ -1,0 +1,1626 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Assessoria Sigma | Sistema de Receita para Clínicas Veterinárias</title>
+  <link rel="icon" type="image/png" href="sigma-logo.png" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400;1,600&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet" />
+  <style>
+    /* ─── TOKENS ─── */
+    :root {
+      --bg:        #080808;
+      --surface:   #0f0f0f;
+      --surface2:  #141414;
+      --gold:      #c49a3c;
+      --gold-lt:   #d4aa52;
+      --gold-dim:  rgba(196,154,60,.10);
+      --gold-line: rgba(196,154,60,.18);
+      --gold-glow: rgba(196,154,60,.25);
+      --text:      #f0ede8;
+      --muted:     rgba(240,237,232,.42);
+      --sans:      'DM Sans', sans-serif;
+      --serif:     'Cormorant Garamond', Georgia, serif;
+    }
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: var(--sans);
+      font-size: 16px;
+      line-height: 1.7;
+      -webkit-font-smoothing: antialiased;
+      overflow-x: hidden;
+    }
+    /* grain */
+    body::after {
+      content: '';
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      z-index: 999;
+      opacity: .032;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+      background-size: 180px;
+    }
+    a { color: inherit; text-decoration: none; }
+    img { display: block; max-width: 100%; }
+
+    /* ─── KEYFRAMES ─── */
+    @keyframes orbFloat1 {
+      0%,100% { transform: translate(0,0) scale(1); }
+      33%      { transform: translate(60px,-40px) scale(1.08); }
+      66%      { transform: translate(-30px,50px) scale(.95); }
+    }
+    @keyframes orbFloat2 {
+      0%,100% { transform: translate(0,0) scale(1); }
+      40%      { transform: translate(-70px,30px) scale(1.12); }
+      70%      { transform: translate(40px,-60px) scale(.92); }
+    }
+    @keyframes orbFloat3 {
+      0%,100% { transform: translate(0,0); }
+      50%      { transform: translate(30px,50px); }
+    }
+    @keyframes cardFloat {
+      0%,100% { transform: translateY(0); }
+      50%      { transform: translateY(-12px); }
+    }
+    @keyframes spinSlow {
+      from { transform: rotate(0deg); }
+      to   { transform: rotate(360deg); }
+    }
+    @keyframes spinSlowRev {
+      from { transform: rotate(0deg); }
+      to   { transform: rotate(-360deg); }
+    }
+    @keyframes barFill {
+      from { width: 0; }
+    }
+    @keyframes countUp {
+      from { opacity: 0; transform: translateY(10px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+    @keyframes pathDraw {
+      from { stroke-dashoffset: 600; }
+      to   { stroke-dashoffset: 0; }
+    }
+    @keyframes dotTravel {
+      0%   { offset-distance: 0%; opacity: 0; }
+      5%   { opacity: 1; }
+      95%  { opacity: 1; }
+      100% { offset-distance: 100%; opacity: 0; }
+    }
+    @keyframes shimmer {
+      0%   { background-position: -200% center; }
+      100% { background-position: 200% center; }
+    }
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(30px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+    @keyframes wordIn {
+      from { opacity: 0; transform: translateY(20px) skewY(2deg); }
+      to   { opacity: 1; transform: translateY(0) skewY(0); }
+    }
+    @keyframes pulseRing {
+      0%   { transform: scale(.95); box-shadow: 0 0 0 0 rgba(196,154,60,.4); }
+      70%  { transform: scale(1);   box-shadow: 0 0 0 12px rgba(196,154,60,0); }
+      100% { transform: scale(.95); box-shadow: 0 0 0 0 rgba(196,154,60,0); }
+    }
+
+    /* ─── REVEAL ─── */
+    .reveal {
+      opacity: 0;
+      transform: translateY(28px);
+      transition: opacity .75s cubic-bezier(.22,1,.36,1), transform .75s cubic-bezier(.22,1,.36,1);
+    }
+    .reveal.visible { opacity: 1; transform: none; }
+    .reveal-delay-1 { transition-delay: .1s; }
+    .reveal-delay-2 { transition-delay: .2s; }
+    .reveal-delay-3 { transition-delay: .3s; }
+    .reveal-delay-4 { transition-delay: .4s; }
+    .reveal-delay-5 { transition-delay: .5s; }
+
+    /* ─── ORB BACKGROUND ─── */
+    .orb-layer {
+      position: absolute;
+      inset: 0;
+      overflow: hidden;
+      pointer-events: none;
+    }
+    .orb {
+      position: absolute;
+      border-radius: 50%;
+      filter: blur(90px);
+      opacity: .18;
+    }
+    .orb-1 {
+      width: 600px; height: 600px;
+      background: radial-gradient(circle, #c49a3c 0%, transparent 70%);
+      top: -100px; right: -100px;
+      animation: orbFloat1 18s ease-in-out infinite;
+    }
+    .orb-2 {
+      width: 400px; height: 400px;
+      background: radial-gradient(circle, #a07830 0%, transparent 70%);
+      bottom: 0; left: -80px;
+      animation: orbFloat2 22s ease-in-out infinite;
+      opacity: .12;
+    }
+    .orb-3 {
+      width: 300px; height: 300px;
+      background: radial-gradient(circle, #d4aa52 0%, transparent 70%);
+      top: 40%; left: 30%;
+      animation: orbFloat3 28s ease-in-out infinite;
+      opacity: .07;
+    }
+
+    /* ─── NAV ─── */
+    nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 900;
+      padding: 1.25rem 2.5rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      transition: background .4s, backdrop-filter .4s, border-color .4s;
+      border-bottom: 1px solid transparent;
+    }
+    nav.scrolled {
+      background: rgba(8,8,8,.85);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border-color: var(--gold-line);
+    }
+    .nav-logo {
+      display: flex;
+      align-items: center;
+    }
+    .nav-logo img { height: 40px; width: auto; mix-blend-mode: screen; }
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 2.5rem;
+      list-style: none;
+    }
+    .nav-links a {
+      font-size: .72rem;
+      font-weight: 400;
+      letter-spacing: .1em;
+      text-transform: uppercase;
+      color: var(--muted);
+      transition: color .2s;
+    }
+    .nav-links a:hover { color: var(--gold); }
+
+    /* ─── BUTTONS ─── */
+    .btn-gold {
+      display: inline-flex;
+      align-items: center;
+      gap: .5rem;
+      background: var(--gold);
+      color: #080808;
+      font-family: var(--sans);
+      font-size: .72rem;
+      font-weight: 500;
+      letter-spacing: .14em;
+      text-transform: uppercase;
+      padding: .8rem 1.8rem;
+      border: none;
+      cursor: pointer;
+      position: relative;
+      overflow: hidden;
+      transition: box-shadow .25s, transform .15s;
+    }
+    .btn-gold::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(90deg, transparent, rgba(255,255,255,.18), transparent);
+      transform: translateX(-100%);
+      transition: transform .5s;
+    }
+    .btn-gold:hover::before { transform: translateX(100%); }
+    .btn-gold:hover {
+      box-shadow: 0 4px 32px var(--gold-glow);
+      transform: translateY(-1px);
+    }
+    .btn-outline {
+      display: inline-flex;
+      align-items: center;
+      gap: .5rem;
+      background: transparent;
+      color: var(--gold);
+      font-family: var(--sans);
+      font-size: .72rem;
+      font-weight: 400;
+      letter-spacing: .14em;
+      text-transform: uppercase;
+      padding: .8rem 1.8rem;
+      border: 1px solid var(--gold-line);
+      cursor: pointer;
+      transition: border-color .25s, background .25s;
+    }
+    .btn-outline:hover {
+      border-color: rgba(196,154,60,.5);
+      background: var(--gold-dim);
+    }
+
+    /* ─── SECTION BASE ─── */
+    section {
+      padding: 8rem 2.5rem;
+      position: relative;
+      overflow: hidden;
+    }
+    .section-inner { max-width: 1100px; margin: 0 auto; }
+    .section-header { margin-bottom: 4rem; }
+    .label {
+      font-size: .62rem;
+      font-weight: 500;
+      letter-spacing: .3em;
+      text-transform: uppercase;
+      color: var(--gold);
+    }
+    .gold-rule {
+      display: block;
+      width: 36px;
+      height: 1px;
+      background: var(--gold);
+      margin: .75rem 0 1.5rem;
+    }
+    .section-header h2 {
+      font-family: var(--serif);
+      font-size: clamp(2rem, 4vw, 3.2rem);
+      font-weight: 300;
+      line-height: 1.15;
+    }
+    .section-header h2 em {
+      font-style: italic;
+      color: var(--gold);
+    }
+    .section-sub {
+      margin-top: 1.25rem;
+      font-size: .92rem;
+      color: var(--muted);
+      max-width: 520px;
+      line-height: 1.75;
+    }
+    .bg-surface { background: var(--surface); }
+
+    /* ─── SHIMMER TEXT ─── */
+    .shimmer-text {
+      background: linear-gradient(90deg, var(--gold) 0%, var(--gold-lt) 40%, #fff8e7 50%, var(--gold-lt) 60%, var(--gold) 100%);
+      background-size: 200% auto;
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      animation: shimmer 4s linear infinite;
+    }
+
+    /* ─── HERO ─── */
+    #hero {
+      min-height: 100vh;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      align-items: center;
+      gap: 4rem;
+      padding: 7rem 2.5rem 5rem;
+    }
+    @media (max-width: 900px) {
+      #hero { grid-template-columns: 1fr; }
+      .hero-card-wrap { display: none; }
+    }
+
+    .hero-left { position: relative; z-index: 2; }
+    .hero-label {
+      display: flex;
+      align-items: center;
+      gap: .75rem;
+      margin-bottom: 2rem;
+    }
+    .hero-label::before {
+      content: '';
+      display: block;
+      width: 28px;
+      height: 1px;
+      background: var(--gold);
+    }
+
+    /* word-split animation */
+    .hero-title {
+      font-family: var(--serif);
+      font-size: clamp(2.8rem, 5.5vw, 4.6rem);
+      font-weight: 300;
+      line-height: 1.08;
+      letter-spacing: -.01em;
+      margin-bottom: 1.75rem;
+    }
+    .hero-title .word {
+      display: inline-block;
+      opacity: 0;
+      transform: translateY(22px) skewY(2deg);
+      animation: wordIn .6s cubic-bezier(.22,1,.36,1) forwards;
+    }
+    .hero-title em { font-style: italic; }
+    .hero-title em.shimmer-text { -webkit-text-fill-color: transparent; }
+
+    .hero-sub {
+      font-size: .97rem;
+      color: var(--muted);
+      max-width: 480px;
+      margin-bottom: .6rem;
+      line-height: 1.7;
+      animation: fadeUp .8s .6s cubic-bezier(.22,1,.36,1) both;
+    }
+    .hero-tagline {
+      font-size: .8rem;
+      color: rgba(196,154,60,.8);
+      letter-spacing: .05em;
+      margin-bottom: 2.5rem;
+      animation: fadeUp .8s .7s cubic-bezier(.22,1,.36,1) both;
+    }
+    .hero-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 1rem;
+      margin-bottom: 3.5rem;
+      animation: fadeUp .8s .8s cubic-bezier(.22,1,.36,1) both;
+    }
+    .hero-note {
+      font-size: .73rem;
+      color: var(--muted);
+      opacity: .6;
+      animation: fadeUp .8s .9s cubic-bezier(.22,1,.36,1) both;
+    }
+
+    /* ─── HERO CARD ─── */
+    .hero-card-wrap {
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      animation: fadeUp 1s .3s cubic-bezier(.22,1,.36,1) both;
+    }
+
+    /* spinning rings */
+    .ring-outer {
+      position: absolute;
+      width: 480px; height: 480px;
+      border: 1px dashed rgba(196,154,60,.12);
+      border-radius: 50%;
+      animation: spinSlow 40s linear infinite;
+    }
+    .ring-inner {
+      position: absolute;
+      width: 360px; height: 360px;
+      border: 1px solid rgba(196,154,60,.08);
+      border-radius: 50%;
+      animation: spinSlowRev 28s linear infinite;
+    }
+    .ring-dot {
+      position: absolute;
+      width: 6px; height: 6px;
+      border-radius: 50%;
+      background: var(--gold);
+      box-shadow: 0 0 8px var(--gold);
+      top: -3px; left: 50%;
+      transform: translateX(-50%);
+    }
+
+    /* floating dashboard card */
+    .hero-card {
+      width: 340px;
+      background: rgba(20,20,20,.9);
+      border: 1px solid var(--gold-line);
+      backdrop-filter: blur(20px);
+      padding: 1.75rem;
+      position: relative;
+      z-index: 2;
+      box-shadow: 0 20px 80px rgba(0,0,0,.6), 0 0 0 1px rgba(196,154,60,.06);
+      animation: cardFloat 6s ease-in-out infinite;
+    }
+    .card-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 1.5rem;
+    }
+    .card-title {
+      font-size: .62rem;
+      letter-spacing: .2em;
+      text-transform: uppercase;
+      color: var(--muted);
+    }
+    .card-dots { display: flex; gap: .35rem; }
+    .card-dot {
+      width: 8px; height: 8px;
+      border-radius: 50%;
+    }
+    .card-dot-r { background: #ff5f57; }
+    .card-dot-y { background: #ffbd2e; }
+    .card-dot-g { background: #28c840; }
+
+    .card-metric {
+      margin-bottom: 1.25rem;
+    }
+    .card-metric-label {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: .5rem;
+    }
+    .card-metric-name {
+      font-size: .75rem;
+      color: var(--muted);
+      display: flex;
+      align-items: center;
+      gap: .4rem;
+    }
+    .card-metric-name::before {
+      content: '';
+      display: block;
+      width: 6px; height: 6px;
+      border-radius: 50%;
+      background: currentColor;
+    }
+    .card-metric-name.red { color: #ff6b6b; }
+    .card-metric-name.gold { color: var(--gold); }
+    .card-metric-status {
+      font-size: .65rem;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+    }
+    .card-metric-status.bad  { color: #ff6b6b; }
+    .card-metric-status.good { color: #4ade80; }
+
+    .card-bar-track {
+      height: 4px;
+      background: rgba(255,255,255,.06);
+      border-radius: 2px;
+      overflow: hidden;
+    }
+    .card-bar {
+      height: 100%;
+      border-radius: 2px;
+      width: 0;
+      transition: width 1.2s cubic-bezier(.22,1,.36,1);
+    }
+    .card-bar.red  { background: linear-gradient(90deg, #ff6b6b, #ff4444); }
+    .card-bar.gold { background: linear-gradient(90deg, var(--gold), var(--gold-lt)); box-shadow: 0 0 8px var(--gold-glow); }
+
+    .card-divider {
+      height: 1px;
+      background: var(--gold-line);
+      margin: 1.25rem 0;
+    }
+    .card-footer {
+      font-size: .68rem;
+      color: rgba(196,154,60,.6);
+      letter-spacing: .05em;
+    }
+
+    /* ─── ANIMATED PATH DIVIDER ─── */
+    .path-divider {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 0 2.5rem;
+      height: 100px;
+      overflow: visible;
+      position: relative;
+      z-index: 2;
+    }
+    .path-divider svg {
+      overflow: visible;
+      width: 100%;
+      max-width: 900px;
+    }
+    .path-line {
+      fill: none;
+      stroke: var(--gold-line);
+      stroke-width: 1;
+      stroke-dasharray: 600;
+      stroke-dashoffset: 600;
+      transition: stroke-dashoffset 1.8s cubic-bezier(.22,1,.36,1);
+    }
+    .path-line.drawn { stroke-dashoffset: 0; }
+    .path-dot {
+      fill: var(--gold);
+      filter: drop-shadow(0 0 4px var(--gold));
+      opacity: 0;
+      transition: opacity .3s;
+    }
+    .path-dot.active { opacity: 1; }
+
+    /* ─── PROBLEM ─── */
+    .problem-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1px;
+      background: var(--gold-line);
+      border: 1px solid var(--gold-line);
+    }
+    @media (max-width: 768px) { .problem-grid { grid-template-columns: 1fr; } }
+    @media (min-width: 769px) and (max-width: 1024px) { .problem-grid { grid-template-columns: 1fr 1fr; } }
+
+    .problem-card {
+      background: var(--surface);
+      padding: 2.5rem 2rem;
+      position: relative;
+      transition: background .25s;
+      overflow: hidden;
+    }
+    .problem-card::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(circle at 0% 100%, rgba(196,154,60,.06), transparent 60%);
+      opacity: 0;
+      transition: opacity .35s;
+    }
+    .problem-card:hover { background: var(--surface2); }
+    .problem-card:hover::before { opacity: 1; }
+
+    .problem-num {
+      font-family: var(--serif);
+      font-size: 2.8rem;
+      font-weight: 300;
+      color: rgba(196,154,60,.14);
+      line-height: 1;
+      margin-bottom: .75rem;
+      transition: color .3s;
+    }
+    .problem-card:hover .problem-num { color: rgba(196,154,60,.28); }
+    .problem-card h3 {
+      font-size: .75rem;
+      font-weight: 500;
+      letter-spacing: .1em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: .6rem;
+    }
+    .problem-card p {
+      font-size: .85rem;
+      color: var(--muted);
+      line-height: 1.65;
+    }
+    .problem-caption {
+      margin-top: 3rem;
+      text-align: center;
+      font-family: var(--serif);
+      font-size: 1.4rem;
+      font-style: italic;
+      color: var(--muted);
+    }
+
+    /* ─── DIAGNÓSTICO ─── */
+    .steps-list {
+      border: 1px solid var(--gold-line);
+      overflow: hidden;
+    }
+    .step {
+      display: grid;
+      grid-template-columns: 72px 1fr;
+      border-bottom: 1px solid var(--gold-line);
+      transition: background .25s;
+      position: relative;
+      overflow: hidden;
+    }
+    .step:last-child { border-bottom: none; }
+    .step::after {
+      content: '';
+      position: absolute;
+      left: 0; top: 0; bottom: 0;
+      width: 0;
+      background: var(--gold-dim);
+      transition: width .4s cubic-bezier(.22,1,.36,1);
+    }
+    .step:hover::after { width: 100%; }
+    .step-num {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-right: 1px solid var(--gold-line);
+      font-family: var(--serif);
+      font-size: 1.8rem;
+      font-weight: 300;
+      color: var(--gold);
+      position: relative;
+      z-index: 1;
+    }
+    .step-content {
+      padding: 1.75rem 2rem;
+      position: relative;
+      z-index: 1;
+    }
+    .step-content h3 {
+      font-size: .75rem;
+      font-weight: 500;
+      letter-spacing: .1em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: .4rem;
+    }
+    .step-content p { font-size: .85rem; color: var(--muted); line-height: 1.65; }
+
+    .diag-note {
+      margin-top: 2.5rem;
+      padding: 1.5rem 2rem;
+      border: 1px solid var(--gold-line);
+      border-left: 3px solid var(--gold);
+      background: var(--gold-dim);
+    }
+    .diag-note p {
+      font-family: var(--serif);
+      font-size: 1.05rem;
+      font-style: italic;
+      color: var(--text);
+    }
+
+    /* ─── MOTOR ─── */
+    .motor-grid {
+      display: grid;
+      grid-template-columns: 1fr 1.1fr;
+      gap: 3rem;
+      align-items: start;
+    }
+    @media (max-width: 860px) { .motor-grid { grid-template-columns: 1fr; } }
+
+    .motor-list { display: flex; flex-direction: column; gap: 0; }
+    .motor-item {
+      padding: 1.5rem 0;
+      border-bottom: 1px solid var(--gold-line);
+      display: grid;
+      grid-template-columns: 2rem 1fr;
+      gap: 1rem;
+      align-items: start;
+      cursor: default;
+      transition: padding .25s;
+    }
+    .motor-item:first-child { padding-top: 0; }
+    .motor-item:last-child { border-bottom: none; }
+    .motor-item:hover { padding-left: .5rem; }
+
+    .motor-icon {
+      color: var(--gold);
+      font-size: 1rem;
+      margin-top: .15rem;
+      opacity: .7;
+      transition: opacity .25s;
+    }
+    .motor-item:hover .motor-icon { opacity: 1; }
+    .motor-item h3 {
+      font-size: .78rem;
+      font-weight: 500;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: .35rem;
+    }
+    .motor-item p { font-size: .83rem; color: var(--muted); line-height: 1.6; }
+
+    /* animated dashboard card */
+    .motor-dashboard {
+      background: rgba(20,20,20,.95);
+      border: 1px solid var(--gold-line);
+      padding: 2rem;
+      box-shadow: 0 20px 60px rgba(0,0,0,.5);
+      position: sticky;
+      top: 7rem;
+    }
+    .dash-label {
+      font-size: .58rem;
+      letter-spacing: .25em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-bottom: 1.5rem;
+      display: flex;
+      align-items: center;
+      gap: .5rem;
+    }
+    .dash-label::before {
+      content: '';
+      display: block;
+      width: 16px; height: 1px;
+      background: var(--gold);
+    }
+
+    .dash-metric {
+      margin-bottom: 1.5rem;
+    }
+    .dash-metric-head {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      margin-bottom: .5rem;
+    }
+    .dash-metric-name { font-size: .78rem; color: var(--muted); }
+    .dash-metric-val {
+      font-family: var(--serif);
+      font-size: 1.1rem;
+      color: var(--gold);
+    }
+    .dash-track {
+      height: 3px;
+      background: rgba(255,255,255,.05);
+      border-radius: 2px;
+      overflow: hidden;
+    }
+    .dash-fill {
+      height: 100%;
+      width: 0;
+      border-radius: 2px;
+      background: linear-gradient(90deg, var(--gold), var(--gold-lt));
+      box-shadow: 0 0 6px var(--gold-glow);
+      transition: width 1.4s cubic-bezier(.22,1,.36,1);
+    }
+    .dash-fill.animated { /* width set by JS */ }
+
+    .dash-divider { height: 1px; background: var(--gold-line); margin: 1.5rem 0; }
+
+    .dash-quote {
+      font-family: var(--serif);
+      font-size: .95rem;
+      font-style: italic;
+      color: var(--muted);
+      line-height: 1.7;
+    }
+    .dash-quote strong { color: var(--text); font-style: normal; }
+
+    /* ─── QUEM SOMOS ─── */
+    .quem-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1px;
+      background: var(--gold-line);
+      border: 1px solid var(--gold-line);
+      margin-bottom: 3rem;
+    }
+    @media (max-width: 680px) { .quem-grid { grid-template-columns: 1fr; } }
+
+    .quem-col { padding: 2.75rem 2.25rem; }
+    .quem-col.do  { background: var(--surface2); }
+    .quem-col.dont { background: var(--surface); }
+    .quem-col h3 {
+      font-size: .65rem;
+      font-weight: 500;
+      letter-spacing: .22em;
+      text-transform: uppercase;
+      margin-bottom: 1.5rem;
+    }
+    .quem-col.do h3   { color: var(--gold); }
+    .quem-col.dont h3 { color: var(--muted); }
+    .quem-list { list-style: none; display: flex; flex-direction: column; gap: .8rem; }
+    .quem-list li {
+      font-size: .85rem;
+      color: var(--muted);
+      display: flex;
+      gap: .75rem;
+      line-height: 1.5;
+    }
+    .quem-col.do   .quem-list li::before { content: '—'; color: var(--gold); flex-shrink: 0; }
+    .quem-col.dont .quem-list li::before { content: '✕'; color: rgba(196,154,60,.35); flex-shrink: 0; font-size: .7rem; }
+
+    .quem-insight {
+      padding: 2rem 2.25rem;
+      border-left: 3px solid var(--gold);
+      background: var(--gold-dim);
+      border: 1px solid var(--gold-line);
+      border-left: 3px solid var(--gold);
+    }
+    .quem-insight p {
+      font-family: var(--serif);
+      font-size: 1.1rem;
+      font-style: italic;
+      color: var(--muted);
+      line-height: 1.75;
+    }
+
+    /* ─── RESULTADOS ─── */
+    .results-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 1rem;
+    }
+    @media (max-width: 640px) { .results-grid { grid-template-columns: 1fr; } }
+
+    .result-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 1rem;
+      padding: 1.5rem 1.75rem;
+      border: 1px solid var(--gold-line);
+      background: var(--surface2);
+      position: relative;
+      overflow: hidden;
+      transition: border-color .25s, transform .25s;
+    }
+    .result-item:hover {
+      border-color: rgba(196,154,60,.4);
+      transform: translateY(-2px);
+    }
+    .result-check {
+      width: 20px; height: 20px;
+      border: 1px solid var(--gold);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      font-size: .6rem;
+      color: var(--gold);
+      animation: pulseRing 3s ease-out infinite;
+    }
+    .result-item p { font-size: .85rem; color: var(--muted); line-height: 1.5; }
+
+    /* ─── FAQ ─── */
+    .faq-list { border: 1px solid var(--gold-line); }
+    .faq-item { border-bottom: 1px solid var(--gold-line); }
+    .faq-item:last-child { border-bottom: none; }
+    .faq-q {
+      width: 100%;
+      background: none;
+      border: none;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1rem;
+      padding: 1.75rem 2rem;
+      color: var(--text);
+      font-family: var(--serif);
+      font-size: 1.1rem;
+      font-weight: 400;
+      text-align: left;
+      transition: background .2s, color .2s;
+    }
+    .faq-q:hover { background: var(--gold-dim); }
+    .faq-q[aria-expanded="true"] { color: var(--gold); background: var(--gold-dim); }
+    .faq-icon {
+      width: 22px; height: 22px;
+      border: 1px solid var(--gold-line);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      font-size: .7rem;
+      color: var(--gold);
+      transition: transform .35s cubic-bezier(.22,1,.36,1), background .2s;
+    }
+    .faq-q[aria-expanded="true"] .faq-icon { transform: rotate(45deg); background: var(--gold-dim); }
+    .faq-a {
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height .45s cubic-bezier(.22,1,.36,1), padding .3s;
+      padding: 0 2rem;
+      font-size: .85rem;
+      color: var(--muted);
+      line-height: 1.8;
+    }
+    .faq-a.open { max-height: 300px; padding: 0 2rem 1.75rem; }
+
+    /* ─── CTA ─── */
+    #cta { text-align: center; }
+    #cta::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(ellipse 60% 80% at 50% 100%, rgba(196,154,60,.09) 0%, transparent 70%);
+      pointer-events: none;
+    }
+    #cta h2 {
+      font-family: var(--serif);
+      font-size: clamp(2rem, 4.5vw, 3.4rem);
+      font-weight: 300;
+      line-height: 1.18;
+      max-width: 680px;
+      margin: 0 auto 1.25rem;
+    }
+    #cta h2 em { font-style: italic; color: var(--gold); }
+    .cta-sub { font-size: .9rem; color: var(--muted); margin-bottom: 2.5rem; }
+    .cta-note { margin-top: 1.25rem; font-size: .72rem; color: var(--muted); opacity: .55; font-style: italic; }
+
+    /* ─── FOOTER ─── */
+    footer {
+      border-top: 1px solid var(--gold-line);
+      padding: 3rem 2.5rem;
+      background: var(--bg);
+    }
+    .footer-inner {
+      max-width: 1100px;
+      margin: 0 auto;
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1.5rem;
+    }
+    .footer-logo { font-family: var(--serif); font-size: 1.15rem; font-weight: 600; }
+    .footer-logo span { color: var(--gold); }
+    .footer-contact { display: flex; flex-wrap: wrap; gap: 2rem; font-size: .78rem; color: var(--muted); }
+    .footer-contact a { transition: color .2s; }
+    .footer-contact a:hover { color: var(--gold); }
+    .footer-legal {
+      width: 100%;
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      gap: 1rem;
+      padding-top: 1.5rem;
+      border-top: 1px solid rgba(196,154,60,.06);
+      font-size: .7rem;
+      color: rgba(240,237,232,.2);
+    }
+    .footer-legal a { color: rgba(240,237,232,.25); transition: color .2s; }
+    .footer-legal a:hover { color: var(--gold); }
+
+    /* ─── RESPONSIVE ─── */
+    @media (max-width: 768px) {
+      nav { padding: 1rem 1.25rem; }
+      .nav-links { display: none; }
+      section { padding: 5rem 1.25rem; }
+      #hero { padding: 6rem 1.25rem 4rem; }
+      footer { padding: 2.5rem 1.25rem; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ─── NAV ─── -->
+<nav id="nav">
+  <a href="#" class="nav-logo"><img src="sigma-logo.png" alt="Assessoria Sigma" /></a>
+  <ul class="nav-links">
+    <li><a href="#problema">Problema</a></li>
+    <li><a href="#diagnostico">Diagnóstico</a></li>
+    <li><a href="#motor">Sistema</a></li>
+    <li><a href="#faq">FAQ</a></li>
+  </ul>
+  <a href="https://wa.me/554497345835?text=Olá!%20Vi%20o%20site%20da%20Sigma%20e%20quero%20saber%20mais%20sobre%20o%20diagnóstico%20para%20minha%20clínica." class="btn-gold" target="_blank">
+    Solicitar diagnóstico da Sigma
+  </a>
+</nav>
+
+<!-- ─── HERO ─── -->
+<section id="hero">
+  <!-- orbs -->
+  <div class="orb-layer" aria-hidden="true">
+    <div class="orb orb-1"></div>
+    <div class="orb orb-2"></div>
+    <div class="orb orb-3"></div>
+  </div>
+
+  <!-- left col -->
+  <div class="hero-left">
+    <div class="hero-label">
+      <span class="label">Assessoria Sigma</span>
+    </div>
+
+    <h1 class="hero-title" id="heroTitle" aria-label="Sua clínica não precisa de mais movimento. Precisa de sistema de receita."></h1>
+
+    <p class="hero-sub">O mercado ensinou clínica a correr mais.<br>A Sigma ensina a <strong>governar a receita.</strong></p>
+    <p class="hero-tagline">Sem promessa mágica. Sem ação solta. Só clareza + implementação.</p>
+
+    <div class="hero-actions">
+      <a href="https://wa.me/554497345835?text=Olá!%20Vi%20o%20site%20da%20Sigma%20e%20quero%20saber%20mais%20sobre%20o%20diagnóstico%20para%20minha%20clínica." class="btn-gold" target="_blank">
+        Solicitar diagnóstico da Sigma →
+      </a>
+      <a href="#diagnostico" class="btn-outline">Ver o que analisamos</a>
+    </div>
+
+    <p class="hero-note">Para clínicas que já têm movimento, trabalham muito… mas não têm previsibilidade.</p>
+  </div>
+
+  <!-- right col: floating card -->
+  <div class="hero-card-wrap">
+    <div class="ring-outer"><div class="ring-dot"></div></div>
+    <div class="ring-inner"></div>
+
+    <div class="hero-card" id="heroCard">
+      <div class="card-header">
+        <span class="card-title">Diagnóstico CRC</span>
+        <div class="card-dots">
+          <div class="card-dot card-dot-r"></div>
+          <div class="card-dot card-dot-y"></div>
+          <div class="card-dot card-dot-g"></div>
+        </div>
+      </div>
+
+      <div class="card-metric">
+        <div class="card-metric-label">
+          <span class="card-metric-name red">Agenda improvisada</span>
+          <span class="card-metric-status bad">Vazamento</span>
+        </div>
+        <div class="card-bar-track">
+          <div class="card-bar red" data-width="78"></div>
+        </div>
+      </div>
+
+      <div class="card-metric">
+        <div class="card-metric-label">
+          <span class="card-metric-name gold">Sistema de receita</span>
+          <span class="card-metric-status good">Previsível</span>
+        </div>
+        <div class="card-bar-track">
+          <div class="card-bar gold" data-width="92"></div>
+        </div>
+      </div>
+
+      <div class="card-divider"></div>
+
+      <div class="card-metric">
+        <div class="card-metric-label">
+          <span class="card-metric-name gold">Base reativada</span>
+          <span class="card-metric-status good">+34%</span>
+        </div>
+        <div class="card-bar-track">
+          <div class="card-bar gold" data-width="62"></div>
+        </div>
+      </div>
+
+      <div class="card-divider"></div>
+      <div class="card-footer">↑ Receita contínua sem aumentar o caos</div>
+    </div>
+  </div>
+</section>
+
+<!-- ─── PATH DIVIDER ─── -->
+<div class="path-divider" id="pathDiv">
+  <svg viewBox="0 0 900 80" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <path id="pathLine" class="path-line" d="M0,40 C150,40 200,10 300,10 C400,10 420,70 550,70 C680,70 700,40 900,40"/>
+    <circle id="pathDot" class="path-dot" r="5" cx="0" cy="40"/>
+  </svg>
+</div>
+
+<!-- ─── PROBLEMA ─── -->
+<section id="problema" class="bg-surface">
+  <div class="orb-layer" aria-hidden="true">
+    <div class="orb orb-2" style="opacity:.07;"></div>
+  </div>
+  <div class="section-inner">
+    <div class="section-header reveal">
+      <span class="label">O Problema Real</span>
+      <span class="gold-rule"></span>
+      <h2>Clínicas veterinárias não falham por falta de tutores.<br>Falham porque operam com atendimento improvisado <em>em um negócio que exige sistema.</em></h2>
+      <p class="section-sub">Clínica cheia pode quebrar do mesmo jeito. A agenda lota — e a receita escorre pelos cantos.</p>
+    </div>
+
+    <div class="problem-grid">
+      <div class="problem-card reveal reveal-delay-1">
+        <div class="problem-num">01</div>
+        <h3>Faltas como "normais"</h3>
+        <p>No-show vira rotina. A clínica perde horário, encaixe, faturamento.</p>
+      </div>
+      <div class="problem-card reveal reveal-delay-2">
+        <div class="problem-num">02</div>
+        <h3>Orçamentos esquecidos</h3>
+        <p>Cirurgia, exame, tratamento… aprovado "depois" e nunca mais lembrado.</p>
+      </div>
+      <div class="problem-card reveal reveal-delay-3">
+        <div class="problem-num">03</div>
+        <h3>Base de tutores parada</h3>
+        <p>Tutores antigos somem. Ninguém chama de volta. A clínica vive de caça.</p>
+      </div>
+      <div class="problem-card reveal reveal-delay-1">
+        <div class="problem-num">04</div>
+        <h3>Agenda irregular</h3>
+        <p>Buracos no meio do dia e urgência salvando o caixa no fim do mês.</p>
+      </div>
+      <div class="problem-card reveal reveal-delay-2">
+        <div class="problem-num">05</div>
+        <h3>Dependência do proprietário</h3>
+        <p>Quando você para, tudo cai. A operação fica refém do seu fôlego.</p>
+      </div>
+      <div class="problem-card reveal reveal-delay-3">
+        <div class="problem-num">06</div>
+        <h3>Marketing sem sistema</h3>
+        <p>Entra mensagem, entra demanda… e o caixa ainda não fecha com folga.</p>
+      </div>
+    </div>
+
+    <p class="problem-caption reveal" style="margin-top:3rem;">Cheia por fora. <em>Instável por dentro.</em></p>
+  </div>
+</section>
+
+<!-- ─── PATH DIVIDER 2 ─── -->
+<div class="path-divider" id="pathDiv2">
+  <svg viewBox="0 0 900 80" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <path id="pathLine2" class="path-line" d="M0,40 C200,40 250,70 400,70 C550,70 600,10 750,10 C850,10 880,30 900,40"/>
+    <circle id="pathDot2" class="path-dot" r="5" cx="0" cy="40"/>
+  </svg>
+</div>
+
+<!-- ─── DIAGNÓSTICO ─── -->
+<section id="diagnostico">
+  <div class="section-inner">
+    <div class="section-header reveal">
+      <span class="label">Diagnóstico CRC</span>
+      <span class="gold-rule"></span>
+      <h2>O que analisamos no Diagnóstico <em>(20–30 min)</em></h2>
+      <p class="section-sub">Você sai com um diagnóstico claro e 2–3 ajustes práticos para aplicar de imediato.</p>
+    </div>
+
+    <div class="steps-list reveal">
+      <div class="step">
+        <div class="step-num">1</div>
+        <div class="step-content">
+          <h3>Captação com intenção</h3>
+          <p>Se os tutores que chegam hoje têm perfil de compra ou só pedem preço e somem.</p>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">2</div>
+        <div class="step-content">
+          <h3>Agenda Viva</h3>
+          <p>Onde a agenda está vazando dinheiro (faltas, cancelamentos, buracos e encaixes caóticos).</p>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">3</div>
+        <div class="step-content">
+          <h3>Base Ativa</h3>
+          <p>Como reativar tutores antigos com campanhas simples (check-up, vacina, retorno, acompanhamento).</p>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">4</div>
+        <div class="step-content">
+          <h3>Conversão Clínica</h3>
+          <p>Se o atendimento e o WhatsApp conduzem decisão — e se existe follow-up que não falha.</p>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">5</div>
+        <div class="step-content">
+          <h3>Receita Contínua</h3>
+          <p>Como transformar esforço em previsibilidade com rotinas e indicadores simples.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="diag-note reveal">
+      <p>O diagnóstico não é uma aula. É um raio-x da sua operação.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ─── MOTOR ─── -->
+<section id="motor" class="bg-surface">
+  <div class="orb-layer" aria-hidden="true">
+    <div class="orb orb-1" style="opacity:.09;right:-150px;top:-150px;"></div>
+  </div>
+  <div class="section-inner">
+    <div class="section-header reveal">
+      <span class="label">Motor de Receita Veterinária Previsível</span>
+      <span class="gold-rule"></span>
+      <h2>O mecanismo que transforma atendimento em <em>receita contínua</em></h2>
+      <p class="section-sub">Não é marketing. Não é atendimento. É engenharia de faturamento.</p>
+    </div>
+
+    <div class="motor-grid">
+      <div class="motor-list reveal">
+        <div class="motor-item">
+          <span class="motor-icon">◈</span>
+          <div>
+            <h3>Captação com Intenção</h3>
+            <p>Atrair demanda com potencial real de conversão — não curiosos.</p>
+          </div>
+        </div>
+        <div class="motor-item">
+          <span class="motor-icon">◈</span>
+          <div>
+            <h3>Agenda Viva</h3>
+            <p>Gestão ativa para reduzir faltas, cancelamentos e ociosidade.</p>
+          </div>
+        </div>
+        <div class="motor-item">
+          <span class="motor-icon">◈</span>
+          <div>
+            <h3>Base Ativa</h3>
+            <p>Reativação estruturada de tutores antigos como alavanca de crescimento.</p>
+          </div>
+        </div>
+        <div class="motor-item">
+          <span class="motor-icon">◈</span>
+          <div>
+            <h3>Conversão Clínica</h3>
+            <p>Atendimento que conduz decisão, com follow-up e linguagem correta.</p>
+          </div>
+        </div>
+        <div class="motor-item">
+          <span class="motor-icon">◈</span>
+          <div>
+            <h3>Receita Contínua</h3>
+            <p>Recorrência, previsibilidade e indicadores claros para decidir sem achismo.</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- animated dashboard -->
+      <div class="motor-dashboard reveal reveal-delay-2" id="motorDash">
+        <div class="dash-label">Sistema ativo</div>
+
+        <div class="dash-metric">
+          <div class="dash-metric-head">
+            <span class="dash-metric-name">Ocupação da agenda</span>
+            <span class="dash-metric-val" data-target="87">0%</span>
+          </div>
+          <div class="dash-track">
+            <div class="dash-fill" data-width="87"></div>
+          </div>
+        </div>
+
+        <div class="dash-metric">
+          <div class="dash-metric-head">
+            <span class="dash-metric-name">Taxa de reativação</span>
+            <span class="dash-metric-val" data-target="64">0%</span>
+          </div>
+          <div class="dash-track">
+            <div class="dash-fill" data-width="64"></div>
+          </div>
+        </div>
+
+        <div class="dash-metric">
+          <div class="dash-metric-head">
+            <span class="dash-metric-name">Orçamentos convertidos</span>
+            <span class="dash-metric-val" data-target="73">0%</span>
+          </div>
+          <div class="dash-track">
+            <div class="dash-fill" data-width="73"></div>
+          </div>
+        </div>
+
+        <div class="dash-metric">
+          <div class="dash-metric-head">
+            <span class="dash-metric-name">Receita previsível</span>
+            <span class="dash-metric-val" data-target="91">0%</span>
+          </div>
+          <div class="dash-track">
+            <div class="dash-fill" data-width="91"></div>
+          </div>
+        </div>
+
+        <div class="dash-divider"></div>
+
+        <p class="dash-quote">
+          Sempre que a clínica tem sistema,<br>
+          <strong>o atendimento vira ativo financeiro.</strong>
+        </p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ─── QUEM SOMOS ─── -->
+<section id="quem">
+  <div class="section-inner">
+    <div class="section-header reveal">
+      <span class="label">Quem Somos</span>
+      <span class="gold-rule"></span>
+      <h2>Não somos uma agência <em>tradicional</em></h2>
+      <p class="section-sub">"A Sigma nasceu de uma convicção simples: clínica não precisa de barulho. Precisa de controle."</p>
+    </div>
+
+    <div class="quem-grid reveal">
+      <div class="quem-col do">
+        <h3>O que fazemos</h3>
+        <ul class="quem-list">
+          <li>Mapeamos vazamentos de agenda e faturamento</li>
+          <li>Implementamos rotinas de confirmação e recuperação</li>
+          <li>Criamos reativação de base e follow-up consistente</li>
+          <li>Organizamos indicadores simples para decisão</li>
+        </ul>
+      </div>
+      <div class="quem-col dont">
+        <h3>O que não fazemos</h3>
+        <ul class="quem-list">
+          <li>Promessa milagrosa</li>
+          <li>Ação solta sem processo</li>
+          <li>"Só tráfego" como solução</li>
+          <li>Depender de talento individual</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="quem-insight reveal">
+      <p>Tem clínica que atende o dia inteiro, chega em casa esgotado… e o caixa continua com o mesmo gosto de "poderia ser melhor". Não é falta de esforço. <em>É falta de sistema.</em></p>
+    </div>
+  </div>
+</section>
+
+<!-- ─── RESULTADOS ─── -->
+<section id="resultados" class="bg-surface">
+  <div class="section-inner">
+    <div class="section-header reveal">
+      <span class="label">O Que Sua Clínica Passa a Ter</span>
+      <span class="gold-rule"></span>
+      <h2>Resultados tangíveis <em>(sem aumentar o caos)</em></h2>
+    </div>
+
+    <div class="results-grid">
+      <div class="result-item reveal reveal-delay-1">
+        <div class="result-check">✓</div>
+        <p>Agenda protegida (menos buracos e no-show)</p>
+      </div>
+      <div class="result-item reveal reveal-delay-2">
+        <div class="result-check">✓</div>
+        <p>Base de tutores ativa (reativação constante)</p>
+      </div>
+      <div class="result-item reveal reveal-delay-3">
+        <div class="result-check">✓</div>
+        <p>Atendimento padronizado (menos improviso)</p>
+      </div>
+      <div class="result-item reveal reveal-delay-1">
+        <div class="result-check">✓</div>
+        <p>Follow-up consistente (orçamento não morre)</p>
+      </div>
+      <div class="result-item reveal reveal-delay-2">
+        <div class="result-check">✓</div>
+        <p>Decisões baseadas em dados (sem achismo)</p>
+      </div>
+      <div class="result-item reveal reveal-delay-3">
+        <div class="result-check">✓</div>
+        <p>Crescimento sustentável (sem sobrecarregar equipe)</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ─── FAQ ─── -->
+<section id="faq">
+  <div class="section-inner">
+    <div class="section-header reveal">
+      <span class="label">Dúvidas Comuns</span>
+      <span class="gold-rule"></span>
+    </div>
+
+    <div class="faq-list reveal">
+      <div class="faq-item">
+        <button class="faq-q" aria-expanded="false">
+          Isso é consultoria de marketing?
+          <div class="faq-icon">+</div>
+        </button>
+        <div class="faq-a">
+          Não. A Sigma não entrega campanha, post ou tráfego pago. Entregamos sistema operacional: rotinas de agenda, reativação de base, follow-up de orçamento e indicadores para decidir com clareza. Marketing pode ser parte do contexto — mas nunca é o núcleo do trabalho.
+        </div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q" aria-expanded="false">
+          A auditoria é mesmo gratuita?
+          <div class="faq-icon">+</div>
+        </button>
+        <div class="faq-a">
+          Sim. O Diagnóstico CRC é uma conversa de 20 a 30 minutos sem custo e sem compromisso. Você sai com clareza sobre onde estão os principais vazamentos da sua operação — e 2–3 pontos concretos para aplicar de imediato, independente de continuar com a Sigma.
+        </div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q" aria-expanded="false">
+          Funciona para clínica que já tem movimento?
+          <div class="faq-icon">+</div>
+        </button>
+        <div class="faq-a">
+          Sim — e especialmente para essas. Clínicas ocupadas perdem mais por não ter sistema do que clínicas vazias. Quando a agenda está cheia mas o caixa não reflete isso, é sinal de vazamento operacional, não de falta de demanda.
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ─── CTA ─── -->
+<section id="cta" class="bg-surface">
+  <div class="orb-layer" aria-hidden="true">
+    <div class="orb orb-1" style="opacity:.12;top:auto;bottom:-100px;right:50%;transform:translateX(50%);"></div>
+  </div>
+  <div class="section-inner" style="position:relative;text-align:center;">
+    <span class="label reveal" style="display:block;margin-bottom:1.25rem;">Próximo passo</span>
+    <h2 class="reveal">Pronto para parar de correr… e começar a <em>governar a receita?</em></h2>
+    <p class="cta-sub reveal">Bate-papo rápido. Sem compromisso. Sem teoria. Só diagnóstico claro + ação.</p>
+    <a href="https://wa.me/554497345835?text=Olá!%20Vi%20o%20site%20da%20Sigma%20e%20quero%20saber%20mais%20sobre%20o%20diagnóstico%20para%20minha%20clínica." class="btn-gold reveal" target="_blank" style="font-size:.8rem;padding:1.1rem 2.75rem;letter-spacing:.16em;">
+      Agendar Bate-papo Gratuito →
+    </a>
+    <p class="cta-note reveal">"Se preferir, envie: nome da clínica + cidade + melhor horário."</p>
+  </div>
+</section>
+
+<!-- ─── FOOTER ─── -->
+<footer>
+  <div class="footer-inner">
+    <div class="footer-logo"><img src="sigma-logo.png" alt="Assessoria Sigma" style="height:36px;width:auto;mix-blend-mode:screen;" /></div>
+    <div class="footer-contact">
+      <span>E-mail: <a href="mailto:aagenciasigma@gmail.com">aagenciasigma@gmail.com</a></span>
+      <span>WhatsApp: <a href="https://wa.me/5544999251952" target="_blank">(44) 99925-1952</a></span>
+    </div>
+    <div class="footer-legal">
+      <span>© 2026 Assessoria Sigma. Todos os direitos reservados.</span>
+      <a href="/privacidade">Política de Privacidade</a>
+    </div>
+  </div>
+</footer>
+
+<script>
+/* ─── NAV SCROLL ─── */
+const nav = document.getElementById('nav');
+window.addEventListener('scroll', () => {
+  nav.classList.toggle('scrolled', window.scrollY > 40);
+}, { passive: true });
+
+/* ─── HERO TITLE: WORD-BY-WORD ─── */
+(function() {
+  const el = document.getElementById('heroTitle');
+  const lines = [
+    { text: 'Sua clínica não precisa', italic: false },
+    { text: 'de mais movimento.', italic: false },
+    { text: 'Precisa de sistema', italic: true, shimmer: false },
+    { text: 'de receita.', italic: true, shimmer: true },
+  ];
+  let html = '';
+  let delay = 0.05;
+  lines.forEach((line, li) => {
+    const words = line.text.split(' ');
+    words.forEach(word => {
+      const cls = line.shimmer ? 'word shimmer-text' : line.italic ? 'word' : 'word';
+      const style = `animation-delay:${delay.toFixed(2)}s`;
+      if (line.italic) {
+        html += `<em><span class="${cls}" style="${style}">${word}</span></em> `;
+      } else {
+        html += `<span class="${cls}" style="${style}">${word}</span> `;
+      }
+      delay += 0.07;
+    });
+    html += '<br>';
+  });
+  el.innerHTML = html;
+})();
+
+/* ─── HERO CARD BARS ─── */
+setTimeout(() => {
+  document.querySelectorAll('.card-bar[data-width]').forEach(bar => {
+    bar.style.width = bar.dataset.width + '%';
+  });
+}, 600);
+
+/* ─── REVEAL ON SCROLL ─── */
+const reveals = document.querySelectorAll('.reveal');
+const revealObs = new IntersectionObserver((entries) => {
+  entries.forEach(e => {
+    if (e.isIntersecting) {
+      e.target.classList.add('visible');
+      revealObs.unobserve(e.target);
+    }
+  });
+}, { threshold: 0.1 });
+reveals.forEach(el => revealObs.observe(el));
+
+/* ─── ANIMATED PATH DIVIDERS ─── */
+function initPath(lineId, dotId, wrapId) {
+  const line = document.getElementById(lineId);
+  const dot  = document.getElementById(dotId);
+  if (!line || !dot) return;
+
+  const pathEl = line; // it's already the path
+  const totalLength = 600; // approximate
+
+  const obs = new IntersectionObserver((entries) => {
+    if (entries[0].isIntersecting) {
+      // draw line
+      line.classList.add('drawn');
+      // animate dot along path
+      dot.classList.add('active');
+      let progress = 0;
+      const pathNode = line;
+      const length = pathNode.getTotalLength ? pathNode.getTotalLength() : 600;
+      const dur = 1800;
+      const start = performance.now();
+      function step(now) {
+        progress = Math.min((now - start) / dur, 1);
+        const eased = progress < .5 ? 2*progress*progress : -1+(4-2*progress)*progress;
+        const pt = pathNode.getPointAtLength ? pathNode.getPointAtLength(eased * length) : {x: eased*900, y:40};
+        dot.setAttribute('cx', pt.x);
+        dot.setAttribute('cy', pt.y);
+        if (progress < 1) requestAnimationFrame(step);
+        else dot.classList.remove('active');
+      }
+      requestAnimationFrame(step);
+      obs.disconnect();
+    }
+  }, { threshold: 0.5 });
+  obs.observe(document.getElementById(wrapId));
+}
+initPath('pathLine',  'pathDot',  'pathDiv');
+initPath('pathLine2', 'pathDot2', 'pathDiv2');
+
+/* ─── MOTOR DASHBOARD: fill bars + count up ─── */
+const motorDash = document.getElementById('motorDash');
+let motorFired = false;
+const motorObs = new IntersectionObserver((entries) => {
+  if (entries[0].isIntersecting && !motorFired) {
+    motorFired = true;
+    // fill bars
+    motorDash.querySelectorAll('.dash-fill[data-width]').forEach((bar, i) => {
+      setTimeout(() => {
+        bar.style.width = bar.dataset.width + '%';
+      }, i * 180);
+    });
+    // count up values
+    motorDash.querySelectorAll('.dash-metric-val[data-target]').forEach((el, i) => {
+      const target = parseInt(el.dataset.target);
+      const dur = 1200;
+      const startTime = performance.now() + i * 180;
+      function tick(now) {
+        const elapsed = Math.max(0, now - startTime);
+        const p = Math.min(elapsed / dur, 1);
+        const eased = 1 - Math.pow(1 - p, 3);
+        el.textContent = Math.round(eased * target) + '%';
+        if (p < 1) requestAnimationFrame(tick);
+      }
+      requestAnimationFrame(tick);
+    });
+    motorObs.disconnect();
+  }
+}, { threshold: 0.3 });
+motorObs.observe(motorDash);
+
+/* ─── FAQ ACCORDION ─── */
+document.querySelectorAll('.faq-q').forEach(btn => {
+  btn.addEventListener('click', () => {
+    const expanded = btn.getAttribute('aria-expanded') === 'true';
+    document.querySelectorAll('.faq-q').forEach(b => {
+      b.setAttribute('aria-expanded', 'false');
+      b.nextElementSibling.classList.remove('open');
+    });
+    if (!expanded) {
+      btn.setAttribute('aria-expanded', 'true');
+      btn.nextElementSibling.classList.add('open');
+    }
+  });
+});
+
+/* ─── SCROLL PROGRESS BAR ─── */
+const progressBar = document.createElement('div');
+progressBar.id = 'scroll-progress';
+progressBar.style.cssText = 'position:fixed;top:0;left:0;height:2px;width:0%;background:linear-gradient(90deg,#c49a3c,#f0d080,#c49a3c);z-index:9999;transition:width .1s linear;box-shadow:0 0 8px rgba(196,154,60,.6);';
+document.body.prepend(progressBar);
+window.addEventListener('scroll', () => {
+  const total = document.documentElement.scrollHeight - window.innerHeight;
+  progressBar.style.width = (window.scrollY / total * 100) + '%';
+}, { passive: true });
+
+/* ─── CURSOR GLOW ─── */
+const glow = document.createElement('div');
+glow.style.cssText = 'position:fixed;pointer-events:none;width:320px;height:320px;border-radius:50%;background:radial-gradient(circle,rgba(196,154,60,.07) 0%,transparent 70%);transform:translate(-50%,-50%);transition:left .18s ease,top .18s ease;z-index:998;';
+document.body.appendChild(glow);
+window.addEventListener('mousemove', e => {
+  glow.style.left = e.clientX + 'px';
+  glow.style.top  = e.clientY + 'px';
+}, { passive: true });
+
+/* ─── 3D TILT ON CARDS ─── */
+document.querySelectorAll('.pillar-card, .faq-item, .step-card').forEach(card => {
+  card.style.transition = 'transform .15s ease, box-shadow .15s ease';
+  card.addEventListener('mousemove', e => {
+    const r = card.getBoundingClientRect();
+    const x = (e.clientX - r.left) / r.width  - .5;
+    const y = (e.clientY - r.top)  / r.height - .5;
+    card.style.transform = `perspective(600px) rotateY(${x * 8}deg) rotateX(${-y * 8}deg) scale(1.02)`;
+  });
+  card.addEventListener('mouseleave', () => {
+    card.style.transform = 'perspective(600px) rotateY(0) rotateX(0) scale(1)';
+  });
+});
+
+/* ─── HERO PARALLAX ─── */
+const heroSection = document.getElementById('hero');
+window.addEventListener('scroll', () => {
+  if (window.scrollY < window.innerHeight) {
+    const orbs = heroSection.querySelectorAll('.orb');
+    orbs.forEach((orb, i) => {
+      const speed = .08 + i * .04;
+      orb.style.transform += ` translateY(${window.scrollY * speed}px)`;
+    });
+  }
+}, { passive: true });
+</script>
+</body>
+</html>
