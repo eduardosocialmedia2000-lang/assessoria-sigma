@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Assessoria Sigma | Sistema de Receita para Clínicas Veterinárias</title>
+  <title>Assessoria Sigma | Sistema de Receita para Clínicas e Hospitais Veterinários</title>
   <link rel="icon" type="image/png" href="sigma-logo.png" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -309,6 +309,77 @@
       align-items: center;
       gap: 4rem;
       padding: 7rem 2.5rem 5rem;
+      position: relative;
+      overflow: hidden;
+    }
+
+    /* ─── PHOTO BACKGROUNDS ─── */
+    .hero-bg-photo {
+      position: absolute;
+      inset: 0;
+      background: url('https://images.unsplash.com/photo-1587300003388-59208cc962cb?auto=format&fit=crop&w=1920&q=80') center/cover no-repeat;
+      opacity: 0.07;
+      pointer-events: none;
+      z-index: 0;
+      filter: saturate(0.2);
+    }
+
+    /* ─── QUEM SOMOS PHOTOS ─── */
+    .quem-photos {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1rem;
+      margin: 2.5rem auto 0;
+      max-width: 640px;
+    }
+    .quem-photo-frame {
+      position: relative;
+      overflow: hidden;
+      border: 1px solid var(--gold-line);
+      aspect-ratio: 4/3;
+    }
+    .quem-photo-frame img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      opacity: 0.38;
+      filter: saturate(0.25) sepia(0.5);
+      transition: opacity .5s, filter .5s;
+      display: block;
+    }
+    .quem-photo-frame:hover img {
+      opacity: 0.52;
+      filter: saturate(0.4) sepia(0.3);
+    }
+    .quem-photo-frame::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(135deg, rgba(196,154,60,.18) 0%, transparent 65%);
+      pointer-events: none;
+    }
+    .quem-photo-label {
+      position: absolute;
+      bottom: .7rem;
+      left: .75rem;
+      font-size: .52rem;
+      letter-spacing: .22em;
+      text-transform: uppercase;
+      color: var(--gold);
+      opacity: .75;
+      z-index: 1;
+    }
+
+    /* ─── CTA BG PHOTO ─── */
+    #cta { position: relative; overflow: hidden; }
+    .cta-bg-photo {
+      position: absolute;
+      inset: 0;
+      background: url('https://images.unsplash.com/photo-1548767797-d8c844163c4a?auto=format&fit=crop&w=1920&q=80') center/cover no-repeat;
+      opacity: 0.055;
+      pointer-events: none;
+      z-index: 0;
+      filter: saturate(0.15);
     }
     @media (max-width: 900px) {
       #hero { grid-template-columns: 1fr; }
@@ -985,6 +1056,7 @@
 
 <!-- ─── HERO ─── -->
 <section id="hero">
+  <div class="hero-bg-photo" aria-hidden="true"></div>
   <!-- orbs -->
   <div class="orb-layer" aria-hidden="true">
     <div class="orb orb-1"></div>
@@ -1010,7 +1082,7 @@
       <a href="#diagnostico" class="btn-outline">Ver o que analisamos</a>
     </div>
 
-    <p class="hero-note">Para clínicas que já têm movimento, trabalham muito… mas não têm previsibilidade.</p>
+    <p class="hero-note">Para clínicas e hospitais veterinários que já têm movimento, trabalham muito… mas não têm previsibilidade.</p>
   </div>
 
   <!-- right col: floating card -->
@@ -1083,7 +1155,7 @@
     <div class="section-header reveal">
       <span class="label">O Problema Real</span>
       <span class="gold-rule"></span>
-      <h2>Clínicas veterinárias não falham por falta de tutores.<br>Falham porque operam com atendimento improvisado <em>em um negócio que exige sistema.</em></h2>
+      <h2>Clínicas e hospitais veterinários não falham por falta de tutores.<br>Falham porque operam com atendimento improvisado <em>em um negócio que exige sistema.</em></h2>
       <p class="section-sub">Clínica cheia pode quebrar do mesmo jeito. A agenda lota — e a receita escorre pelos cantos.</p>
     </div>
 
@@ -1324,6 +1396,17 @@
       </div>
     </div>
 
+    <div class="quem-photos reveal">
+      <div class="quem-photo-frame">
+        <img src="https://images.unsplash.com/photo-1583512603806-077998240c7a?auto=format&fit=crop&w=800&q=80" alt="Veterinário atendendo paciente" loading="lazy" />
+        <span class="quem-photo-label">Atendimento</span>
+      </div>
+      <div class="quem-photo-frame">
+        <img src="https://images.unsplash.com/photo-1628009368231-7bb7cfcb0def?auto=format&fit=crop&w=800&q=80" alt="Clínica veterinária" loading="lazy" />
+        <span class="quem-photo-label">Sistema</span>
+      </div>
+    </div>
+
     <div class="quem-insight reveal">
       <p>Tem clínica que atende o dia inteiro, chega em casa esgotado… e o caixa continua com o mesmo gosto de "poderia ser melhor". Não é falta de esforço. <em>É falta de sistema.</em></p>
     </div>
@@ -1410,10 +1493,11 @@
 
 <!-- ─── CTA ─── -->
 <section id="cta" class="bg-surface">
+  <div class="cta-bg-photo" aria-hidden="true"></div>
   <div class="orb-layer" aria-hidden="true">
     <div class="orb orb-1" style="opacity:.12;top:auto;bottom:-100px;right:50%;transform:translateX(50%);"></div>
   </div>
-  <div class="section-inner" style="position:relative;text-align:center;">
+  <div class="section-inner" style="position:relative;text-align:center;z-index:1;">
     <span class="label reveal" style="display:block;margin-bottom:1.25rem;">Próximo passo</span>
     <h2 class="reveal">Pronto para parar de correr… e começar a <em>governar a receita?</em></h2>
     <p class="cta-sub reveal">Bate-papo rápido. Sem compromisso. Sem teoria. Só diagnóstico claro + ação.</p>
