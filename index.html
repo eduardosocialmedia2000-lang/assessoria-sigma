@@ -1,1934 +1,2067 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="pt-BR">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Assessoria Sigma | Sistema de Receita para Clínicas e Hospitais Veterinários</title>
-  <link rel="icon" type="image/png" href="sigma-logo.png" />
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400;1,600&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet" />
-  <style>
-    /* ─── TOKENS ─── */
-    :root {
-      --bg:        #080808;
-      --surface:   #0f0f0f;
-      --surface2:  #141414;
-      --gold:      #c49a3c;
-      --gold-lt:   #d4aa52;
-      --gold-dim:  rgba(196,154,60,.10);
-      --gold-line: rgba(196,154,60,.18);
-      --gold-glow: rgba(196,154,60,.25);
-      --text:      #f0ede8;
-      --muted:     rgba(240,237,232,.42);
-      --sans:      'DM Sans', sans-serif;
-      --serif:     'Cormorant Garamond', Georgia, serif;
-    }
-    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-    html { scroll-behavior: smooth; }
-    body {
-      background: var(--bg);
-      color: var(--text);
-      font-family: var(--sans);
-      font-size: 16px;
-      line-height: 1.7;
-      -webkit-font-smoothing: antialiased;
-      overflow-x: hidden;
-    }
-    /* grain */
-    body::after {
-      content: '';
-      position: fixed;
-      inset: 0;
-      pointer-events: none;
-      z-index: 999;
-      opacity: .032;
-      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
-      background-size: 180px;
-    }
-    a { color: inherit; text-decoration: none; }
-    img { display: block; max-width: 100%; }
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Apresentação Comercial — Assessoria Sigma</title>
+<meta name="description" content="Motor de Receita Veterinária Previsível — Engenharia de faturamento para clínicas e hospitais veterinários." />
+<meta name="theme-color" content="#0a0a0a" />
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,400;1,600&display=swap" rel="stylesheet">
+<link rel="icon" type="image/png" href="logo-sigma.png">
 
-    /* ─── KEYFRAMES ─── */
-    @keyframes orbFloat1 {
-      0%,100% { transform: translate(0,0) scale(1); }
-      33%      { transform: translate(60px,-40px) scale(1.08); }
-      66%      { transform: translate(-30px,50px) scale(.95); }
-    }
-    @keyframes orbFloat2 {
-      0%,100% { transform: translate(0,0) scale(1); }
-      40%      { transform: translate(-70px,30px) scale(1.12); }
-      70%      { transform: translate(40px,-60px) scale(.92); }
-    }
-    @keyframes orbFloat3 {
-      0%,100% { transform: translate(0,0); }
-      50%      { transform: translate(30px,50px); }
-    }
-    @keyframes cardFloat {
-      0%,100% { transform: translateY(0); }
-      50%      { transform: translateY(-12px); }
-    }
-    @keyframes spinSlow {
-      from { transform: rotate(0deg); }
-      to   { transform: rotate(360deg); }
-    }
-    @keyframes spinSlowRev {
-      from { transform: rotate(0deg); }
-      to   { transform: rotate(-360deg); }
-    }
-    @keyframes barFill {
-      from { width: 0; }
-    }
-    @keyframes countUp {
-      from { opacity: 0; transform: translateY(10px); }
-      to   { opacity: 1; transform: translateY(0); }
-    }
-    @keyframes pathDraw {
-      from { stroke-dashoffset: 600; }
-      to   { stroke-dashoffset: 0; }
-    }
-    @keyframes dotTravel {
-      0%   { offset-distance: 0%; opacity: 0; }
-      5%   { opacity: 1; }
-      95%  { opacity: 1; }
-      100% { offset-distance: 100%; opacity: 0; }
-    }
-    @keyframes shimmer {
-      0%   { background-position: -200% center; }
-      100% { background-position: 200% center; }
-    }
-    @keyframes fadeUp {
-      from { opacity: 0; transform: translateY(30px); }
-      to   { opacity: 1; transform: translateY(0); }
-    }
-    @keyframes wordIn {
-      from { opacity: 0; transform: translateY(20px) skewY(2deg); }
-      to   { opacity: 1; transform: translateY(0) skewY(0); }
-    }
-    @keyframes pulseRing {
-      0%   { transform: scale(.95); box-shadow: 0 0 0 0 rgba(196,154,60,.4); }
-      70%  { transform: scale(1);   box-shadow: 0 0 0 12px rgba(196,154,60,0); }
-      100% { transform: scale(.95); box-shadow: 0 0 0 0 rgba(196,154,60,0); }
-    }
+<style>
+  :root {
+    --bg: #0a0a0a;
+    --bg-2: #111111;
+    --card: #151515;
+    --card-2: #1a1a1a;
+    --border: #2a2418;
+    --border-strong: #3d3320;
+    --text: #f5f5f5;
+    --text-soft: #d6d6d6;
+    --muted: #8a8a8a;
+    --muted-2: #6a6a6a;
 
-    /* ─── REVEAL ─── */
-    .reveal {
-      opacity: 0;
-      transform: translateY(28px);
-      transition: opacity .75s cubic-bezier(.22,1,.36,1), transform .75s cubic-bezier(.22,1,.36,1);
-    }
-    .reveal.visible { opacity: 1; transform: none; }
-    .reveal-delay-1 { transition-delay: .1s; }
-    .reveal-delay-2 { transition-delay: .2s; }
-    .reveal-delay-3 { transition-delay: .3s; }
-    .reveal-delay-4 { transition-delay: .4s; }
-    .reveal-delay-5 { transition-delay: .5s; }
+    --gold: #d4af37;
+    --gold-light: #e8c468;
+    --gold-dark: #a68829;
+    --gold-deep: #8a6f1f;
+    --gold-bg: rgba(212, 175, 55, 0.08);
+    --gold-bg-strong: rgba(212, 175, 55, 0.15);
+    --gold-grad: linear-gradient(135deg, #f4d97a 0%, #d4af37 45%, #a68829 100%);
+    --gold-grad-soft: linear-gradient(135deg, rgba(244, 217, 122, 0.18) 0%, rgba(212, 175, 55, 0.06) 100%);
 
-    /* ─── ORB BACKGROUND ─── */
-    .orb-layer {
-      position: absolute;
-      inset: 0;
-      overflow: hidden;
-      pointer-events: none;
-    }
-    .orb {
-      position: absolute;
-      border-radius: 50%;
-      filter: blur(90px);
-      opacity: .18;
-    }
-    .orb-1 {
-      width: 600px; height: 600px;
-      background: radial-gradient(circle, #c49a3c 0%, transparent 70%);
-      top: -100px; right: -100px;
-      animation: orbFloat1 18s ease-in-out infinite;
-    }
-    .orb-2 {
-      width: 400px; height: 400px;
-      background: radial-gradient(circle, #a07830 0%, transparent 70%);
-      bottom: 0; left: -80px;
-      animation: orbFloat2 22s ease-in-out infinite;
-      opacity: .12;
-    }
-    .orb-3 {
-      width: 300px; height: 300px;
-      background: radial-gradient(circle, #d4aa52 0%, transparent 70%);
-      top: 40%; left: 30%;
-      animation: orbFloat3 28s ease-in-out infinite;
-      opacity: .07;
-    }
+    --red: #c0392b;
+    --green: #27ae60;
 
-    /* ─── NAV ─── */
-    nav {
-      position: fixed;
-      top: 0; left: 0; right: 0;
-      z-index: 900;
-      padding: 1.25rem 2.5rem;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      transition: background .4s, backdrop-filter .4s, border-color .4s;
-      border-bottom: 1px solid transparent;
-    }
-    nav.scrolled {
-      background: rgba(8,8,8,.85);
-      backdrop-filter: blur(20px);
-      -webkit-backdrop-filter: blur(20px);
-      border-color: var(--gold-line);
-    }
-    .nav-logo {
-      display: flex;
-      align-items: center;
-    }
-    .nav-logo img { height: 40px; width: auto; }
-    .nav-links {
-      display: flex;
-      align-items: center;
-      gap: 2.5rem;
-      list-style: none;
-    }
-    .nav-links a {
-      font-size: .72rem;
-      font-weight: 400;
-      letter-spacing: .1em;
-      text-transform: uppercase;
-      color: var(--muted);
-      transition: color .2s;
-    }
-    .nav-links a:hover { color: var(--gold); }
+    --sans: 'Montserrat', system-ui, -apple-system, sans-serif;
+    --serif: 'Montserrat', system-ui, sans-serif;
 
-    /* ─── BUTTONS ─── */
-    .btn-gold {
-      display: inline-flex;
-      align-items: center;
-      gap: .5rem;
-      background: var(--gold);
-      color: #080808;
-      font-family: var(--sans);
-      font-size: .72rem;
-      font-weight: 500;
-      letter-spacing: .14em;
-      text-transform: uppercase;
-      padding: .8rem 1.8rem;
-      border: none;
-      cursor: pointer;
-      position: relative;
-      overflow: hidden;
-      transition: box-shadow .25s, transform .15s;
-    }
-    .btn-gold::before {
-      content: '';
-      position: absolute;
-      inset: 0;
-      background: linear-gradient(90deg, transparent, rgba(255,255,255,.18), transparent);
-      transform: translateX(-100%);
-      transition: transform .5s;
-    }
-    .btn-gold:hover::before { transform: translateX(100%); }
-    .btn-gold:hover {
-      box-shadow: 0 4px 32px var(--gold-glow);
-      transform: translateY(-1px);
-    }
-    .btn-outline {
-      display: inline-flex;
-      align-items: center;
-      gap: .5rem;
-      background: transparent;
-      color: var(--gold);
-      font-family: var(--sans);
-      font-size: .72rem;
-      font-weight: 400;
-      letter-spacing: .14em;
-      text-transform: uppercase;
-      padding: .8rem 1.8rem;
-      border: 1px solid var(--gold-line);
-      cursor: pointer;
-      transition: border-color .25s, background .25s;
-    }
-    .btn-outline:hover {
-      border-color: rgba(196,154,60,.5);
-      background: var(--gold-dim);
-    }
+    --slide-w: 1920px;
+    --slide-h: 1080px;
+  }
 
-    /* ─── SECTION BASE ─── */
-    section {
-      padding: 8rem 2.5rem;
-      position: relative;
-      overflow: hidden;
-    }
-    .section-inner { max-width: 1100px; margin: 0 auto; }
-    .section-header { margin-bottom: 4rem; }
-    .label {
-      font-size: .62rem;
-      font-weight: 500;
-      letter-spacing: .3em;
-      text-transform: uppercase;
-      color: var(--gold);
-    }
-    .gold-rule {
-      display: block;
-      width: 36px;
-      height: 1px;
-      background: var(--gold);
-      margin: .75rem 0 1.5rem;
-    }
-    .section-header h2 {
-      font-family: var(--serif);
-      font-size: clamp(2rem, 4vw, 3.2rem);
-      font-weight: 300;
-      line-height: 1.15;
-    }
-    .section-header h2 em {
-      font-style: italic;
-      color: var(--gold);
-    }
-    .section-sub {
-      margin-top: 1.25rem;
-      font-size: .92rem;
-      color: var(--muted);
-      max-width: 520px;
-      line-height: 1.75;
-    }
-    .bg-surface { background: var(--surface); }
+  *, *::before, *::after { box-sizing: border-box; }
+  html, body { margin: 0; padding: 0; }
+  body {
+    font-family: var(--sans);
+    background: #000;
+    color: var(--text);
+    overflow: hidden;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    user-select: none;
+  }
 
-    /* ─── SHIMMER TEXT ─── */
-    .shimmer-text {
-      background: linear-gradient(90deg, var(--gold) 0%, var(--gold-lt) 40%, #fff8e7 50%, var(--gold-lt) 60%, var(--gold) 100%);
-      background-size: 200% auto;
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      background-clip: text;
-      animation: shimmer 4s linear infinite;
-    }
+  /* ===== STAGE / SLIDE SCALING ===== */
+  .stage {
+    position: fixed;
+    inset: 0;
+    overflow: hidden;
+    background:
+      radial-gradient(ellipse at top, rgba(212,175,55,0.05) 0%, transparent 60%),
+      radial-gradient(ellipse at bottom, rgba(212,175,55,0.03) 0%, transparent 60%),
+      var(--bg);
+  }
+  .slides-wrap {
+    width: var(--slide-w);
+    height: var(--slide-h);
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%) scale(1);
+    transform-origin: center center;
+  }
 
-    /* ─── HERO ─── */
-    #hero {
-      min-height: 100vh;
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      align-items: center;
-      gap: 4rem;
-      padding: 7rem 2.5rem 5rem;
-      position: relative;
-      overflow: hidden;
-    }
+  .slide {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    background: var(--bg);
+    overflow: hidden;
+    padding: 80px 120px;
+    display: none;
+    flex-direction: column;
+    justify-content: center;
+    align-items: stretch;
+    opacity: 0;
+    transition: opacity 0.5s ease;
+  }
+  .slide > * { flex: 0 0 auto; }
+  .slide.active {
+    display: flex;
+    opacity: 1;
+    z-index: 2;
+  }
 
-    /* ─── PHOTO BACKGROUNDS ─── */
-    .hero-bg-photo {
-      position: absolute;
-      inset: 0;
-      background: url('https://images.unsplash.com/photo-1587300003388-59208cc962cb?auto=format&fit=crop&w=1920&q=80') center/cover no-repeat;
-      opacity: 0.07;
-      pointer-events: none;
-      z-index: 0;
-      filter: saturate(0.2);
-    }
+  /* Subtle ambient glow on each slide */
+  .slide::before {
+    content: '';
+    position: absolute;
+    top: -200px;
+    right: -200px;
+    width: 600px;
+    height: 600px;
+    background: radial-gradient(circle, rgba(212,175,55,0.06) 0%, transparent 70%);
+    pointer-events: none;
+  }
+  .slide::after {
+    content: '';
+    position: absolute;
+    bottom: -200px;
+    left: -200px;
+    width: 600px;
+    height: 600px;
+    background: radial-gradient(circle, rgba(212,175,55,0.03) 0%, transparent 70%);
+    pointer-events: none;
+  }
 
-    /* ─── QUEM SOMOS PHOTOS ─── */
-    .quem-photos {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 1rem;
-      margin: 2.5rem auto 0;
-      max-width: 640px;
-    }
-    .quem-photo-frame {
-      position: relative;
-      overflow: hidden;
-      border: 1px solid var(--gold-line);
-      aspect-ratio: 4/3;
-    }
-    .quem-photo-frame img {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      opacity: 0.38;
-      filter: saturate(0.25) sepia(0.5);
-      transition: opacity .5s, filter .5s;
-      display: block;
-    }
-    .quem-photo-frame:hover img {
-      opacity: 0.52;
-      filter: saturate(0.4) sepia(0.3);
-    }
-    .quem-photo-frame::after {
-      content: '';
-      position: absolute;
-      inset: 0;
-      background: linear-gradient(135deg, rgba(196,154,60,.18) 0%, transparent 65%);
-      pointer-events: none;
-    }
-    .quem-photo-label {
-      position: absolute;
-      bottom: .7rem;
-      left: .75rem;
-      font-size: .52rem;
-      letter-spacing: .22em;
-      text-transform: uppercase;
-      color: var(--gold);
-      opacity: .75;
-      z-index: 1;
-    }
+  /* ===== TYPOGRAPHY ===== */
+  .eyebrow {
+    font-size: 13px;
+    font-weight: 600;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin: 0 0 28px;
+    display: inline-flex;
+    align-items: center;
+    gap: 14px;
+  }
+  .eyebrow::before {
+    content: '';
+    display: inline-block;
+    width: 32px;
+    height: 1px;
+    background: var(--gold);
+  }
+  .eyebrow.center { justify-content: center; }
+  .eyebrow.center::before, .eyebrow.center::after {
+    content: '';
+    display: inline-block;
+    width: 32px;
+    height: 1px;
+    background: var(--gold);
+  }
 
-    /* ─── CTA BG PHOTO ─── */
-    #cta { position: relative; overflow: hidden; }
-    .cta-bg-photo {
-      position: absolute;
-      inset: 0;
-      background: url('https://images.unsplash.com/photo-1548767797-d8c844163c4a?auto=format&fit=crop&w=1920&q=80') center/cover no-repeat;
-      opacity: 0.055;
-      pointer-events: none;
-      z-index: 0;
-      filter: saturate(0.15);
-    }
-    @media (max-width: 900px) {
-      #hero { grid-template-columns: 1fr; }
-      .hero-card-wrap { display: none; }
-    }
+  h1, h2, h3, h4 { margin: 0; font-weight: 700; line-height: 1.05; }
+  h1 { font-size: 92px; }
+  h2 { font-size: 72px; }
+  h3 { font-size: 48px; }
+  h4 { font-size: 32px; }
 
-    .hero-left { position: relative; z-index: 2; }
-    .hero-label {
-      display: flex;
-      align-items: center;
-      gap: .75rem;
-      margin-bottom: 2rem;
-    }
-    .hero-label::before {
-      content: '';
-      display: block;
-      width: 28px;
-      height: 1px;
-      background: var(--gold);
-    }
+  .serif { font-family: var(--serif); font-weight: 500; }
+  .gold { color: var(--gold); }
+  .gold-grad-text {
+    background: var(--gold-grad);
+    background-clip: text;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    color: transparent;
+  }
+  .muted { color: var(--muted); }
+  .soft { color: var(--text-soft); }
+  .center { text-align: center; }
+  .lead { font-size: 28px; line-height: 1.45; color: var(--text-soft); font-weight: 300; }
+  .small { font-size: 18px; color: var(--muted); }
 
-    /* word-split animation */
-    .hero-title {
-      font-family: var(--serif);
-      font-size: clamp(2.8rem, 5.5vw, 4.6rem);
-      font-weight: 300;
-      line-height: 1.08;
-      letter-spacing: -.01em;
-      margin-bottom: 1.75rem;
-    }
-    .hero-title .word {
-      display: inline-block;
-      opacity: 0;
-      transform: translateY(22px) skewY(2deg);
-      animation: wordIn .6s cubic-bezier(.22,1,.36,1) forwards;
-    }
-    .hero-title em { font-style: italic; }
-    .hero-title em.shimmer-text { -webkit-text-fill-color: transparent; }
+  /* ===== LAYOUT HELPERS ===== */
+  .row { display: flex; gap: 24px; }
+  .col { display: flex; flex-direction: column; gap: 24px; }
+  .grid { display: grid; gap: 24px; }
+  .g-2 { grid-template-columns: 1fr 1fr; }
+  .g-3 { grid-template-columns: repeat(3, 1fr); }
+  .g-4 { grid-template-columns: repeat(4, 1fr); }
+  .g-6 { grid-template-columns: repeat(6, 1fr); }
+  .full { flex: 1; }
+  .gap-sm { gap: 12px; }
+  .gap-md { gap: 24px; }
+  .gap-lg { gap: 40px; }
+  .mt-sm { margin-top: 16px; } .mt-md { margin-top: 32px; } .mt-lg { margin-top: 56px; }
+  .mb-sm { margin-bottom: 16px; } .mb-md { margin-bottom: 32px; } .mb-lg { margin-bottom: 56px; }
 
-    .hero-sub {
-      font-size: .97rem;
-      color: var(--muted);
-      max-width: 480px;
-      margin-bottom: .6rem;
-      line-height: 1.7;
-      animation: fadeUp .8s .6s cubic-bezier(.22,1,.36,1) both;
-    }
-    .hero-tagline {
-      font-size: .8rem;
-      color: rgba(196,154,60,.8);
-      letter-spacing: .05em;
-      margin-bottom: 2.5rem;
-      animation: fadeUp .8s .7s cubic-bezier(.22,1,.36,1) both;
-    }
-    .hero-actions {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 1rem;
-      margin-bottom: 3.5rem;
-      animation: fadeUp .8s .8s cubic-bezier(.22,1,.36,1) both;
-    }
-    .hero-note {
-      font-size: .73rem;
-      color: var(--muted);
-      opacity: .6;
-      animation: fadeUp .8s .9s cubic-bezier(.22,1,.36,1) both;
-    }
+  /* ===== CARDS / COMPONENTS ===== */
+  .card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 18px;
+    padding: 36px;
+    transition: all 0.3s ease;
+    position: relative;
+    overflow: hidden;
+  }
+  .card.gold-border { border-color: var(--gold-dark); }
+  .card.gold-bg {
+    background: linear-gradient(135deg, var(--gold-bg) 0%, transparent 100%);
+    border-color: var(--gold-dark);
+  }
+  .card.hover-lift:hover { transform: translateY(-4px); border-color: var(--gold-dark); }
 
-    /* ─── HERO CARD ─── */
-    .hero-card-wrap {
-      position: relative;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      animation: fadeUp 1s .3s cubic-bezier(.22,1,.36,1) both;
-    }
+  .stat-num {
+    font-family: var(--serif);
+    font-weight: 700;
+    font-size: 96px;
+    line-height: 1;
+    background: var(--gold-grad);
+    background-clip: text;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    margin: 0;
+  }
+  .stat-label {
+    font-size: 15px;
+    color: var(--muted);
+    text-transform: none;
+    letter-spacing: 0;
+    margin-top: 8px;
+    font-weight: 500;
+  }
 
-    /* spinning rings */
-    .ring-outer {
-      position: absolute;
-      width: 480px; height: 480px;
-      border: 1px dashed rgba(196,154,60,.12);
-      border-radius: 50%;
-      animation: spinSlow 40s linear infinite;
-    }
-    .ring-inner {
-      position: absolute;
-      width: 360px; height: 360px;
-      border: 1px solid rgba(196,154,60,.08);
-      border-radius: 50%;
-      animation: spinSlowRev 28s linear infinite;
-    }
-    .ring-dot {
-      position: absolute;
-      width: 6px; height: 6px;
-      border-radius: 50%;
-      background: var(--gold);
-      box-shadow: 0 0 8px var(--gold);
-      top: -3px; left: 50%;
-      transform: translateX(-50%);
-    }
+  .check, .x {
+    display: inline-flex;
+    width: 28px;
+    height: 28px;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    font-size: 14px;
+    font-weight: 700;
+    flex-shrink: 0;
+  }
+  .check { background: var(--gold-bg-strong); color: var(--gold); border: 1px solid var(--gold-dark); }
+  .x { background: rgba(192,57,43,0.12); color: #d76051; border: 1px solid rgba(192,57,43,0.4); }
 
-    /* floating dashboard card */
-    .hero-card {
-      width: 340px;
-      background: rgba(20,20,20,.9);
-      border: 1px solid var(--gold-line);
-      backdrop-filter: blur(20px);
-      padding: 1.75rem;
-      position: relative;
-      z-index: 2;
-      box-shadow: 0 20px 80px rgba(0,0,0,.6), 0 0 0 1px rgba(196,154,60,.06);
-      animation: cardFloat 6s ease-in-out infinite;
-    }
-    .card-header {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      margin-bottom: 1.5rem;
-    }
-    .card-title {
-      font-size: .62rem;
-      letter-spacing: .2em;
-      text-transform: uppercase;
-      color: var(--muted);
-    }
-    .card-dots { display: flex; gap: .35rem; }
-    .card-dot {
-      width: 8px; height: 8px;
-      border-radius: 50%;
-    }
-    .card-dot-r { background: #ff5f57; }
-    .card-dot-y { background: #ffbd2e; }
-    .card-dot-g { background: #28c840; }
+  .pill {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    padding: 8px 18px;
+    border-radius: 999px;
+    background: var(--gold-bg-strong);
+    border: 1px solid var(--gold-dark);
+    color: var(--gold);
+    font-size: 14px;
+    font-weight: 600;
+    letter-spacing: 0.04em;
+    text-transform: none;
+  }
+  .pill::before {
+    content: '';
+    width: 8px; height: 8px; border-radius: 50%;
+    background: var(--gold);
+    box-shadow: 0 0 8px var(--gold);
+  }
 
-    .card-metric {
-      margin-bottom: 1.25rem;
-    }
-    .card-metric-label {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      margin-bottom: .5rem;
-    }
-    .card-metric-name {
-      font-size: .75rem;
-      color: var(--muted);
-      display: flex;
-      align-items: center;
-      gap: .4rem;
-    }
-    .card-metric-name::before {
-      content: '';
-      display: block;
-      width: 6px; height: 6px;
-      border-radius: 50%;
-      background: currentColor;
-    }
-    .card-metric-name.red { color: #ff6b6b; }
-    .card-metric-name.gold { color: var(--gold); }
-    .card-metric-status {
-      font-size: .65rem;
-      letter-spacing: .08em;
-      text-transform: uppercase;
-    }
-    .card-metric-status.bad  { color: #ff6b6b; }
-    .card-metric-status.good { color: #4ade80; }
+  .num-marco {
+    font-family: var(--serif);
+    font-size: 80px;
+    font-weight: 700;
+    line-height: 1;
+    background: var(--gold-grad);
+    background-clip: text;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+  .marco-card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 20px;
+    padding: 32px 28px;
+    position: relative;
+    overflow: hidden;
+    transition: all 0.3s;
+  }
+  .marco-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0;
+    width: 100%; height: 4px;
+    background: var(--gold-grad);
+    opacity: 0.6;
+  }
+  .marco-card h4 {
+    font-size: 22px;
+    margin-top: 16px;
+    color: var(--text);
+    line-height: 1.2;
+  }
+  .marco-card p {
+    color: var(--muted);
+    margin-top: 12px;
+    font-size: 15px;
+    line-height: 1.5;
+  }
+  .marco-card .num-marco { font-size: 56px; }
 
-    .card-bar-track {
-      height: 4px;
-      background: rgba(255,255,255,.06);
-      border-radius: 2px;
-      overflow: hidden;
-    }
-    .card-bar {
-      height: 100%;
-      border-radius: 2px;
-      width: 0;
-      transition: width 1.2s cubic-bezier(.22,1,.36,1);
-    }
-    .card-bar.red  { background: linear-gradient(90deg, #ff6b6b, #ff4444); }
-    .card-bar.gold { background: linear-gradient(90deg, var(--gold), var(--gold-lt)); box-shadow: 0 0 8px var(--gold-glow); }
+  .icon-box {
+    width: 64px;
+    height: 64px;
+    background: var(--gold-bg-strong);
+    border: 1px solid var(--gold-dark);
+    border-radius: 14px;
+    display: grid;
+    place-items: center;
+    color: var(--gold);
+    font-size: 28px;
+  }
 
-    .card-divider {
-      height: 1px;
-      background: var(--gold-line);
-      margin: 1.25rem 0;
-    }
-    .card-footer {
-      font-size: .68rem;
-      color: rgba(196,154,60,.6);
-      letter-spacing: .05em;
-    }
+  /* Header bar (top-fixed within slide) */
+  .slide-header {
+    position: absolute;
+    top: 48px;
+    left: 120px;
+    right: 120px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-bottom: 20px;
+    border-bottom: 1px solid var(--border);
+    z-index: 3;
+  }
+  .slide-header .brand {
+    font-family: var(--serif);
+    font-size: 20px;
+    font-weight: 700;
+    letter-spacing: 0.02em;
+    text-transform: none;
+    color: var(--gold);
+  }
+  .slide-header .meta {
+    font-size: 13px;
+    color: var(--muted);
+    letter-spacing: 0.06em;
+    text-transform: none;
+  }
 
-    /* ─── ANIMATED PATH DIVIDER ─── */
-    .path-divider {
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      padding: 0 2.5rem;
-      height: 100px;
-      overflow: visible;
-      position: relative;
-      z-index: 2;
-    }
-    .path-divider svg {
-      overflow: visible;
-      width: 100%;
-      max-width: 900px;
-    }
-    .path-line {
-      fill: none;
-      stroke: var(--gold-line);
-      stroke-width: 1;
-      stroke-dasharray: 600;
-      stroke-dashoffset: 600;
-      transition: stroke-dashoffset 1.8s cubic-bezier(.22,1,.36,1);
-    }
-    .path-line.drawn { stroke-dashoffset: 0; }
-    .path-dot {
-      fill: var(--gold);
-      filter: drop-shadow(0 0 4px var(--gold));
-      opacity: 0;
-      transition: opacity .3s;
-    }
-    .path-dot.active { opacity: 1; }
+  /* ===== NAV ===== */
+  .nav-bar {
+    position: fixed;
+    bottom: 24px;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    background: rgba(15, 15, 15, 0.85);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border: 1px solid var(--border);
+    border-radius: 999px;
+    padding: 10px 16px;
+    z-index: 100;
+    box-shadow: 0 8px 32px rgba(0,0,0,0.5);
+  }
+  .nav-btn {
+    background: transparent;
+    border: 1px solid var(--border);
+    color: var(--text);
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    cursor: pointer;
+    display: grid;
+    place-items: center;
+    transition: all 0.2s;
+    font-size: 18px;
+  }
+  .nav-btn:hover { background: var(--gold-bg); border-color: var(--gold-dark); color: var(--gold); }
+  .nav-btn:disabled { opacity: 0.3; cursor: not-allowed; }
+  .nav-counter {
+    font-size: 14px;
+    color: var(--muted);
+    padding: 0 16px;
+    min-width: 70px;
+    text-align: center;
+    letter-spacing: 0;
+  }
+  .nav-counter .curr { color: var(--gold); font-weight: 700; }
 
-    /* ─── PROBLEM ─── */
-    .problem-grid {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 1px;
-      background: var(--gold-line);
-      border: 1px solid var(--gold-line);
-    }
-    @media (max-width: 768px) { .problem-grid { grid-template-columns: 1fr; } }
-    @media (min-width: 769px) and (max-width: 1024px) { .problem-grid { grid-template-columns: 1fr 1fr; } }
+  .progress {
+    position: fixed;
+    top: 0; left: 0;
+    width: 0%;
+    height: 3px;
+    background: var(--gold-grad);
+    z-index: 200;
+    transition: width 0.4s ease;
+    box-shadow: 0 0 12px var(--gold);
+  }
 
-    .problem-card {
-      background: var(--surface);
-      padding: 2.5rem 2rem;
-      position: relative;
-      transition: background .25s;
-      overflow: hidden;
-    }
-    .problem-card::before {
-      content: '';
-      position: absolute;
-      inset: 0;
-      background: radial-gradient(circle at 0% 100%, rgba(196,154,60,.06), transparent 60%);
-      opacity: 0;
-      transition: opacity .35s;
-    }
-    .problem-card:hover { background: var(--surface2); }
-    .problem-card:hover::before { opacity: 1; }
+  .hint {
+    position: fixed;
+    bottom: 28px;
+    right: 32px;
+    font-size: 12px;
+    color: var(--muted-2);
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    z-index: 100;
+  }
+  .hint kbd {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    padding: 2px 8px;
+    font-family: var(--sans);
+    font-size: 11px;
+    color: var(--gold);
+    margin: 0 2px;
+  }
 
-    .problem-num {
-      font-family: var(--serif);
-      font-size: 2.8rem;
-      font-weight: 300;
-      color: rgba(196,154,60,.14);
-      line-height: 1;
-      margin-bottom: .75rem;
-      transition: color .3s;
-    }
-    .problem-card:hover .problem-num { color: rgba(196,154,60,.28); }
-    .problem-card h3 {
-      font-size: .75rem;
-      font-weight: 500;
-      letter-spacing: .1em;
-      text-transform: uppercase;
-      color: var(--gold);
-      margin-bottom: .6rem;
-    }
-    .problem-card p {
-      font-size: .85rem;
-      color: var(--muted);
-      line-height: 1.65;
-    }
-    .problem-caption {
-      margin-top: 3rem;
-      text-align: center;
-      font-family: var(--serif);
-      font-size: 1.4rem;
-      font-style: italic;
-      color: var(--muted);
-    }
+  /* ===== ANIMATIONS ===== */
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  @keyframes shimmer {
+    0% { background-position: -200% center; }
+    100% { background-position: 200% center; }
+  }
+  .slide.active .anim {
+    animation: fadeUp 0.7s ease both;
+  }
+  .slide.active .anim:nth-child(1) { animation-delay: 0.05s; }
+  .slide.active .anim:nth-child(2) { animation-delay: 0.15s; }
+  .slide.active .anim:nth-child(3) { animation-delay: 0.25s; }
+  .slide.active .anim:nth-child(4) { animation-delay: 0.35s; }
+  .slide.active .anim:nth-child(5) { animation-delay: 0.45s; }
+  .slide.active .anim:nth-child(6) { animation-delay: 0.55s; }
+  .slide.active .anim:nth-child(7) { animation-delay: 0.65s; }
+  .slide.active .anim:nth-child(8) { animation-delay: 0.75s; }
 
-    /* ─── DIAGNÓSTICO ─── */
-    .steps-list {
-      border: 1px solid var(--gold-line);
-      overflow: hidden;
-    }
-    .step {
-      display: grid;
-      grid-template-columns: 72px 1fr;
-      border-bottom: 1px solid var(--gold-line);
-      transition: background .25s;
-      position: relative;
-      overflow: hidden;
-    }
-    .step:last-child { border-bottom: none; }
-    .step::after {
-      content: '';
-      position: absolute;
-      left: 0; top: 0; bottom: 0;
-      width: 0;
-      background: var(--gold-dim);
-      transition: width .4s cubic-bezier(.22,1,.36,1);
-    }
-    .step:hover::after { width: 100%; }
-    .step-num {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      border-right: 1px solid var(--gold-line);
-      font-family: var(--serif);
-      font-size: 1.8rem;
-      font-weight: 300;
-      color: var(--gold);
-      position: relative;
-      z-index: 1;
-    }
-    .step-content {
-      padding: 1.75rem 2rem;
-      position: relative;
-      z-index: 1;
-    }
-    .step-content h3 {
-      font-size: .75rem;
-      font-weight: 500;
-      letter-spacing: .1em;
-      text-transform: uppercase;
-      color: var(--gold);
-      margin-bottom: .4rem;
-    }
-    .step-content p { font-size: .85rem; color: var(--muted); line-height: 1.65; }
+  .shimmer-text {
+    background: linear-gradient(90deg, #d4af37 0%, #f4d97a 25%, #ffffff 50%, #f4d97a 75%, #d4af37 100%);
+    background-size: 200% auto;
+    background-clip: text;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    animation: shimmer 5s linear infinite;
+  }
 
-    .diag-note {
-      margin-top: 2.5rem;
-      padding: 1.5rem 2rem;
-      border: 1px solid var(--gold-line);
-      border-left: 3px solid var(--gold);
-      background: var(--gold-dim);
-    }
-    .diag-note p {
-      font-family: var(--serif);
-      font-size: 1.05rem;
-      font-style: italic;
-      color: var(--text);
-    }
+  /* ===== SPECIFIC SLIDES ===== */
+  .cover {
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: 0;
+    gap: 0;
+  }
+  .cover-logo {
+    width: 260px;
+    height: 260px;
+    border-radius: 36px;
+    margin: 0 auto 48px;
+    object-fit: contain;
+    background: #000;
+    border: 1px solid var(--gold-dark);
+    padding: 14px;
+    box-shadow: 0 30px 80px rgba(212,175,55,0.18), 0 0 0 1px rgba(212,175,55,0.08);
+    display: block;
+  }
+  .cover h1 {
+    font-family: var(--serif);
+    font-size: 128px;
+    font-weight: 800;
+    letter-spacing: -0.02em;
+    margin: 0 0 28px;
+    line-height: 1;
+  }
+  .cover .sub {
+    font-size: 32px;
+    color: var(--gold);
+    font-weight: 400;
+    letter-spacing: 0.01em;
+    margin: 0;
+    font-family: var(--serif);
+    font-style: normal;
+  }
+  .cover .tagline {
+    font-size: 22px;
+    color: var(--muted);
+    max-width: 880px;
+    margin: 28px auto 0;
+    font-weight: 300;
+    line-height: 1.6;
+  }
+  .cover .divider {
+    width: 100px;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, var(--gold), transparent);
+    margin: 36px auto 0;
+  }
 
-    /* ─── MOTOR ─── */
-    .motor-grid {
-      display: grid;
-      grid-template-columns: 1fr 1.1fr;
-      gap: 3rem;
-      align-items: start;
-    }
-    @media (max-width: 860px) { .motor-grid { grid-template-columns: 1fr; } }
+  /* List with check */
+  .check-list { display: flex; flex-direction: column; gap: 20px; }
+  .check-item {
+    display: flex;
+    gap: 18px;
+    align-items: flex-start;
+    font-size: 22px;
+    line-height: 1.45;
+    color: var(--text-soft);
+  }
+  .check-item .check { margin-top: 4px; }
+  .check-item strong { color: var(--text); font-weight: 600; }
+  .check-item .arrow { color: var(--gold); margin: 0 8px; }
 
-    .motor-list { display: flex; flex-direction: column; gap: 0; }
-    .motor-item {
-      padding: 1.5rem 0;
-      border-bottom: 1px solid var(--gold-line);
-      display: grid;
-      grid-template-columns: 2rem 1fr;
-      gap: 1rem;
-      align-items: start;
-      cursor: default;
-      transition: padding .25s;
-    }
-    .motor-item:first-child { padding-top: 0; }
-    .motor-item:last-child { border-bottom: none; }
-    .motor-item:hover { padding-left: .5rem; }
+  /* Quote / featured */
+  .quote-box {
+    background: var(--gold-grad-soft);
+    border: 1px solid var(--gold-dark);
+    border-radius: 20px;
+    padding: 48px 60px;
+    text-align: center;
+    position: relative;
+  }
+  .quote-box .quote {
+    font-family: var(--serif);
+    font-style: italic;
+    font-size: 40px;
+    line-height: 1.3;
+    color: var(--text);
+  }
 
-    .motor-icon {
-      color: var(--gold);
-      font-size: 1rem;
-      margin-top: .15rem;
-      opacity: .7;
-      transition: opacity .25s;
-    }
-    .motor-item:hover .motor-icon { opacity: 1; }
-    .motor-item h3 {
-      font-size: .78rem;
-      font-weight: 500;
-      letter-spacing: .08em;
-      text-transform: uppercase;
-      color: var(--gold);
-      margin-bottom: .35rem;
-    }
-    .motor-item p { font-size: .83rem; color: var(--muted); line-height: 1.6; }
+  /* HVSB Case */
+  .case-card {
+    background: linear-gradient(135deg, var(--card) 0%, var(--card-2) 100%);
+    border: 1px solid var(--gold-dark);
+    border-radius: 24px;
+    padding: 48px;
+  }
+  .case-stats { display: grid; grid-template-columns: repeat(4, 1fr); gap: 32px; margin-top: 32px; }
+  .case-stat .stat-num { font-size: 64px; }
+  .case-stat .stat-label { font-size: 14px; }
 
-    /* animated dashboard card */
-    .motor-dashboard {
-      background: rgba(20,20,20,.95);
-      border: 1px solid var(--gold-line);
-      padding: 2rem;
-      box-shadow: 0 20px 60px rgba(0,0,0,.5);
-      position: sticky;
-      top: 7rem;
-    }
-    .dash-label {
-      font-size: .58rem;
-      letter-spacing: .25em;
-      text-transform: uppercase;
-      color: var(--muted);
-      margin-bottom: 1.5rem;
-      display: flex;
-      align-items: center;
-      gap: .5rem;
-    }
-    .dash-label::before {
-      content: '';
-      display: block;
-      width: 16px; height: 1px;
-      background: var(--gold);
-    }
+  /* Risk grid */
+  .risk-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; }
+  .risk-item {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-left: 3px solid var(--gold);
+    border-radius: 14px;
+    padding: 28px;
+    display: flex;
+    gap: 18px;
+    align-items: flex-start;
+  }
+  .risk-item .icon-box { width: 48px; height: 48px; font-size: 22px; flex-shrink: 0; }
+  .risk-item h5 { margin: 0 0 6px; font-size: 18px; color: var(--gold); letter-spacing: 0.06em; text-transform: uppercase; }
+  .risk-item p { margin: 0; font-size: 16px; color: var(--text-soft); line-height: 1.4; }
 
-    .dash-metric {
-      margin-bottom: 1.5rem;
-    }
-    .dash-metric-head {
-      display: flex;
-      justify-content: space-between;
-      align-items: baseline;
-      margin-bottom: .5rem;
-    }
-    .dash-metric-name { font-size: .78rem; color: var(--muted); }
-    .dash-metric-val {
-      font-family: var(--serif);
-      font-size: 1.1rem;
-      color: var(--gold);
-    }
-    .dash-track {
-      height: 3px;
-      background: rgba(255,255,255,.05);
-      border-radius: 2px;
-      overflow: hidden;
-    }
-    .dash-fill {
-      height: 100%;
-      width: 0;
-      border-radius: 2px;
-      background: linear-gradient(90deg, var(--gold), var(--gold-lt));
-      box-shadow: 0 0 6px var(--gold-glow);
-      transition: width 1.4s cubic-bezier(.22,1,.36,1);
-    }
-    .dash-fill.animated { /* width set by JS */ }
+  /* Deliverables grid */
+  .deliv-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px; }
+  .deliv-card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 28px 24px;
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+    transition: all 0.3s;
+  }
+  .deliv-card .icon-box { width: 52px; height: 52px; font-size: 24px; }
+  .deliv-card h5 { font-size: 18px; line-height: 1.25; color: var(--text); margin: 0; }
+  .deliv-card p { font-size: 14px; color: var(--muted); margin: 0; line-height: 1.4; }
+  .deliv-card .price {
+    margin-top: auto;
+    padding-top: 16px;
+    border-top: 1px solid var(--border);
+    color: var(--gold);
+    font-family: var(--serif);
+    font-size: 20px;
+    font-weight: 600;
+  }
 
-    .dash-divider { height: 1px; background: var(--gold-line); margin: 1.5rem 0; }
+  /* Value stacking */
+  .value-table { width: 100%; border-collapse: collapse; font-size: 22px; }
+  .value-table th, .value-table td {
+    text-align: left;
+    padding: 18px 24px;
+    border-bottom: 1px solid var(--border);
+  }
+  .value-table th {
+    color: var(--gold);
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    font-size: 14px;
+    font-weight: 700;
+  }
+  .value-table td:last-child { text-align: right; font-family: var(--serif); color: var(--gold); font-weight: 600; }
+  .value-table tr:last-child td { border-bottom: none; }
+  .value-table tr.total td {
+    border-top: 2px solid var(--gold);
+    padding-top: 24px;
+    font-size: 28px;
+    color: var(--text);
+  }
+  .value-table tr.total td:last-child { color: var(--gold); font-size: 32px; }
 
-    .dash-quote {
-      font-family: var(--serif);
-      font-size: .95rem;
-      font-style: italic;
-      color: var(--muted);
-      line-height: 1.7;
-    }
-    .dash-quote strong { color: var(--text); font-style: normal; }
+  .price-block {
+    text-align: center;
+    padding: 32px;
+  }
+  .price-block .struck {
+    font-family: var(--serif);
+    font-size: 40px;
+    color: var(--muted);
+    text-decoration: line-through;
+    text-decoration-color: var(--red);
+    text-decoration-thickness: 3px;
+    margin-bottom: 16px;
+  }
+  .price-block .now {
+    font-family: var(--serif);
+    font-size: 140px;
+    font-weight: 700;
+    line-height: 1;
+    background: var(--gold-grad);
+    background-clip: text;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+  .price-block .now-suffix {
+    font-size: 32px;
+    color: var(--text-soft);
+    margin-top: 12px;
+  }
 
-    /* ─── QUEM SOMOS ─── */
-    .quem-grid {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 1px;
-      background: var(--gold-line);
-      border: 1px solid var(--gold-line);
-      margin-bottom: 3rem;
-    }
-    @media (max-width: 680px) { .quem-grid { grid-template-columns: 1fr; } }
+  .cta-button {
+    display: inline-flex;
+    align-items: center;
+    gap: 16px;
+    padding: 22px 48px;
+    background: var(--gold-grad);
+    color: #1a1208;
+    font-size: 22px;
+    font-weight: 700;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    border-radius: 999px;
+    border: none;
+    cursor: pointer;
+    text-decoration: none;
+    transition: all 0.3s;
+    box-shadow: 0 12px 40px rgba(212, 175, 55, 0.3);
+  }
+  .cta-button:hover { transform: translateY(-2px); box-shadow: 0 16px 48px rgba(212, 175, 55, 0.5); }
 
-    .quem-col { padding: 2.75rem 2.25rem; }
-    .quem-col.do  { background: var(--surface2); }
-    .quem-col.dont { background: var(--surface); }
-    .quem-col h3 {
-      font-size: .65rem;
-      font-weight: 500;
-      letter-spacing: .22em;
-      text-transform: uppercase;
-      margin-bottom: 1.5rem;
-    }
-    .quem-col.do h3   { color: var(--gold); }
-    .quem-col.dont h3 { color: var(--muted); }
-    .quem-list { list-style: none; display: flex; flex-direction: column; gap: .8rem; }
-    .quem-list li {
-      font-size: .85rem;
-      color: var(--muted);
-      display: flex;
-      gap: .75rem;
-      line-height: 1.5;
-    }
-    .quem-col.do   .quem-list li::before { content: '—'; color: var(--gold); flex-shrink: 0; }
-    .quem-col.dont .quem-list li::before { content: '✕'; color: rgba(196,154,60,.35); flex-shrink: 0; font-size: .7rem; }
+  .block-divider {
+    position: fixed;
+    top: 50%;
+    left: 0;
+    right: 0;
+    pointer-events: none;
+  }
 
-    .quem-insight {
-      padding: 2rem 2.25rem;
-      border-left: 3px solid var(--gold);
-      background: var(--gold-dim);
-      border: 1px solid var(--gold-line);
-      border-left: 3px solid var(--gold);
-    }
-    .quem-insight p {
-      font-family: var(--serif);
-      font-size: 1.1rem;
-      font-style: italic;
-      color: var(--muted);
-      line-height: 1.75;
-    }
+  /* Section title slide */
+  .section-title {
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+  }
+  .section-title .bloco-num {
+    font-family: var(--serif);
+    font-size: 24px;
+    color: var(--gold);
+    letter-spacing: 0.4em;
+    text-transform: uppercase;
+    margin-bottom: 32px;
+  }
+  .section-title h2 {
+    font-family: var(--serif);
+    font-size: 120px;
+    font-weight: 500;
+    line-height: 1.05;
+    letter-spacing: -0.02em;
+    max-width: 1400px;
+  }
+  .section-title .divider {
+    width: 120px;
+    height: 1px;
+    background: var(--gold);
+    margin: 40px auto;
+  }
+  .section-title p { font-size: 24px; color: var(--muted); max-width: 800px; }
 
-    /* ─── RESULTADOS ─── */
-    .results-grid {
-      display: grid;
-      grid-template-columns: repeat(2, 1fr);
-      gap: 1rem;
-    }
-    @media (max-width: 640px) { .results-grid { grid-template-columns: 1fr; } }
+  /* X-list (problems) */
+  .x-list { display: grid; grid-template-columns: 1fr 1fr; gap: 18px 32px; }
+  .x-item {
+    display: flex;
+    gap: 16px;
+    align-items: flex-start;
+    font-size: 19px;
+    line-height: 1.4;
+    color: var(--text-soft);
+  }
+  .x-item .x { margin-top: 2px; }
+  .x-item strong { color: var(--text); }
 
-    .result-item {
-      display: flex;
-      align-items: flex-start;
-      gap: 1rem;
-      padding: 1.5rem 1.75rem;
-      border: 1px solid var(--gold-line);
-      background: var(--surface2);
-      position: relative;
-      overflow: hidden;
-      transition: border-color .25s, transform .25s;
-    }
-    .result-item:hover {
-      border-color: rgba(196,154,60,.4);
-      transform: translateY(-2px);
-    }
-    .result-check {
-      width: 20px; height: 20px;
-      border: 1px solid var(--gold);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      flex-shrink: 0;
-      font-size: .6rem;
-      color: var(--gold);
-      animation: pulseRing 3s ease-out infinite;
-    }
-    .result-item p { font-size: .85rem; color: var(--muted); line-height: 1.5; }
+  /* Six marcos overview grid */
+  .marcos-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; margin-top: 40px; }
 
-    /* ─── STATS STRIP ─── */
-    .stats-strip {
-      display: grid;
-      grid-template-columns: repeat(4, 1fr);
-      background: var(--surface);
-      border-top: 1px solid var(--gold-line);
-      border-bottom: 1px solid var(--gold-line);
-      position: relative;
-      z-index: 2;
-    }
-    @media (max-width: 768px) { .stats-strip { grid-template-columns: repeat(2,1fr); } }
-    .stat-item {
-      padding: 2.5rem 1.5rem;
-      text-align: center;
-      border-right: 1px solid var(--gold-line);
-      position: relative;
-      transition: background .3s;
-    }
-    .stat-item:last-child { border-right: none; }
-    .stat-item:hover { background: var(--surface2); }
-    .stat-num {
-      font-family: var(--serif);
-      font-size: 3rem;
-      font-weight: 300;
-      color: var(--gold);
-      line-height: 1;
-      display: block;
-      margin-bottom: .5rem;
-      transition: text-shadow .3s;
-    }
-    .stat-item:hover .stat-num { text-shadow: 0 0 20px rgba(196,154,60,.4); }
-    .stat-label {
-      font-size: .62rem;
-      letter-spacing: .16em;
-      text-transform: uppercase;
-      color: var(--muted);
-      line-height: 1.5;
-    }
+  /* Cycle visual */
+  .cycle-flow { display: flex; align-items: center; justify-content: center; flex-wrap: wrap; gap: 18px; margin-top: 48px; }
+  .cycle-chip {
+    background: var(--card);
+    border: 1px solid var(--gold-dark);
+    border-radius: 999px;
+    padding: 18px 28px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    font-size: 18px;
+    font-weight: 600;
+  }
+  .cycle-chip .num { color: var(--gold); font-family: var(--serif); font-size: 22px; }
+  .cycle-arrow { color: var(--gold); font-size: 22px; }
 
-    /* ─── COMPARISON ─── */
-    .comparison-wrap {
-      margin-top: 3.5rem;
-      display: grid;
-      grid-template-columns: 1fr auto 1fr;
-      gap: 0;
-      border: 1px solid var(--gold-line);
-      overflow: hidden;
-    }
-    @media (max-width: 768px) { .comparison-wrap { grid-template-columns: 1fr; } }
-    .comp-col {
-      padding: 2.5rem 2rem;
-    }
-    .comp-col.before { background: rgba(255,60,60,.03); }
-    .comp-col.after  { background: rgba(196,154,60,.04); }
-    .comp-divider {
-      width: 1px;
-      background: var(--gold-line);
-      position: relative;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-    }
-    .comp-divider-label {
-      position: absolute;
-      background: var(--bg);
-      padding: .35rem .6rem;
-      font-size: .55rem;
-      letter-spacing: .2em;
-      text-transform: uppercase;
-      color: var(--muted);
-      border: 1px solid var(--gold-line);
-      white-space: nowrap;
-    }
-    .comp-head {
-      font-size: .6rem;
-      letter-spacing: .2em;
-      text-transform: uppercase;
-      margin-bottom: 1.5rem;
-      display: flex;
-      align-items: center;
-      gap: .5rem;
-    }
-    .comp-head.bad  { color: rgba(255,100,100,.7); }
-    .comp-head.good { color: var(--gold); }
-    .comp-list { list-style: none; display: flex; flex-direction: column; gap: .85rem; }
-    .comp-list li {
-      font-size: .83rem;
-      color: var(--muted);
-      display: flex;
-      align-items: flex-start;
-      gap: .6rem;
-      line-height: 1.5;
-    }
-    .comp-list li::before {
-      content: attr(data-icon);
-      flex-shrink: 0;
-      font-size: .75rem;
-      margin-top: .05rem;
-    }
+  /* Slide for marco detail */
+  .marco-detail-header { display: flex; align-items: center; gap: 32px; margin-bottom: 40px; }
+  .marco-detail-header .num-big {
+    font-family: var(--serif);
+    font-size: 160px;
+    font-weight: 700;
+    line-height: 0.85;
+    background: var(--gold-grad);
+    background-clip: text;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+  .marco-detail-header .info h2 { font-family: var(--serif); font-size: 64px; font-weight: 600; line-height: 1.05; }
+  .marco-detail-header .info .days {
+    color: var(--gold);
+    font-size: 18px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    margin-top: 8px;
+    font-weight: 600;
+  }
 
-    /* ─── TESTIMONIAL ─── */
-    .testimonial-wrap {
-      display: flex;
-      justify-content: center;
-      margin-bottom: 3rem;
-    }
-    .testimonial-card {
-      max-width: 560px;
-      width: 100%;
-      padding: 2rem 2.5rem;
-      border: 1px solid var(--gold-line);
-      border-left: 3px solid var(--gold);
-      background: rgba(20,20,20,.9);
-      position: relative;
-    }
-    .testimonial-card::before {
-      content: '"';
-      position: absolute;
-      top: -.5rem;
-      left: 1.5rem;
-      font-family: var(--serif);
-      font-size: 5rem;
-      color: var(--gold);
-      opacity: .15;
-      line-height: 1;
-    }
-    .testimonial-stars { color: var(--gold); font-size: .75rem; letter-spacing: .3em; margin-bottom: 1rem; }
-    .testimonial-text {
-      font-family: var(--serif);
-      font-size: 1rem;
-      font-style: italic;
-      color: var(--text);
-      line-height: 1.7;
-      margin-bottom: 1.25rem;
-    }
-    .testimonial-author {
-      font-size: .62rem;
-      letter-spacing: .14em;
-      text-transform: uppercase;
-      color: var(--muted);
-    }
+  .marco-body { display: grid; grid-template-columns: 1.2fr 1fr; gap: 48px; }
+  .marco-body .descrip { font-size: 22px; line-height: 1.55; color: var(--text-soft); }
+  .marco-body .descrip p { margin: 0 0 20px; }
+  .marco-body .descrip .error-block, .marco-body .descrip .result-block {
+    border-radius: 14px;
+    padding: 20px 24px;
+    margin-top: 16px;
+  }
+  .marco-body .descrip .error-block {
+    background: rgba(192,57,43,0.06);
+    border-left: 3px solid var(--red);
+    font-size: 18px;
+  }
+  .marco-body .descrip .result-block {
+    background: var(--gold-bg);
+    border-left: 3px solid var(--gold);
+    font-size: 18px;
+  }
+  .marco-body .descrip .label {
+    text-transform: uppercase;
+    font-size: 12px;
+    color: var(--gold);
+    letter-spacing: 0.2em;
+    font-weight: 700;
+    margin-bottom: 6px;
+    display: block;
+  }
+  .marco-side {
+    background: var(--card);
+    border: 1px solid var(--gold-dark);
+    border-radius: 18px;
+    padding: 40px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 24px;
+  }
 
-    /* ─── FAQ ─── */
-    .faq-list { border: 1px solid var(--gold-line); }
-    .faq-item { border-bottom: 1px solid var(--gold-line); }
-    .faq-item:last-child { border-bottom: none; }
-    .faq-q {
-      width: 100%;
-      background: none;
-      border: none;
-      cursor: pointer;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 1rem;
-      padding: 1.75rem 2rem;
-      color: var(--text);
-      font-family: var(--serif);
-      font-size: 1.1rem;
-      font-weight: 400;
-      text-align: left;
-      transition: background .2s, color .2s;
-    }
-    .faq-q:hover { background: var(--gold-dim); }
-    .faq-q[aria-expanded="true"] { color: var(--gold); background: var(--gold-dim); }
-    .faq-icon {
-      width: 22px; height: 22px;
-      border: 1px solid var(--gold-line);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      flex-shrink: 0;
-      font-size: .7rem;
-      color: var(--gold);
-      transition: transform .35s cubic-bezier(.22,1,.36,1), background .2s;
-    }
-    .faq-q[aria-expanded="true"] .faq-icon { transform: rotate(45deg); background: var(--gold-dim); }
-    .faq-a {
-      max-height: 0;
-      overflow: hidden;
-      transition: max-height .45s cubic-bezier(.22,1,.36,1), padding .3s;
-      padding: 0 2rem;
-      font-size: .85rem;
-      color: var(--muted);
-      line-height: 1.8;
-    }
-    .faq-a.open { max-height: 300px; padding: 0 2rem 1.75rem; }
+  /* Cover frame for empty/transition slides */
+  .frame-slide { align-items: center; justify-content: center; text-align: center; }
+  .frame-slide .frame-q {
+    font-family: var(--serif);
+    font-size: 88px;
+    font-weight: 500;
+    line-height: 1.15;
+    max-width: 1500px;
+  }
+  .frame-slide .frame-sub { font-size: 24px; color: var(--muted); margin-top: 32px; }
 
-    /* ─── CTA ─── */
-    #cta { text-align: center; }
-    #cta::before {
-      content: '';
-      position: absolute;
-      inset: 0;
-      background: radial-gradient(ellipse 60% 80% at 50% 100%, rgba(196,154,60,.09) 0%, transparent 70%);
-      pointer-events: none;
-    }
-    #cta h2 {
-      font-family: var(--serif);
-      font-size: clamp(2rem, 4.5vw, 3.4rem);
-      font-weight: 300;
-      line-height: 1.18;
-      max-width: 680px;
-      margin: 0 auto 1.25rem;
-    }
-    #cta h2 em { font-style: italic; color: var(--gold); }
-    .cta-sub { font-size: .9rem; color: var(--muted); margin-bottom: 2.5rem; }
-    .cta-note { margin-top: 1.25rem; font-size: .72rem; color: var(--muted); opacity: .55; font-style: italic; }
+  /* Compare two columns */
+  .compare-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 32px; }
+  .compare-col {
+    border-radius: 18px;
+    padding: 40px;
+    border: 1px solid var(--border);
+  }
+  .compare-col.bad { background: rgba(192,57,43,0.04); border-color: rgba(192,57,43,0.3); }
+  .compare-col.good { background: var(--gold-bg); border-color: var(--gold-dark); }
+  .compare-col h4 { font-size: 24px; margin-bottom: 20px; }
+  .compare-col.bad h4 { color: #e07060; }
+  .compare-col.good h4 { color: var(--gold); }
+  .compare-col p { font-size: 18px; line-height: 1.5; color: var(--text-soft); margin: 0 0 16px; }
 
-    /* ─── FOOTER ─── */
-    footer {
-      border-top: 1px solid var(--gold-line);
-      padding: 3rem 2.5rem;
-      background: var(--bg);
-    }
-    .footer-inner {
-      max-width: 1100px;
-      margin: 0 auto;
-      display: flex;
-      flex-wrap: wrap;
-      align-items: center;
-      justify-content: space-between;
-      gap: 1.5rem;
-    }
-    .footer-logo { font-family: var(--serif); font-size: 1.15rem; font-weight: 600; }
-    .footer-logo span { color: var(--gold); }
-    .footer-contact { display: flex; flex-wrap: wrap; gap: 2rem; font-size: .78rem; color: var(--muted); }
-    .footer-contact a { transition: color .2s; }
-    .footer-contact a:hover { color: var(--gold); }
-    .footer-legal {
-      width: 100%;
-      display: flex;
-      flex-wrap: wrap;
-      justify-content: space-between;
-      gap: 1rem;
-      padding-top: 1.5rem;
-      border-top: 1px solid rgba(196,154,60,.06);
-      font-size: .7rem;
-      color: rgba(240,237,232,.2);
-    }
-    .footer-legal a { color: rgba(240,237,232,.25); transition: color .2s; }
-    .footer-legal a:hover { color: var(--gold); }
-
-    /* ─── RESPONSIVE ─── */
-    @media (max-width: 768px) {
-      nav { padding: 1rem 1.25rem; }
-      .nav-links { display: none; }
-      section { padding: 5rem 1.25rem; }
-      #hero { padding: 6rem 1.25rem 4rem; }
-      footer { padding: 2.5rem 1.25rem; }
-    }
-  </style>
+  /* Hide on screens too small to display */
+  @media (max-width: 600px) {
+    .nav-bar { padding: 6px 10px; }
+    .nav-btn { width: 36px; height: 36px; }
+    .hint { display: none; }
+  }
+</style>
 </head>
 <body>
 
-<!-- ─── NAV ─── -->
-<nav id="nav">
-  <a href="#" class="nav-logo"><img src="sigma-logo.png" alt="Assessoria Sigma" /></a>
-  <ul class="nav-links">
-    <li><a href="#problema">Problema</a></li>
-    <li><a href="#diagnostico">Diagnóstico</a></li>
-    <li><a href="#motor">Sistema</a></li>
-    <li><a href="#faq">FAQ</a></li>
-  </ul>
-  <a href="https://wa.me/554497345835?text=Olá!%20Vi%20o%20site%20da%20Sigma%20e%20quero%20saber%20mais%20sobre%20o%20diagnóstico%20para%20minha%20clínica." class="btn-gold" target="_blank">
-    Solicitar diagnóstico da Sigma
-  </a>
+<div class="progress" id="progress"></div>
+
+<div class="stage">
+  <div class="slides-wrap" id="slidesWrap">
+
+    <!-- ============================================================ -->
+    <!-- BLOCO 1 — ABERTURA E CONEXÃO -->
+    <!-- ============================================================ -->
+
+    <!-- SLIDE 1 — Identidade Visual -->
+    <section class="slide cover active" data-slide="1">
+      <img src="logo-sigma.png" alt="Assessoria Sigma" class="cover-logo anim" />
+      <h1 class="anim serif"><span class="gold-grad-text">Assessoria Sigma</span></h1>
+      <div class="anim sub">Motor de Receita Veterinária Previsível</div>
+      <div class="divider anim"></div>
+      <div class="anim tagline">Engenharia de faturamento para clínicas e hospitais veterinários.</div>
+    </section>
+
+    <!-- SLIDE 2 — A Oportunidade -->
+    <section class="slide" data-slide="2">
+      <div class="anim eyebrow">A Oportunidade</div>
+      <h2 class="anim serif" style="max-width:1500px;">Uma oportunidade para construir um <span class="gold-grad-text">Motor de Receita Previsível</span> capaz de:</h2>
+      <div class="check-list anim mt-lg" style="max-width:1400px;">
+        <div class="check-item"><span class="check">✓</span><div><strong>Crescer de 15% a 30% no faturamento em 90 dias</strong> <span class="arrow">—</span> sem aumentar o caos da operação.</div></div>
+        <div class="check-item"><span class="check">✓</span><div><strong>Se tornar a clínica de referência da região</strong> <span class="arrow">—</span> a escolha óbvia, sem competir por preço.</div></div>
+        <div class="check-item"><span class="check">✓</span><div><strong>Transformar a clínica em um ativo que funciona com sistema</strong> <span class="arrow">—</span> não com a presença do dono.</div></div>
+      </div>
+    </section>
+
+    <!-- ============================================================ -->
+    <!-- BLOCO 2 — AUTORIDADE E CREDIBILIDADE -->
+    <!-- ============================================================ -->
+
+    <!-- SLIDE 3 — Quem Somos -->
+    <section class="slide" data-slide="3">
+      <div class="slide-header">
+        <div class="brand">Assessoria Sigma</div>
+        <div class="meta">Bloco 02 · Autoridade</div>
+      </div>
+      <div class="anim eyebrow">Quem Somos</div>
+      <h2 class="anim serif" style="max-width:1500px;">Especialistas em <span class="gold-grad-text">engenharia de faturamento</span> para clínicas e hospitais veterinários.</h2>
+
+      <div class="grid g-4 mt-lg anim">
+        <div class="card hover-lift">
+          <div class="stat-num">45+</div>
+          <div class="stat-label">Clínicas com sistema implementado</div>
+        </div>
+        <div class="card hover-lift gold-bg">
+          <div class="stat-num">30,5x</div>
+          <div class="stat-label">ROAS · Case HVSB</div>
+        </div>
+        <div class="card hover-lift">
+          <div class="stat-num">+156%</div>
+          <div class="stat-label">Crescimento médio em receita</div>
+        </div>
+        <div class="card hover-lift">
+          <div class="stat-num">1968</div>
+          <div class="stat-label">Hospital + antigo do Sul (HVSB)</div>
+        </div>
+      </div>
+
+      <div class="quote-box anim mt-lg">
+        <div class="quote">"Não somos uma agência. A agência te entrega o lead.<br/><span class="gold">Nós montamos o motor que transforma o lead em caixa.</span>"</div>
+      </div>
+    </section>
+
+    <!-- SLIDE 4 — Cenário do Mercado -->
+    <section class="slide" data-slide="4">
+      <div class="anim pill">Cenário do mercado</div>
+      <h2 class="anim serif mt-md" style="max-width:1500px;">A clínica não falha por falta de tutores.<br/><span class="gold-grad-text">Falha por operar sem sistema.</span></h2>
+
+      <div class="x-list anim mt-lg">
+        <div class="x-item"><span class="x">✕</span><div><strong>Agenda que oscila sem explicação</strong> — meses cheios seguidos de meses quase vazios.</div></div>
+        <div class="x-item"><span class="x">✕</span><div><strong>Dependência de indicação</strong> — 80%+ dos pacientes vêm de boca a boca, sem captação ativa.</div></div>
+        <div class="x-item"><span class="x">✕</span><div><strong>No-show acima de 30%</strong> tratado como "normal" — horário, encaixe e faturamento perdidos toda semana.</div></div>
+        <div class="x-item"><span class="x">✕</span><div><strong>Orçamentos de cirurgias e exames</strong> aprovados "depois" e nunca mais lembrados.</div></div>
+        <div class="x-item"><span class="x">✕</span><div><strong>Leads que somem no WhatsApp da recepção</strong> logo após perguntar o preço — a receita evapora.</div></div>
+        <div class="x-item"><span class="x">✕</span><div><strong>Agências genéricas</strong> que entregam relatório bonito de alcance e zero cliente novo no caixa.</div></div>
+        <div class="x-item"><span class="x">✕</span><div><strong>Decisões no achismo</strong> — sem medir custo de aquisição, retorno por cliente ou taxa de conversão.</div></div>
+        <div class="x-item"><span class="x">✕</span><div><strong>A operação trava quando o dono para</strong> — a clínica é refém do fôlego de uma pessoa só.</div></div>
+      </div>
+
+      <div class="quote-box anim mt-lg">
+        <div class="quote serif">Clínica cheia por fora, <span class="gold">instável por dentro.</span></div>
+      </div>
+    </section>
+
+    <!-- SLIDE 5 — A Solução -->
+    <section class="slide" data-slide="5">
+      <div class="anim eyebrow">A Solução · Transformação Possível</div>
+      <h2 class="anim serif" style="max-width:1500px;">Quero te ajudar a construir uma clínica que:</h2>
+
+      <div class="grid g-2 anim mt-lg">
+        <div class="card hover-lift">
+          <div class="icon-box">📅</div>
+          <h3 class="serif gold mt-sm" style="font-size:32px;">Tem agenda previsível</h3>
+          <p class="lead mt-sm">Você sabe como o mês vai fechar antes dele começar. Acaba a montanha-russa de meses bons e ruins.</p>
+        </div>
+        <div class="card hover-lift">
+          <div class="icon-box">⚙️</div>
+          <h3 class="serif gold mt-sm" style="font-size:32px;">Cresce com sistema, não com sorte</h3>
+          <p class="lead mt-sm">Cada real investido em marketing tem um caminho rastreável até o caixa. Nada se perde no meio.</p>
+        </div>
+        <div class="card hover-lift">
+          <div class="icon-box">🔄</div>
+          <h3 class="serif gold mt-sm" style="font-size:32px;">Converte e retém o que já tem</h3>
+          <p class="lead mt-sm">O orçamento não morre, o tutor antigo volta, e a base de pacientes vira receita recorrente.</p>
+        </div>
+        <div class="card hover-lift">
+          <div class="icon-box">🏛️</div>
+          <h3 class="serif gold mt-sm" style="font-size:32px;">Funciona sem você no centro</h3>
+          <p class="lead mt-sm">Você deixa de ser o bombeiro que apaga incêndio e passa a ser o arquiteto do negócio.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- SLIDE 6 — Provas e Resultados -->
+    <section class="slide" data-slide="6">
+      <div class="anim eyebrow">Case Real · Hospital Veterinário São Bernardo (HVSB)</div>
+      <h2 class="anim serif"><span class="gold-grad-text">R$ 4.370</span> em anúncios convertidos em <span class="gold-grad-text">R$ 133.367,58</span> de faturamento.</h2>
+      <div class="small anim mt-sm">Campanha e sistema · Janeiro de 2026</div>
+
+      <div class="case-card anim mt-lg">
+        <div class="case-stats" style="grid-template-columns: repeat(5, 1fr);">
+          <div class="case-stat">
+            <div class="stat-num">R$ 4.370</div>
+            <div class="stat-label">Investimento</div>
+          </div>
+          <div class="case-stat">
+            <div class="stat-num">R$ 133K</div>
+            <div class="stat-label">Receita gerada</div>
+          </div>
+          <div class="case-stat">
+            <div class="stat-num">R$ 128K</div>
+            <div class="stat-label">Lucro líquido</div>
+          </div>
+          <div class="case-stat">
+            <div class="stat-num">30,5x</div>
+            <div class="stat-label">ROAS</div>
+          </div>
+          <div class="case-stat">
+            <div class="stat-num">3.053%</div>
+            <div class="stat-label">ROI auditado</div>
+          </div>
+        </div>
+
+        <div class="row mt-lg gap-lg" style="border-top:1px solid var(--border); padding-top:32px;">
+          <div class="col full">
+            <h4 class="gold" style="text-transform:uppercase; letter-spacing:0.18em; font-size:14px; font-weight:700;">Funil mensurado</h4>
+            <p class="lead">958 cliques → 191 agendamentos → <strong class="gold">37 novos pacientes confirmados</strong></p>
+            <p class="small">Taxa de conversão de 19,9% · Custo por agendamento de R$ 22,88</p>
+          </div>
+          <div class="col full">
+            <h4 class="gold" style="text-transform:uppercase; letter-spacing:0.18em; font-size:14px; font-weight:700;">Receita por especialidade</h4>
+            <p class="lead" style="font-size:18px;">
+              Clínico Geral · <strong class="gold">R$ 93.487</strong><br>
+              Emergência · <strong class="gold">R$ 24.677</strong><br>
+              Dermatologia · <strong class="gold">R$ 11.626</strong><br>
+              Oftalmologia · <strong class="gold">R$ 3.575</strong>
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================================================ -->
+    <!-- BLOCO 3 — METODOLOGIA E DIFERENCIAL -->
+    <!-- ============================================================ -->
+
+    <!-- SLIDE 7 — Introdução ao Sistema -->
+    <section class="slide" data-slide="7">
+      <div class="anim eyebrow">Bloco 03 · A Metodologia</div>
+      <h2 class="anim serif"><span class="gold-grad-text">Motor de Receita</span><br/>Veterinária Previsível.</h2>
+
+      <div class="compare-2 anim mt-lg">
+        <div class="compare-col bad">
+          <h4>❌ A maioria das clínicas compra peças isoladas</h4>
+          <p>Um anúncio aqui. Um CRM ali. Um post acolá. Esperando que elas formem um carro sozinhas.</p>
+          <p class="muted" style="font-style:italic;">Anúncio é o acelerador. CRM é o painel. Post é o banco. <br>Bonitos — e inúteis sem um motor que transforme combustível em movimento.</p>
+        </div>
+        <div class="compare-col good">
+          <h4>✓ A Sigma monta o motor inteiro, na ordem certa</h4>
+          <p><strong>Primeiro o processo comercial. Depois o tráfego.</strong></p>
+          <p>É por isso que funciona. Cada real investido tem um caminho rastreável até o caixa — sem vazamento, sem desperdício, sem frustração.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- SLIDE 8 — O Ciclo (visão geral 6 marcos) -->
+    <section class="slide" data-slide="8">
+      <div class="anim eyebrow">O Ciclo da Metodologia</div>
+      <h2 class="anim serif">O Motor de Receita é instalado em <span class="gold-grad-text">6 marcos</span> ao longo de 90 dias.</h2>
+      <p class="anim lead mt-sm">Transformam uma clínica de agenda instável em uma máquina de receita previsível.</p>
+
+      <div class="marcos-grid anim">
+        <div class="marco-card">
+          <div class="num-marco">01</div>
+          <h4>Recepção Blindada</h4>
+          <p>Time pronto para converter antes do primeiro lead chegar.</p>
+        </div>
+        <div class="marco-card">
+          <div class="num-marco">02</div>
+          <h4>Sistema Faro de Atração</h4>
+          <p>Demanda nova todos os dias via Google e Meta.</p>
+        </div>
+        <div class="marco-card">
+          <div class="num-marco">03</div>
+          <h4>Coleira de Retenção</h4>
+          <p>Zero lead perdido e no-show abaixo de 10%.</p>
+        </div>
+        <div class="marco-card">
+          <div class="num-marco">04</div>
+          <h4>Maestria em Conversão</h4>
+          <p>Orçamentos de alto valor fechados com confiança.</p>
+        </div>
+        <div class="marco-card">
+          <div class="num-marco">05</div>
+          <h4>Resgate de Pacientes + LTV</h4>
+          <p>Lucro extraído da base que a clínica já tem.</p>
+        </div>
+        <div class="marco-card">
+          <div class="num-marco">06</div>
+          <h4>Painel Olho do Dono</h4>
+          <p>Controle total do negócio sem precisar estar em tudo.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- SLIDE 9 — MARCO 1: Recepção Blindada -->
+    <section class="slide" data-slide="9">
+      <div class="marco-detail-header anim">
+        <div class="num-big">01</div>
+        <div class="info">
+          <h2>Protocolo Recepção Blindada</h2>
+          <div class="days">Dias 1 a 7</div>
+        </div>
+      </div>
+      <h3 class="anim serif gold mb-md" style="font-size:36px; max-width:1500px;">Antes de ligar a máquina de leads, o time precisa estar pronto para receber.</h3>
+
+      <div class="marco-body anim">
+        <div class="descrip">
+          <div class="error-block">
+            <span class="label">Erro Comum</span>
+            A clínica investe em anúncio com uma recepção que perde o tutor no balcão. Cada atendente resolve do jeito que acha melhor, sem script e sem follow-up. O lead pago entra — e escorre pelo ralo.
+          </div>
+          <p class="mt-md">Nós treinamos a recepção com um <strong>script de acolhimento humanizado</strong>, um <strong>protocolo para reverter o "vou ver com meu marido"</strong> em agendamento imediato e uma <strong>sequência de follow-up</strong> (D+1, D+3, D+7) para orçamentos de cirurgias e exames parados.</p>
+          <div class="result-block">
+            <span class="label">Resultado</span>
+            Time treinado e taxa de conversão do atendimento mensurável — antes do primeiro real em anúncio.
+          </div>
+        </div>
+        <div class="marco-side">
+          <div class="icon-box" style="margin-bottom:8px;">🛡️</div>
+          <h4 class="serif gold" style="font-size:28px;">3 entregas práticas</h4>
+          <div class="check-list" style="gap:14px;">
+            <div class="check-item" style="font-size:17px;"><span class="check">✓</span><div>Script de acolhimento humanizado validado.</div></div>
+            <div class="check-item" style="font-size:17px;"><span class="check">✓</span><div>Protocolo de reversão de objeção em call.</div></div>
+            <div class="check-item" style="font-size:17px;"><span class="check">✓</span><div>Sequência D+1 / D+3 / D+7 de follow-up.</div></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SLIDE 10 — MARCO 2: Sistema Faro -->
+    <section class="slide" data-slide="10">
+      <div class="marco-detail-header anim">
+        <div class="num-big">02</div>
+        <div class="info">
+          <h2>Sistema Faro de Atração</h2>
+          <div class="days">Dias 8 a 15</div>
+        </div>
+      </div>
+      <h3 class="anim serif gold mb-md" style="font-size:36px; max-width:1500px;">Com o time pronto, a máquina é ativada em dois canais com papéis distintos no caixa.</h3>
+
+      <div class="marco-body anim">
+        <div class="descrip">
+          <div class="error-block">
+            <span class="label">Erro Comum</span>
+            Tratar Google e Meta como a mesma coisa — e cobrar de um o que só o outro entrega.
+          </div>
+          <p class="mt-md"><strong class="gold">Google Ads é Caixa Imediato:</strong> o tutor já decidiu que precisa de atendimento e está buscando agora. Cada clique é uma intenção real de compra — paga o investimento com consultas agendadas já na primeira semana.</p>
+          <p><strong class="gold">Meta Ads é Patrimônio de Marca:</strong> o tutor ainda não percebeu a necessidade. A clínica aparece enquanto ele scrolla, construindo reconhecimento e gerando demanda futura de prevenção.</p>
+          <div class="result-block">
+            <span class="label">Resultado</span>
+            Primeiros leads chegando até o Dia 15 — Google paga a conta rápido, Meta constrói o futuro.
+          </div>
+        </div>
+        <div class="marco-side">
+          <div class="row gap-md" style="align-items:flex-start;">
+            <div class="icon-box" style="font-size:22px;">G</div>
+            <div>
+              <h4 style="font-size:22px;" class="gold">Google Ads</h4>
+              <p class="small mt-sm">Caixa imediato · intenção real de compra · agendamento na 1ª semana.</p>
+            </div>
+          </div>
+          <div class="row gap-md" style="align-items:flex-start;">
+            <div class="icon-box" style="font-size:22px;">M</div>
+            <div>
+              <h4 style="font-size:22px;" class="gold">Meta Ads</h4>
+              <p class="small mt-sm">Patrimônio de marca · reconhecimento · demanda futura.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SLIDE 11 — MARCO 3: Coleira de Retenção -->
+    <section class="slide" data-slide="11">
+      <div class="marco-detail-header anim">
+        <div class="num-big">03</div>
+        <div class="info">
+          <h2>Protocolo Coleira de Retenção</h2>
+          <div class="days">Dias 8 a 21</div>
+        </div>
+      </div>
+      <h3 class="anim serif gold mb-md" style="font-size:36px; max-width:1500px;">Não é uma revolução tecnológica. É organizar o WhatsApp que já existe.</h3>
+
+      <div class="marco-body anim">
+        <div class="descrip">
+          <div class="error-block">
+            <span class="label">Erro Comum</span>
+            Leads se perdem porque toda a equipe gerencia o WhatsApp de forma manual e caótica, e ninguém lembra quem ainda não foi respondido.
+          </div>
+          <p class="mt-md">A automação <strong>não substitui a recepcionista</strong> — ela <strong class="gold">libera</strong> a recepcionista para dar atenção real ao tutor, enquanto o sistema cuida do repetitivo: WhatsApp oficial integrado a um painel único, mensagem de boas-vindas com o nome do pet e lembrete de consulta que soa como cuidado, não como cobrança.</p>
+          <div class="result-block">
+            <span class="label">Resultado</span>
+            Zero lead perdido e no-show abaixo de 10% — sem mudar a cultura de atendimento da clínica.
+          </div>
+        </div>
+        <div class="marco-side">
+          <div class="icon-box" style="margin-bottom:8px;">💬</div>
+          <h4 class="serif gold" style="font-size:28px;">O que se ganha</h4>
+          <div class="check-list" style="gap:14px;">
+            <div class="check-item" style="font-size:17px;"><span class="check">✓</span><div>WhatsApp oficial em painel único da equipe.</div></div>
+            <div class="check-item" style="font-size:17px;"><span class="check">✓</span><div>Boas-vindas com nome do pet — humanizado.</div></div>
+            <div class="check-item" style="font-size:17px;"><span class="check">✓</span><div>Lembretes que soam como cuidado, não cobrança.</div></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SLIDE 12 — MARCO 4: Bootcamp Maestria em Conversão -->
+    <section class="slide" data-slide="12">
+      <div class="marco-detail-header anim">
+        <div class="num-big">04</div>
+        <div class="info">
+          <h2>Bootcamp Maestria em Conversão</h2>
+          <div class="days">Dias 15 a 30</div>
+        </div>
+      </div>
+      <h3 class="anim serif gold mb-md" style="font-size:36px; max-width:1500px;">Garantir que nenhum orçamento de cirurgia ou internação fique parado.</h3>
+
+      <div class="marco-body anim">
+        <div class="descrip">
+          <div class="error-block">
+            <span class="label">Erro Comum</span>
+            O veterinário apresenta o preço antes do valor, e o tutor recua. O orçamento de alto valor "esfria" sem ninguém ir atrás.
+          </div>
+          <p class="mt-md">Bootcamp prático para o dono e o veterinário clínico:</p>
+          <ul style="font-size:19px; line-height:1.6; color:var(--text-soft);">
+            <li><strong class="gold">Protocolo Guia de Confiança</strong> — usa o vínculo do tutor com o pet como âncora de decisão.</li>
+            <li><strong class="gold">Script de apresentação de orçamento</strong> — valor antes do preço, sempre.</li>
+            <li><strong class="gold">Sequência D+1 / D+3 / D+7</strong> de recuperação com oferta de parcelamento.</li>
+          </ul>
+          <div class="result-block">
+            <span class="label">Resultado</span>
+            Aumento direto na taxa de fechamento de cirurgias e procedimentos de alto valor.
+          </div>
+        </div>
+        <div class="marco-side">
+          <div class="icon-box" style="margin-bottom:8px;">🎯</div>
+          <h4 class="serif gold" style="font-size:28px;">A virada</h4>
+          <p class="lead">De "vou pensar" para <strong class="gold">"vamos marcar pra essa semana"</strong>. O orçamento deixa de ser uma cotação fria e vira a próxima decisão natural do tutor.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- SLIDE 13 — MARCO 5: Resgate de Pacientes + LTV -->
+    <section class="slide" data-slide="13">
+      <div class="marco-detail-header anim">
+        <div class="num-big">05</div>
+        <div class="info">
+          <h2>Operação Resgate de Pacientes + LTV</h2>
+          <div class="days">Dias 30 a 60</div>
+        </div>
+      </div>
+      <h3 class="anim serif gold mb-md" style="font-size:36px; max-width:1500px;">O divisor de águas entre uma clínica que cobre os custos e uma com lucro real.</h3>
+
+      <div class="marco-body anim">
+        <div class="descrip">
+          <div class="error-block">
+            <span class="label">Erro Comum</span>
+            A clínica vive de caçar cliente novo enquanto um ativo valioso dorme no banco de dados — os tutores inativos que ninguém vai buscar.
+          </div>
+          <p class="mt-md">No universo pet, o cliente vale pelo <strong class="gold">tempo de vida do animal</strong>: um cão saudável representa de 10 a 15 anos de receita recorrente.</p>
+          <p>Nós segmentamos todos os inativos há mais de 90 dias e rodamos campanhas de reativação personalizadas — <strong>vacina em atraso, check-up anual, retorno de tratamento</strong> — com automação de aniversário do pet e tags de LTV.</p>
+          <div class="result-block">
+            <span class="label">Resultado</span>
+            Lucro adicional gerado da base existente, sem aumentar um real em mídia.
+          </div>
+        </div>
+        <div class="marco-side">
+          <div class="icon-box" style="margin-bottom:8px;">🐾</div>
+          <h4 class="serif gold" style="font-size:28px;">LTV no universo pet</h4>
+          <div class="stat-num" style="font-size:80px;">10–15</div>
+          <div class="stat-label">anos de receita recorrente por animal saudável</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SLIDE 14 — MARCO 6: Painel Olho do Dono -->
+    <section class="slide" data-slide="14">
+      <div class="marco-detail-header anim">
+        <div class="num-big">06</div>
+        <div class="info">
+          <h2>Painel Olho do Dono</h2>
+          <div class="days">Dia 30 em diante</div>
+        </div>
+      </div>
+      <h3 class="anim serif gold mb-md" style="font-size:36px; max-width:1500px;">O dono passa a enxergar tudo sem precisar estar em tudo.</h3>
+
+      <div class="marco-body anim">
+        <div class="descrip">
+          <div class="error-block">
+            <span class="label">Erro Comum</span>
+            O dono toma todas as decisões no feeling, porque não tem nenhum indicador na frente — e por isso não consegue sair da operação.
+          </div>
+          <p class="mt-md">Um painel em <strong class="gold">linguagem simples, sem jargão técnico</strong>, mostra exatamente o que está funcionando, o que está travando e o que precisa de decisão: Google Ads, Meta Ads, CRM, no-show, ticket médio e faturamento — tudo consolidado.</p>
+          <p>Mais revisão semanal das campanhas e check-ins de 30, 60 e 90 dias.</p>
+          <div class="result-block">
+            <span class="label">Resultado</span>
+            Crescimento de 15% a 30% no faturamento em 90 dias, ROI documentado e um dono que controla o negócio de onde estiver.
+          </div>
+        </div>
+        <div class="marco-side">
+          <div class="icon-box" style="margin-bottom:8px;">📊</div>
+          <h4 class="serif gold" style="font-size:28px;">O que o painel mostra</h4>
+          <div class="check-list" style="gap:12px;">
+            <div class="check-item" style="font-size:16px;"><span class="check">✓</span><div>Google + Meta Ads consolidados.</div></div>
+            <div class="check-item" style="font-size:16px;"><span class="check">✓</span><div>Funil do CRM com cada lead rastreado.</div></div>
+            <div class="check-item" style="font-size:16px;"><span class="check">✓</span><div>No-show, ticket médio e faturamento real.</div></div>
+            <div class="check-item" style="font-size:16px;"><span class="check">✓</span><div>Revisão semanal · check-ins 30/60/90.</div></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SLIDE 15 — Ciclo Visual da Metodologia -->
+    <section class="slide" data-slide="15">
+      <div class="anim eyebrow center">Motor de Receita Veterinária Previsível</div>
+      <h2 class="anim serif center" style="margin:0 auto;">O fluxo completo, <span class="gold-grad-text">na ordem certa.</span></h2>
+
+      <div class="cycle-flow anim mt-lg">
+        <div class="cycle-chip"><span class="num">01</span> Recepção Blindada</div>
+        <span class="cycle-arrow">→</span>
+        <div class="cycle-chip"><span class="num">02</span> Faro de Atração</div>
+        <span class="cycle-arrow">→</span>
+        <div class="cycle-chip"><span class="num">03</span> Coleira de Retenção</div>
+        <span class="cycle-arrow">→</span>
+        <div class="cycle-chip"><span class="num">04</span> Maestria em Conversão</div>
+        <span class="cycle-arrow">→</span>
+        <div class="cycle-chip"><span class="num">05</span> Resgate de Pacientes</div>
+        <span class="cycle-arrow">→</span>
+        <div class="cycle-chip"><span class="num">06</span> Painel Olho do Dono</div>
+      </div>
+
+      <div class="quote-box anim mt-lg" style="margin: 80px auto 0; max-width: 1400px;">
+        <div class="quote" style="font-size: 36px;">Primeiro o processo. Depois o tráfego.<br/><span class="gold">É por isso que funciona.</span></div>
+      </div>
+    </section>
+
+    <!-- ============================================================ -->
+    <!-- BLOCO 4 — PROVA SOCIAL E URGÊNCIA -->
+    <!-- ============================================================ -->
+
+    <!-- SLIDE 16 — Autoridade de Referência -->
+    <section class="slide" data-slide="16">
+      <div class="anim eyebrow">Autoridade de Referência</div>
+      <h2 class="anim serif">A metodologia foi aplicada onde a <span class="gold-grad-text">exigência é máxima.</span></h2>
+
+      <div class="case-card anim mt-lg">
+        <div class="row gap-lg" style="align-items:center;">
+          <div style="flex:0 0 auto;">
+            <div class="icon-box" style="width:120px; height:120px; font-size:60px;">🏥</div>
+          </div>
+          <div class="col full">
+            <div class="pill">Hospital Veterinário São Bernardo</div>
+            <h3 class="serif mt-sm" style="font-size:44px;">Fundado em <span class="gold">1968</span> — o hospital veterinário privado <span class="gold">mais antigo do Sul</span> do país.</h3>
+          </div>
+        </div>
+
+        <div class="case-stats mt-lg" style="grid-template-columns: repeat(4, 1fr);">
+          <div class="case-stat">
+            <div class="stat-num">+513K</div>
+            <div class="stat-label">Consultas realizadas</div>
+          </div>
+          <div class="case-stat">
+            <div class="stat-num">+64K</div>
+            <div class="stat-label">Cirurgias</div>
+          </div>
+          <div class="case-stat">
+            <div class="stat-num">15</div>
+            <div class="stat-label">Especialidades</div>
+          </div>
+          <div class="case-stat">
+            <div class="stat-num">24h</div>
+            <div class="stat-label">UTI ativa</div>
+          </div>
+        </div>
+
+        <p class="lead center mt-lg" style="font-style:italic;">Se o sistema funciona em uma operação <span class="gold">desse porte e dessa exigência</span>, funciona na sua clínica.</p>
+      </div>
+    </section>
+
+    <!-- SLIDE 17 — Riscos de Fazer Sozinho -->
+    <section class="slide" data-slide="17">
+      <div class="anim eyebrow">Riscos de Fazer Sozinho</div>
+      <h2 class="anim serif">O custo real de continuar <span class="gold-grad-text">sem sistema.</span></h2>
+
+      <div class="risk-grid anim mt-lg">
+        <div class="risk-item">
+          <div class="icon-box">⏳</div>
+          <div><h5>Tempo</h5><p>1 a 2 anos testando anúncio e processo no erro, enquanto a concorrência estrutura.</p></div>
+        </div>
+        <div class="risk-item">
+          <div class="icon-box">💰</div>
+          <div><h5>Caixa</h5><p>Milhares de reais queimados em anúncio que traz curioso — não tutor que paga.</p></div>
+        </div>
+        <div class="risk-item">
+          <div class="icon-box">🎯</div>
+          <div><h5>Metas</h5><p>A agenda continua na montanha-russa, sem previsibilidade para planejar nada.</p></div>
+        </div>
+        <div class="risk-item">
+          <div class="icon-box">⚔️</div>
+          <div><h5>Concorrência</h5><p>A clínica vizinha que se estruturar primeiro vira a referência da região.</p></div>
+        </div>
+        <div class="risk-item">
+          <div class="icon-box">🧠</div>
+          <div><h5>Saúde</h5><p>Mais exaustão tentando ser dono, gestor, vendedor e veterinário ao mesmo tempo.</p></div>
+        </div>
+        <div class="risk-item">
+          <div class="icon-box">👑</div>
+          <div><h5>Autoridade</h5><p>Sua excelência clínica continua invisível — quem aparece é quem tem sistema.</p></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================================================ -->
+    <!-- BLOCO 5 — APRESENTAÇÃO DO PROGRAMA -->
+    <!-- ============================================================ -->
+
+    <!-- SLIDE 18 — Frase de Transição -->
+    <section class="slide frame-slide" data-slide="18">
+      <div class="anim bloco-num">Bloco 05 · O Programa</div>
+      <div class="anim frame-q">Transformando sua <span class="gold-grad-text">competência clínica</span><br/>em um negócio de <span class="gold-grad-text">receita previsível.</span></div>
+    </section>
+
+    <!-- SLIDE 19 — Logo e Nome do Programa -->
+    <section class="slide cover" data-slide="19">
+      <div class="anim eyebrow center">Método de Implementação</div>
+      <h1 class="anim serif"><span class="gold-grad-text">MLV</span></h1>
+      <div class="anim sub serif">Método Máquina de Lucro Veterinário</div>
+      <div class="divider anim"></div>
+      <div class="anim tagline">O programa de implementação completo da Assessoria Sigma. Um motor montado na sua clínica, na ordem certa, em 90 dias.</div>
+    </section>
+
+    <!-- SLIDE 20 — Estrutura do Programa -->
+    <section class="slide" data-slide="20">
+      <div class="anim eyebrow">Como funciona o MLV</div>
+      <h2 class="anim serif"><span class="gold-grad-text">Implementação completa em 90 dias</span> + gestão contínua.</h2>
+
+      <div class="grid g-3 anim mt-lg">
+        <div class="card hover-lift">
+          <div class="icon-box">⏱️</div>
+          <h4 class="gold mt-sm" style="font-size:22px; text-transform:uppercase; letter-spacing:0.1em;">Duração</h4>
+          <p class="lead mt-sm">Implementação completa em 90 dias + gestão e suporte contínuos.</p>
+        </div>
+        <div class="card hover-lift">
+          <div class="icon-box">📍</div>
+          <h4 class="gold mt-sm" style="font-size:22px; text-transform:uppercase; letter-spacing:0.1em;">Acompanhamento</h4>
+          <p class="lead mt-sm">Reunião quinzenal de feedback · Check-ins de 30, 60 e 90 dias · Revisão semanal das campanhas + reunião trimestral de posicionamento.</p>
+        </div>
+        <div class="card hover-lift gold-bg">
+          <div class="icon-box">⚙️</div>
+          <h4 class="gold mt-sm" style="font-size:22px; text-transform:uppercase; letter-spacing:0.1em;">Diferenciais-chave</h4>
+          <p class="lead mt-sm" style="font-size:18px;">Motor antes do Combustível · Oportunidades rastreáveis · Playbook proprietário que vira ativo da clínica.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- SLIDE 21 — Entregável 1: Diagnóstico -->
+    <section class="slide" data-slide="21">
+      <div class="anim eyebrow">Entregável 01</div>
+      <h2 class="anim serif">Diagnóstico CRC<br/><span class="gold-grad-text">+ Mapa de Vazamentos.</span></h2>
+      <p class="anim lead mt-sm">Um raio-x completo da operação antes de qualquer ação.</p>
+
+      <div class="grid g-2 anim mt-lg" style="grid-template-columns: 1.4fr 1fr;">
+        <div class="card gold-border">
+          <div class="check-list">
+            <div class="check-item"><span class="check">✓</span><div>Análise dos <strong>5 pilares</strong>: Captação, Agenda, Base, Conversão e Receita.</div></div>
+            <div class="check-item"><span class="check">✓</span><div><strong>Identificação exata</strong> de onde a clínica perde dinheiro hoje.</div></div>
+            <div class="check-item"><span class="check">✓</span><div><strong>Plano de implementação</strong> personalizado para os 90 dias.</div></div>
+          </div>
+        </div>
+        <div class="card gold-bg">
+          <div class="icon-box">🔬</div>
+          <h4 class="gold mt-sm" style="font-size:18px; text-transform:uppercase; letter-spacing:0.18em;">Resultado</h4>
+          <p class="lead mt-sm">Clareza total sobre onde está <strong class="gold">o dinheiro escondido</strong> na sua operação.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- SLIDE 22 — Entregável 2: Recepção Blindada -->
+    <section class="slide" data-slide="22">
+      <div class="anim eyebrow">Entregável 02</div>
+      <h2 class="anim serif">Protocolo<br/><span class="gold-grad-text">Recepção Blindada.</span></h2>
+      <p class="anim lead mt-sm">A recepção transformada em uma equipe de conversão.</p>
+
+      <div class="grid g-2 anim mt-lg" style="grid-template-columns: 1.4fr 1fr;">
+        <div class="card gold-border">
+          <div class="check-list">
+            <div class="check-item"><span class="check">✓</span><div>Script de acolhimento humanizado <strong>validado para o nicho veterinário</strong>.</div></div>
+            <div class="check-item"><span class="check">✓</span><div>Protocolo de <strong>reversão de objeção</strong> ("vou ver com meu marido").</div></div>
+            <div class="check-item"><span class="check">✓</span><div>Sequência de <strong>follow-up D+1, D+3, D+7</strong> para orçamentos parados.</div></div>
+          </div>
+        </div>
+        <div class="card gold-bg">
+          <div class="icon-box">🛡️</div>
+          <h4 class="gold mt-sm" style="font-size:18px; text-transform:uppercase; letter-spacing:0.18em;">Resultado</h4>
+          <p class="lead mt-sm">Nenhum tutor perdido no balcão e <strong class="gold">taxa de conversão mensurável</strong>.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- SLIDE 23 — Entregável 3: Sistema Faro -->
+    <section class="slide" data-slide="23">
+      <div class="anim eyebrow">Entregável 03</div>
+      <h2 class="anim serif">Sistema Faro<br/><span class="gold-grad-text">de Atração.</span></h2>
+      <p class="anim lead mt-sm">Demanda nova chegando todos os dias, nos dois canais certos.</p>
+
+      <div class="grid g-2 anim mt-lg" style="grid-template-columns: 1.4fr 1fr;">
+        <div class="card gold-border">
+          <div class="check-list">
+            <div class="check-item"><span class="check">✓</span><div>Campanhas <strong>Google Ads</strong> com palavras-chave de intenção local (caixa imediato).</div></div>
+            <div class="check-item"><span class="check">✓</span><div>Campanhas <strong>Meta Ads</strong> de marca e prevenção (demanda futura).</div></div>
+            <div class="check-item"><span class="check">✓</span><div>Pixel instalado e <strong>leads integrados automaticamente</strong> ao CRM.</div></div>
+          </div>
+        </div>
+        <div class="card gold-bg">
+          <div class="icon-box">📡</div>
+          <h4 class="gold mt-sm" style="font-size:18px; text-transform:uppercase; letter-spacing:0.18em;">Resultado</h4>
+          <p class="lead mt-sm">Fluxo de leads qualificados com <strong class="gold">expectativa de retorno clara</strong>.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- SLIDE 24 — Entregável 4: Coleira de Retenção -->
+    <section class="slide" data-slide="24">
+      <div class="anim eyebrow">Entregável 04</div>
+      <h2 class="anim serif">Protocolo<br/><span class="gold-grad-text">Coleira de Retenção.</span></h2>
+      <p class="anim lead mt-sm">O WhatsApp organizado para que nenhum lead caia no esquecimento.</p>
+
+      <div class="grid g-2 anim mt-lg" style="grid-template-columns: 1.4fr 1fr;">
+        <div class="card gold-border">
+          <div class="check-list">
+            <div class="check-item"><span class="check">✓</span><div><strong>Kommo CRM configurado</strong> rastreando cada lead, do primeiro contato ao retorno.</div></div>
+            <div class="check-item"><span class="check">✓</span><div><strong>WhatsApp oficial</strong> integrado a um painel único da equipe.</div></div>
+            <div class="check-item"><span class="check">✓</span><div>Mensagens de <strong>boas-vindas e lembretes automáticos</strong> de consulta.</div></div>
+          </div>
+        </div>
+        <div class="card gold-bg">
+          <div class="icon-box">💬</div>
+          <h4 class="gold mt-sm" style="font-size:18px; text-transform:uppercase; letter-spacing:0.18em;">Resultado</h4>
+          <p class="lead mt-sm">Zero lead perdido e <strong class="gold">no-show abaixo de 10%</strong>.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- SLIDE 25 — Entregável 5: Bootcamp Maestria -->
+    <section class="slide" data-slide="25">
+      <div class="anim eyebrow">Entregável 05</div>
+      <h2 class="anim serif">Bootcamp<br/><span class="gold-grad-text">Maestria em Conversão.</span></h2>
+      <p class="anim lead mt-sm">O dono e o veterinário treinados para fechar alto valor com confiança.</p>
+
+      <div class="grid g-2 anim mt-lg" style="grid-template-columns: 1.4fr 1fr;">
+        <div class="card gold-border">
+          <div class="check-list">
+            <div class="check-item"><span class="check">✓</span><div><strong>Protocolo Guia de Confiança</strong> para apresentação de procedimentos.</div></div>
+            <div class="check-item"><span class="check">✓</span><div>Script de orçamento: <strong>valor antes do preço</strong>.</div></div>
+            <div class="check-item"><span class="check">✓</span><div>Sequência de <strong>recuperação de orçamentos parados</strong>.</div></div>
+          </div>
+        </div>
+        <div class="card gold-bg">
+          <div class="icon-box">🎯</div>
+          <h4 class="gold mt-sm" style="font-size:18px; text-transform:uppercase; letter-spacing:0.18em;">Resultado</h4>
+          <p class="lead mt-sm">Mais <strong class="gold">cirurgias e internações de alto valor</strong> fechadas.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- SLIDE 26 — Entregável 6: Resgate -->
+    <section class="slide" data-slide="26">
+      <div class="anim eyebrow">Entregável 06</div>
+      <h2 class="anim serif">Operação Resgate de<br/><span class="gold-grad-text">Pacientes + LTV.</span></h2>
+      <p class="anim lead mt-sm">Lucro extraído da base que a clínica já tem — sem gastar mais em mídia.</p>
+
+      <div class="grid g-2 anim mt-lg" style="grid-template-columns: 1.4fr 1fr;">
+        <div class="card gold-border">
+          <div class="check-list">
+            <div class="check-item"><span class="check">✓</span><div>Segmentação completa de <strong>tutores inativos há mais de 90 dias</strong>.</div></div>
+            <div class="check-item"><span class="check">✓</span><div>Campanhas de <strong>reativação personalizadas</strong> via WhatsApp.</div></div>
+            <div class="check-item"><span class="check">✓</span><div>Automação de <strong>aniversário do pet</strong> e tags de LTV.</div></div>
+          </div>
+        </div>
+        <div class="card gold-bg">
+          <div class="icon-box">🐾</div>
+          <h4 class="gold mt-sm" style="font-size:18px; text-transform:uppercase; letter-spacing:0.18em;">Resultado</h4>
+          <p class="lead mt-sm">Receita adicional <strong class="gold">recorrente da base</strong> existente.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- SLIDE 27 — Entregável 7: Painel Olho do Dono -->
+    <section class="slide" data-slide="27">
+      <div class="anim eyebrow">Entregável 07</div>
+      <h2 class="anim serif">Painel<br/><span class="gold-grad-text">Olho do Dono.</span></h2>
+      <p class="anim lead mt-sm">O negócio inteiro em uma tela, em linguagem simples.</p>
+
+      <div class="grid g-2 anim mt-lg" style="grid-template-columns: 1.4fr 1fr;">
+        <div class="card gold-border">
+          <div class="check-list">
+            <div class="check-item"><span class="check">✓</span><div>Relatório mensal consolidando <strong>Google, Meta, CRM, no-show e faturamento</strong>.</div></div>
+            <div class="check-item"><span class="check">✓</span><div>Indicadores claros para <strong>decidir sem achismo</strong>.</div></div>
+            <div class="check-item"><span class="check">✓</span><div>Visão do <strong>funil para saber exatamente onde os leads travam</strong>.</div></div>
+          </div>
+        </div>
+        <div class="card gold-bg">
+          <div class="icon-box">📊</div>
+          <h4 class="gold mt-sm" style="font-size:18px; text-transform:uppercase; letter-spacing:0.18em;">Resultado</h4>
+          <p class="lead mt-sm">Decisões baseadas em dados e <strong class="gold">liberdade para sair da operação</strong>.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- SLIDE 28 — Entregável 8: Gestão e Direcionamento -->
+    <section class="slide" data-slide="28">
+      <div class="anim eyebrow">Entregável 08</div>
+      <h2 class="anim serif">Gestão e<br/><span class="gold-grad-text">Direcionamento Estratégico.</span></h2>
+      <p class="anim lead mt-sm">A Sigma ao seu lado durante todo o ciclo.</p>
+
+      <div class="grid g-2 anim mt-lg" style="grid-template-columns: 1.4fr 1fr;">
+        <div class="card gold-border">
+          <div class="check-list">
+            <div class="check-item"><span class="check">✓</span><div><strong>Reunião quinzenal de feedback</strong> · ajuste fino a cada 14 dias.</div></div>
+            <div class="check-item"><span class="check">✓</span><div><strong>Check-ins estratégicos</strong> de 30, 60 e 90 dias.</div></div>
+            <div class="check-item"><span class="check">✓</span><div><strong>Revisão e otimização</strong> semanal das campanhas.</div></div>
+            <div class="check-item"><span class="check">✓</span><div>Reunião <strong>trimestral de posicionamento</strong>, diferenciais e metas.</div></div>
+          </div>
+        </div>
+        <div class="card gold-bg">
+          <div class="icon-box">🤝</div>
+          <h4 class="gold mt-sm" style="font-size:18px; text-transform:uppercase; letter-spacing:0.18em;">Resultado</h4>
+          <p class="lead mt-sm">O motor não só instalado, mas <strong class="gold">refinado e acelerando</strong>.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- SLIDE 29 — Direcionamento Estratégico -->
+    <section class="slide" data-slide="29">
+      <div class="anim eyebrow">Acompanhamento Próximo</div>
+      <h2 class="anim serif">Você <span class="gold-grad-text">nunca fica sozinho</span> durante a implementação.</h2>
+
+      <div class="grid g-4 anim mt-lg">
+        <div class="card hover-lift">
+          <div class="icon-box">🔄</div>
+          <h4 class="gold mt-sm" style="font-size:20px;">Semana a semana</h4>
+          <p class="lead mt-sm" style="font-size:16px;">Suas campanhas são revisadas e ajustadas continuamente.</p>
+        </div>
+        <div class="card hover-lift">
+          <div class="icon-box">💬</div>
+          <h4 class="gold mt-sm" style="font-size:20px;">A cada 14 dias</h4>
+          <p class="lead mt-sm" style="font-size:16px;">Reunião quinzenal de <strong>feedback</strong>, ajustes finos e alinhamento da operação.</p>
+        </div>
+        <div class="card hover-lift">
+          <div class="icon-box">📅</div>
+          <h4 class="gold mt-sm" style="font-size:20px;">A cada 30 dias</h4>
+          <p class="lead mt-sm" style="font-size:16px;">Reunião de <strong>decisão</strong> — o próximo passo definido junto com você.</p>
+        </div>
+        <div class="card hover-lift gold-bg">
+          <div class="icon-box">🛡️</div>
+          <h4 class="gold mt-sm" style="font-size:20px;">A cada trimestre</h4>
+          <p class="lead mt-sm" style="font-size:16px;">A reunião <strong>O Guardião</strong> revisa posicionamento, diferenciais e metas.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- SLIDE 30 — Suporte Direto -->
+    <section class="slide" data-slide="30">
+      <div class="anim eyebrow">Suporte Direto</div>
+      <h2 class="anim serif">Acesso direto à Sigma —<br/><span class="gold-grad-text">sem fila e sem intermediário.</span></h2>
+
+      <div class="quote-box anim mt-lg" style="max-width:1500px;">
+        <div class="quote serif">Canal de comunicação direto com a equipe Sigma durante toda a implementação. Suas dúvidas e ajustes são tratados com a <span class="gold">agilidade que uma clínica em crescimento exige.</span></div>
+      </div>
+    </section>
+
+    <!-- SLIDE 31 — Proximidade e Acompanhamento -->
+    <section class="slide frame-slide" data-slide="31">
+      <div class="anim pill">Atenção individualizada</div>
+      <div class="anim frame-q mt-md">Apenas <span class="gold-grad-text">3 clínicas novas</span> por mês.</div>
+      <p class="anim frame-sub" style="max-width:1200px;">A Sigma limita propositalmente o número de clínicas atendidas por mês. Isso garante implementação manual cuidadosa, treinamento de equipe feito com calma e o acompanhamento próximo que o resultado de 90 dias exige.</p>
+    </section>
+
+    <!-- ============================================================ -->
+    <!-- BLOCO 6 — VALOR E FECHAMENTO -->
+    <!-- ============================================================ -->
+
+    <!-- SLIDE 32 — Momento de Perguntas -->
+    <section class="slide frame-slide" data-slide="32">
+      <div class="anim pill">Pausa estratégica</div>
+      <div class="anim frame-q mt-md">Antes de falarmos de investimento —<br/>o que <span class="gold-grad-text">ficou na sua cabeça</span> até aqui?</div>
+      <p class="anim frame-sub">Esta é a hora de tirar dúvidas e validar o que faz sentido pra sua realidade.</p>
+    </section>
+
+    <!-- SLIDE 33 — Transição: Quanto custa × Quanto vale -->
+    <section class="slide frame-slide" data-slide="33">
+      <div class="anim bloco-num">Bloco 06 · Valor e Fechamento</div>
+      <div class="anim frame-q">Quanto custa <span class="muted">×</span> <span class="gold-grad-text">Quanto vale.</span></div>
+    </section>
+
+    <!-- SLIDE 34 — Empilhamento de Valor Parte 1 -->
+    <section class="slide" data-slide="34">
+      <div class="anim eyebrow">Empilhamento de Valor</div>
+      <h2 class="anim serif">Tudo que está incluído no <span class="gold-grad-text">Método Máquina de Lucro Veterinário.</span></h2>
+
+      <div class="card anim mt-lg" style="padding: 0;">
+        <table class="value-table">
+          <thead>
+            <tr><th>Entregável</th><th style="text-align:right;">Valor de mercado</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>Diagnóstico CRC + Mapa de Vazamentos</td><td>R$ 2.500</td></tr>
+            <tr><td>Protocolo Recepção Blindada</td><td>R$ 5.500</td></tr>
+            <tr><td>Sistema Faro de Atração (Google + Meta)</td><td>R$ 9.000</td></tr>
+            <tr><td>Protocolo Coleira de Retenção (Kommo CRM)</td><td>R$ 6.000</td></tr>
+            <tr><td>Bootcamp Maestria em Conversão</td><td>R$ 6.000</td></tr>
+            <tr><td>Operação Resgate de Pacientes + LTV</td><td>R$ 5.000</td></tr>
+            <tr><td>Painel Olho do Dono</td><td>R$ 3.500</td></tr>
+            <tr><td>Gestão e Direcionamento Estratégico (90 dias)</td><td>R$ 21.000</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- SLIDE 35 — Empilhamento Parte 2 (total) -->
+    <section class="slide" data-slide="35">
+      <div class="anim eyebrow">Total</div>
+      <h2 class="anim serif">Contratar cada peça separadamente —<br/>uma agência, um consultor de processos e um gestor de tráfego —<br/><span class="gold-grad-text">custaria:</span></h2>
+
+      <div class="anim mt-lg center" style="margin-top:80px;">
+        <div class="stat-num" style="font-size:240px; line-height:1;">R$ 58.500</div>
+        <p class="lead mt-md" style="font-style:italic;">E ainda assim você teria <span class="gold">peças soltas. Não um motor.</span></p>
+      </div>
+    </section>
+
+    <!-- SLIDE 36 — Empilhamento Parte 3 (oferta) -->
+    <section class="slide" data-slide="36">
+      <div class="anim eyebrow">A Oferta</div>
+      <h2 class="anim serif">Tudo isso, montado na ordem certa, como um <span class="gold-grad-text">sistema único:</span></h2>
+
+      <div class="anim mt-lg center" style="margin-top: 60px;">
+        <div class="struck" style="font-family:var(--serif); font-size:48px; color:var(--muted); text-decoration:line-through; text-decoration-color:var(--red); text-decoration-thickness:3px; margin-bottom:24px;">R$ 58.500</div>
+        <div class="lead muted" style="margin-bottom:8px; text-transform:uppercase; letter-spacing:0.2em; font-size:18px; font-weight:600;">Seu investimento no MLV</div>
+        <div class="stat-num" style="font-size:180px; line-height:1;">R$ 15.000</div>
+        <p class="small mt-sm">(implementação completa de 90 dias)</p>
+        <div class="quote-box mt-lg" style="margin: 56px auto 0; max-width: 1200px;">
+          <div class="quote serif" style="font-size:32px;">Você não está contratando peças. <br/><span class="gold">Está instalando o motor inteiro</span> — por menos de um quarto do custo de montá-lo sozinho.</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SLIDE 37 — Prova Social Final -->
+    <section class="slide" data-slide="37">
+      <div class="anim eyebrow">Prova Social</div>
+      <h2 class="anim serif">Clínicas que pararam de correr e passaram a <span class="gold-grad-text">governar a receita.</span></h2>
+
+      <div class="grid g-2 anim mt-lg">
+        <div class="card gold-bg" style="padding: 40px;">
+          <div class="row gap-md" style="align-items:center;">
+            <div class="icon-box" style="width:60px; height:60px; font-size:28px;">🏥</div>
+            <div>
+              <h4 style="font-size:24px;">Hospital Veterinário São Bernardo</h4>
+              <p class="small">Curitiba/PR · Janeiro 2026</p>
+            </div>
+          </div>
+          <div class="row gap-md mt-md" style="border-top:1px solid var(--gold-dark); padding-top:24px;">
+            <div class="col">
+              <div class="stat-num" style="font-size:44px;">30,5x</div>
+              <div class="stat-label">ROAS</div>
+            </div>
+            <div class="col">
+              <div class="stat-num" style="font-size:44px;">3.053%</div>
+              <div class="stat-label">ROI auditado</div>
+            </div>
+            <div class="col">
+              <div class="stat-num" style="font-size:44px;">37</div>
+              <div class="stat-label">Novos pacientes</div>
+            </div>
+          </div>
+        </div>
+        <div class="card" style="padding: 40px;">
+          <div class="row gap-md" style="align-items:center;">
+            <div class="icon-box" style="width:60px; height:60px; font-size:28px;">🐾</div>
+            <div>
+              <h4 style="font-size:24px;">+45 clínicas atendidas</h4>
+              <p class="small">Metodologia validada em diferentes portes</p>
+            </div>
+          </div>
+          <div class="row gap-lg mt-md" style="border-top:1px solid var(--border); padding-top:24px;">
+            <div class="col">
+              <div class="stat-num" style="font-size:48px;">+156%</div>
+              <div class="stat-label">Crescimento médio em receita</div>
+            </div>
+            <div class="col">
+              <div class="stat-num" style="font-size:48px;">&lt;10%</div>
+              <div class="stat-label">No-show pós-implementação</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SLIDE 38 — Oferta com Garantia -->
+    <section class="slide" data-slide="38">
+      <div class="anim eyebrow">Método Máquina de Lucro Veterinário</div>
+      <h2 class="anim serif">A oferta completa.</h2>
+
+      <div class="grid g-2 anim mt-lg gap-lg" style="grid-template-columns: 1fr 1fr;">
+        <div class="card gold-bg" style="padding:40px;">
+          <h4 class="gold" style="font-size:18px; letter-spacing:0.18em; text-transform:uppercase;">Implementação · 90 dias</h4>
+          <div class="stat-num mt-sm" style="font-size:96px;">R$ 15.000</div>
+          <p class="lead">Pagamento da implementação completa do motor.</p>
+        </div>
+        <div class="card" style="padding:40px; border-color:var(--gold-dark);">
+          <h4 class="gold" style="font-size:18px; letter-spacing:0.18em; text-transform:uppercase;">Gestão e Suporte</h4>
+          <div class="stat-num mt-sm" style="font-size:96px;">R$ 3.500<span style="font-size:32px; color:var(--muted);">/mês</span></div>
+          <p class="lead">Acompanhamento contínuo após a implementação.</p>
+        </div>
+      </div>
+
+      <div class="quote-box anim mt-lg" style="max-width:1700px;">
+        <div class="row gap-md" style="align-items:center;">
+          <div class="icon-box" style="width:80px; height:80px; font-size:32px;">🛡️</div>
+          <div style="text-align:left;">
+            <h4 class="gold serif" style="font-size:32px;">Garantia "Skin in the Game"</h4>
+            <p class="lead mt-sm" style="font-size:20px;">Se em 90 dias o processo comercial não estiver rodando e você não tiver gerado ao menos o valor do seu investimento em oportunidades rastreáveis, <strong class="gold">a Sigma trabalha de graça</strong> até atingir essa meta. E você mantém todos os playbooks e scripts criados.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SLIDE 39 — Os 3 Componentes do Investimento -->
+    <section class="slide" data-slide="39">
+      <div class="anim eyebrow">Transparência Total</div>
+      <h2 class="anim serif">O investimento é composto de <span class="gold-grad-text">3 partes.</span></h2>
+      <p class="anim lead mt-sm">Você sabe exatamente onde cada real vai — sem markup escondido, sem surpresa.</p>
+
+      <div class="grid g-3 anim mt-lg" style="gap: 20px;">
+
+        <!-- Card 1 — Fee Sigma -->
+        <div class="card gold-bg" style="padding: 28px; display:flex; flex-direction:column;">
+          <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:12px;">
+            <div class="icon-box" style="width:48px; height:48px; font-size:22px;">⚙️</div>
+            <div class="muted small" style="text-transform:uppercase; letter-spacing:0.16em; font-weight:700; font-size:11px;">Parte 01</div>
+          </div>
+          <h4 class="gold serif" style="font-size:24px; margin-bottom: 8px;">Fee da Sigma</h4>
+          <p class="small" style="margin-bottom: 16px;">Implementação + gestão + suporte. Toda a metodologia da Sigma.</p>
+          <div style="margin-top:auto; padding-top:16px; border-top:1px solid var(--gold-dark);">
+            <div class="stat-num" style="font-size:32px;">R$ 15.000</div>
+            <div class="small">+ R$ 3.500/mês · 90 dias</div>
+            <div class="small muted" style="margin-top:6px; font-style:italic;">(Acelera: R$ 8.500 + R$ 2.000/mês)</div>
+          </div>
+          <div class="pill mt-md" style="font-size:10px; padding: 5px 12px; align-self:flex-start;">✅ Pago direto à Sigma</div>
+        </div>
+
+        <!-- Card 2 — Verba de Mídia -->
+        <div class="card" style="padding: 28px; display:flex; flex-direction:column; border-color: var(--gold-dark);">
+          <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:12px;">
+            <div class="icon-box" style="width:48px; height:48px; font-size:22px;">💳</div>
+            <div class="muted small" style="text-transform:uppercase; letter-spacing:0.16em; font-weight:700; font-size:11px;">Parte 02</div>
+          </div>
+          <h4 class="gold serif" style="font-size:24px; margin-bottom: 8px;">Verba de Mídia</h4>
+          <p class="small" style="margin-bottom: 16px;">Google Ads + Meta Ads. Você paga direto no cartão, em nome da clínica.</p>
+          <div style="margin-top:auto; padding-top:16px; border-top:1px solid var(--border); font-size:15px; color:var(--text-soft); line-height:1.6;">
+            <div><strong class="gold">Plano Completo</strong> · a partir de</div>
+            <div class="stat-num" style="font-size:28px;">R$ 1.800/mês</div>
+            <div class="small muted" style="margin-top:4px;">(R$ 900 Google + R$ 900 Meta)</div>
+            <div class="small muted" style="margin-top:10px; font-style:italic;">Acelera: só Google · a partir de R$ 900/mês</div>
+          </div>
+          <div class="pill mt-md" style="font-size:10px; padding: 5px 12px; align-self:flex-start; background: rgba(212,175,55,0.08); color: var(--muted);">💳 Paga direto no Google/Meta</div>
+        </div>
+
+        <!-- Card 3 — Licenças -->
+        <div class="card" style="padding: 28px; display:flex; flex-direction:column; border-color: var(--gold-dark);">
+          <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:12px;">
+            <div class="icon-box" style="width:48px; height:48px; font-size:22px;">🔧</div>
+            <div class="muted small" style="text-transform:uppercase; letter-spacing:0.16em; font-weight:700; font-size:11px;">Parte 03</div>
+          </div>
+          <h4 class="gold serif" style="font-size:24px; margin-bottom: 8px;">Licenças de Ferramentas</h4>
+          <p class="small" style="margin-bottom: 16px;">Plataformas que rodam o motor. Assinatura no seu nome — você é dono.</p>
+          <div style="margin-top:auto; padding-top:16px; border-top:1px solid var(--border); font-size:15px; color:var(--text-soft); line-height:1.7;">
+            <div><strong class="gold">Plano Completo:</strong></div>
+            <div>· Kommo CRM <span class="muted">(sob cotação)</span></div>
+            <div>· WhatsApp Business API <span class="muted">(uso)</span></div>
+            <div style="margin-top:10px;"><strong class="gold">Plano Acelera:</strong></div>
+            <div>· WaSpeed <span class="muted">(sob cotação)</span></div>
+          </div>
+          <div class="pill mt-md" style="font-size:10px; padding: 5px 12px; align-self:flex-start; background: rgba(212,175,55,0.08); color: var(--muted);">🔧 Cliente assina direto</div>
+        </div>
+
+      </div>
+
+      <div class="anim center" style="margin-top: 24px;">
+        <p class="small" style="font-style:italic; color: var(--muted);">💡 A Sigma configura tudo. As contas ficam no seu nome — você é dono e mantém o controle, mesmo se um dia decidir parar.</p>
+      </div>
+    </section>
+
+    <!-- SLIDE 40 — Oferta com Urgência (CTA Final) -->
+    <section class="slide" data-slide="40">
+      <div class="anim eyebrow center">A Decisão</div>
+      <h2 class="anim serif center" style="max-width:1500px; margin:0 auto;">Quero construir minha<br/><span class="gold-grad-text shimmer-text">Máquina de Lucro Veterinário.</span></h2>
+
+      <div class="grid g-3 anim mt-lg">
+        <div class="card center" style="padding:32px;">
+          <div class="stat-num" style="font-size:56px;">R$ 15.000</div>
+          <div class="stat-label">Implementação · 90 dias</div>
+        </div>
+        <div class="card center" style="padding:32px;">
+          <div class="stat-num" style="font-size:56px;">R$ 3.500<span style="font-size:18px;">/mês</span></div>
+          <div class="stat-label">Gestão contínua</div>
+        </div>
+        <div class="card gold-bg center" style="padding:32px;">
+          <div class="stat-num" style="font-size:56px;">&gt; R$ 43K</div>
+          <div class="stat-label">Economia vs contratação separada</div>
+        </div>
+      </div>
+
+      <div class="anim center mt-lg" style="margin-top:48px;">
+        <div class="pill" style="font-size:16px; padding: 12px 24px;">⚠️ Apenas 3 clínicas novas por mês</div>
+        <p class="muted mt-md" style="max-width:900px; margin-left:auto; margin-right:auto;">A implementação é manual e o treinamento de equipe é feito com calma — para garantir o ROI de 90 dias, não dá para escalar isso.</p>
+
+        <div class="mt-lg" style="margin-top:48px;">
+          <a class="cta-button" href="#">Quero construir minha Máquina de Lucro Veterinário →</a>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================================================ -->
+    <!-- BLOCO EXTRA — PLANO PROTAGONISTA (DOWNSELL / FECHAMENTO EM CALL) -->
+    <!-- Use somente se a pessoa travar no preço do plano completo -->
+    <!-- ============================================================ -->
+
+    <!-- SLIDE 41 — Transição / Ponte (Plano Acelera) -->
+    <section class="slide frame-slide" data-slide="41">
+      <div class="anim pill">Caminho alternativo</div>
+      <div class="anim frame-q mt-md">Se hoje você quer dar um <span class="gold-grad-text">primeiro passo menor</span><br/>antes de instalar o motor inteiro —</div>
+      <p class="anim frame-sub" style="max-width:1200px;">Eu tenho uma versão de entrada do programa, com escopo enxuto, pensada pra clínicas que querem ver o fluxo de caixa virar antes de comprometer com o sistema completo.</p>
+    </section>
+
+    <!-- SLIDE 42 — Plano Acelera (Protagonista de Entrada) -->
+    <section class="slide" data-slide="42">
+      <div class="anim eyebrow">Plano de Entrada</div>
+      <h2 class="anim serif"><span class="gold-grad-text">Plano Acelera.</span></h2>
+      <p class="anim lead mt-sm">O essencial do motor instalado em 45 dias — pra começar a gerar caixa antes de escalar.</p>
+
+      <div class="grid g-2 anim mt-lg" style="grid-template-columns: 1.2fr 1fr; gap: 32px;">
+        <div class="card gold-border" style="padding:36px;">
+          <h4 class="gold" style="font-size:18px; text-transform:uppercase; letter-spacing:0.18em; margin-bottom:20px;">O que está incluído</h4>
+          <div class="check-list" style="gap: 14px;">
+            <div class="check-item" style="font-size:18px;"><span class="check">✓</span><div><strong>Diagnóstico CRC + Mapa de Vazamentos</strong> — análise dos 5 pilares.</div></div>
+            <div class="check-item" style="font-size:18px;"><span class="check">✓</span><div><strong>Protocolo Recepção Blindada</strong> — script + follow-up D+1/D+3/D+7.</div></div>
+            <div class="check-item" style="font-size:18px;"><span class="check">✓</span><div><strong>Google Ads</strong> — campanhas de caixa imediato (sem Meta Ads).</div></div>
+            <div class="check-item" style="font-size:18px;"><span class="check">✓</span><div><strong>WaSpeed</strong> — gestão de WhatsApp via extensão de navegador (sem Kommo CRM completo).</div></div>
+            <div class="check-item" style="font-size:18px;"><span class="check">✓</span><div><strong>Painel simplificado</strong> — Google + WhatsApp + funil.</div></div>
+            <div class="check-item" style="font-size:18px;"><span class="check">✓</span><div><strong>Gestão de 45 dias</strong> + reuniões quinzenais.</div></div>
+          </div>
+        </div>
+
+        <div class="card gold-bg" style="padding:36px; display:flex; flex-direction:column; justify-content:center;">
+          <div class="muted" style="text-transform:uppercase; letter-spacing:0.18em; font-size:14px; font-weight:700; margin-bottom:8px;">Implementação · 45 dias</div>
+          <div class="stat-num" style="font-size:88px; line-height:1;">R$ 8.500</div>
+          <div class="muted mt-md" style="text-transform:uppercase; letter-spacing:0.18em; font-size:14px; font-weight:700; margin-bottom:8px;">Gestão</div>
+          <div class="stat-num" style="font-size:48px; line-height:1;">R$ 2.000<span style="font-size:20px; color:var(--muted);">/mês × 3</span></div>
+          <div class="pill mt-md" style="font-size:13px; padding: 8px 16px; align-self:flex-start;">🛡️ Garantia de 45 dias</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SLIDE 43 — Comparativo Acelera × Completo + CTA -->
+    <section class="slide" data-slide="43">
+      <div class="anim eyebrow center">Comparativo</div>
+      <h2 class="anim serif center"><span class="gold-grad-text">Plano Acelera</span> × <span class="gold-grad-text">Plano Motor Completo</span></h2>
+
+      <div class="grid g-2 anim mt-lg" style="gap: 24px;">
+        <div class="card" style="padding:32px;">
+          <h4 class="gold serif" style="font-size:28px; margin-bottom: 20px;">Plano Acelera</h4>
+          <div class="muted small" style="margin-bottom: 16px;">Para começar a gerar caixa primeiro.</div>
+          <ul style="list-style:none; padding:0; margin:0; font-size:16px; line-height:1.6; color:var(--text-soft);">
+            <li>✓ Diagnóstico + Recepção Blindada</li>
+            <li>✓ Google Ads (caixa imediato)</li>
+            <li>✓ WaSpeed (WhatsApp via navegador)</li>
+            <li>✓ Painel simplificado</li>
+            <li>✓ Gestão 45 dias</li>
+            <li style="color:#7a7a7a; text-decoration:line-through;">Meta Ads (Patrimônio de Marca)</li>
+            <li style="color:#7a7a7a; text-decoration:line-through;">Bootcamp Maestria em Conversão</li>
+            <li style="color:#7a7a7a; text-decoration:line-through;">Resgate de Pacientes + LTV</li>
+          </ul>
+          <div style="margin-top: 24px; padding-top:20px; border-top: 1px solid var(--border);">
+            <div class="stat-num" style="font-size:48px;">R$ 8.500</div>
+            <div class="small">+ R$ 2.000/mês × 3 · 45 dias</div>
+          </div>
+        </div>
+
+        <div class="card gold-bg" style="padding:32px; position:relative;">
+          <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom: 16px; gap: 16px;">
+            <h4 class="gold serif" style="font-size:28px; margin: 0;">Motor Completo</h4>
+            <div class="pill" style="font-size:11px; padding: 6px 14px; flex-shrink: 0;">⭐ Recomendado</div>
+          </div>
+          <div class="muted small" style="margin-bottom: 16px;">Para instalar o motor inteiro de uma vez.</div>
+          <ul style="list-style:none; padding:0; margin:0; font-size:16px; line-height:1.6; color:var(--text-soft);">
+            <li>✓ Diagnóstico + Recepção Blindada</li>
+            <li>✓ Google Ads <strong class="gold">+ Meta Ads</strong></li>
+            <li>✓ <strong class="gold">Kommo CRM completo</strong> + automação de aniversário/LTV</li>
+            <li>✓ Painel Olho do Dono completo</li>
+            <li>✓ <strong class="gold">Bootcamp Maestria em Conversão</strong></li>
+            <li>✓ <strong class="gold">Resgate de Pacientes + LTV</strong></li>
+            <li>✓ Gestão 90 dias + check-ins 30/60/90</li>
+            <li>✓ Garantia Skin in the Game</li>
+          </ul>
+          <div style="margin-top: 24px; padding-top:20px; border-top: 1px solid var(--gold-dark);">
+            <div class="stat-num" style="font-size:48px;">R$ 15.000</div>
+            <div class="small">+ R$ 3.500/mês · 90 dias</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="anim center mt-md" style="margin-top: 32px;">
+        <a class="cta-button" href="#" style="font-size:18px; padding: 18px 36px;">Quero começar pelo Acelera →</a>
+      </div>
+    </section>
+
+  </div>
+</div>
+
+<!-- ===== NAV ===== -->
+<nav class="nav-bar" id="navBar">
+  <button class="nav-btn" id="firstBtn" title="Primeiro (Home)">⏮</button>
+  <button class="nav-btn" id="prevBtn" title="Anterior (←)">‹</button>
+  <div class="nav-counter"><span class="curr" id="currNum">01</span> / <span id="totalNum">39</span></div>
+  <button class="nav-btn" id="nextBtn" title="Próximo (→)">›</button>
+  <button class="nav-btn" id="lastBtn" title="Último (End)">⏭</button>
+  <button class="nav-btn" id="fsBtn" title="Tela cheia (F)">⛶</button>
 </nav>
 
-<!-- ─── HERO ─── -->
-<section id="hero">
-  <div class="hero-bg-photo" aria-hidden="true"></div>
-  <!-- orbs -->
-  <div class="orb-layer" aria-hidden="true">
-    <div class="orb orb-1"></div>
-    <div class="orb orb-2"></div>
-    <div class="orb orb-3"></div>
-  </div>
-
-  <!-- left col -->
-  <div class="hero-left">
-    <div class="hero-label">
-      <span class="label">Assessoria Sigma</span>
-    </div>
-
-    <h1 class="hero-title" id="heroTitle" aria-label="Sua clínica não precisa de mais movimento. Precisa de sistema de receita."></h1>
-
-    <p class="hero-sub">O mercado ensinou clínica a correr mais.<br>A Sigma ensina a <strong>governar a receita.</strong></p>
-    <p class="hero-tagline">Sem promessa mágica. Sem ação solta. Só clareza + implementação.</p>
-
-    <div class="hero-actions">
-      <a href="https://wa.me/554497345835?text=Olá!%20Vi%20o%20site%20da%20Sigma%20e%20quero%20saber%20mais%20sobre%20o%20diagnóstico%20para%20minha%20clínica." class="btn-gold" target="_blank">
-        Solicitar diagnóstico da Sigma →
-      </a>
-      <a href="#diagnostico" class="btn-outline">Ver o que analisamos</a>
-    </div>
-
-    <p class="hero-note">Para clínicas e hospitais veterinários que já têm movimento, trabalham muito… mas não têm previsibilidade.</p>
-  </div>
-
-  <!-- right col: floating card -->
-  <div class="hero-card-wrap">
-    <div class="ring-outer"><div class="ring-dot"></div></div>
-    <div class="ring-inner"></div>
-
-    <div class="hero-card" id="heroCard">
-      <div class="card-header">
-        <span class="card-title">Diagnóstico CRC</span>
-        <div class="card-dots">
-          <div class="card-dot card-dot-r"></div>
-          <div class="card-dot card-dot-y"></div>
-          <div class="card-dot card-dot-g"></div>
-        </div>
-      </div>
-
-      <div class="card-metric">
-        <div class="card-metric-label">
-          <span class="card-metric-name red">Agenda improvisada</span>
-          <span class="card-metric-status bad">Vazamento</span>
-        </div>
-        <div class="card-bar-track">
-          <div class="card-bar red" data-width="78"></div>
-        </div>
-      </div>
-
-      <div class="card-metric">
-        <div class="card-metric-label">
-          <span class="card-metric-name gold">Sistema de receita</span>
-          <span class="card-metric-status good">Previsível</span>
-        </div>
-        <div class="card-bar-track">
-          <div class="card-bar gold" data-width="92"></div>
-        </div>
-      </div>
-
-      <div class="card-divider"></div>
-
-      <div class="card-metric">
-        <div class="card-metric-label">
-          <span class="card-metric-name gold">Base reativada</span>
-          <span class="card-metric-status good">+34%</span>
-        </div>
-        <div class="card-bar-track">
-          <div class="card-bar gold" data-width="62"></div>
-        </div>
-      </div>
-
-      <div class="card-divider"></div>
-      <div class="card-footer">↑ Receita contínua sem aumentar o caos</div>
-    </div>
-  </div>
-</section>
-
-<!-- ─── STATS STRIP ─── -->
-<div class="stats-strip">
-  <div class="stat-item reveal">
-    <span class="stat-num" data-target="87" data-suffix="%">0%</span>
-    <span class="stat-label">Taxa média de<br>ocupação da agenda</span>
-  </div>
-  <div class="stat-item reveal reveal-delay-1">
-    <span class="stat-num" data-target="34" data-prefix="+" data-suffix="%">0%</span>
-    <span class="stat-label">Receita com base<br>ativa reativada</span>
-  </div>
-  <div class="stat-item reveal reveal-delay-2">
-    <span class="stat-num" data-target="20" data-suffix=" min">0 min</span>
-    <span class="stat-label">Duração do<br>diagnóstico gratuito</span>
-  </div>
-  <div class="stat-item reveal reveal-delay-3">
-    <span class="stat-num" data-target="5" data-suffix=" pilares">0</span>
-    <span class="stat-label">Do sistema de<br>receita contínua</span>
-  </div>
+<div class="hint">
+  <kbd>←</kbd> <kbd>→</kbd> navegar &nbsp;·&nbsp; <kbd>F</kbd> fullscreen &nbsp;·&nbsp; <kbd>Esc</kbd> sair
 </div>
-
-<!-- ─── PATH DIVIDER ─── -->
-<div class="path-divider" id="pathDiv">
-  <svg viewBox="0 0 900 80" fill="none" xmlns="http://www.w3.org/2000/svg">
-    <path id="pathLine" class="path-line" d="M0,40 C150,40 200,10 300,10 C400,10 420,70 550,70 C680,70 700,40 900,40"/>
-    <circle id="pathDot" class="path-dot" r="5" cx="0" cy="40"/>
-  </svg>
-</div>
-
-<!-- ─── PROBLEMA ─── -->
-<section id="problema" class="bg-surface">
-  <div class="orb-layer" aria-hidden="true">
-    <div class="orb orb-2" style="opacity:.07;"></div>
-  </div>
-  <div class="section-inner">
-    <div class="section-header reveal">
-      <span class="label">O Problema Real</span>
-      <span class="gold-rule"></span>
-      <h2>Clínicas e hospitais veterinários não falham por falta de tutores.<br>Falham porque operam com atendimento improvisado <em>em um negócio que exige sistema.</em></h2>
-      <p class="section-sub">Clínica cheia pode quebrar do mesmo jeito. A agenda lota — e a receita escorre pelos cantos.</p>
-    </div>
-
-    <div class="problem-grid">
-      <div class="problem-card reveal reveal-delay-1">
-        <div class="problem-num">01</div>
-        <h3>Faltas como "normais"</h3>
-        <p>No-show vira rotina. A clínica perde horário, encaixe, faturamento.</p>
-      </div>
-      <div class="problem-card reveal reveal-delay-2">
-        <div class="problem-num">02</div>
-        <h3>Orçamentos esquecidos</h3>
-        <p>Cirurgia, exame, tratamento… aprovado "depois" e nunca mais lembrado.</p>
-      </div>
-      <div class="problem-card reveal reveal-delay-3">
-        <div class="problem-num">03</div>
-        <h3>Base de tutores parada</h3>
-        <p>Tutores antigos somem. Ninguém chama de volta. A clínica vive de caça.</p>
-      </div>
-      <div class="problem-card reveal reveal-delay-1">
-        <div class="problem-num">04</div>
-        <h3>Agenda irregular</h3>
-        <p>Buracos no meio do dia e urgência salvando o caixa no fim do mês.</p>
-      </div>
-      <div class="problem-card reveal reveal-delay-2">
-        <div class="problem-num">05</div>
-        <h3>Dependência do proprietário</h3>
-        <p>Quando você para, tudo cai. A operação fica refém do seu fôlego.</p>
-      </div>
-      <div class="problem-card reveal reveal-delay-3">
-        <div class="problem-num">06</div>
-        <h3>Marketing sem sistema</h3>
-        <p>Entra mensagem, entra demanda… e o caixa ainda não fecha com folga.</p>
-      </div>
-    </div>
-
-    <p class="problem-caption reveal" style="margin-top:3rem;">Cheia por fora. <em>Instável por dentro.</em></p>
-  </div>
-</section>
-
-<!-- ─── PATH DIVIDER 2 ─── -->
-<div class="path-divider" id="pathDiv2">
-  <svg viewBox="0 0 900 80" fill="none" xmlns="http://www.w3.org/2000/svg">
-    <path id="pathLine2" class="path-line" d="M0,40 C200,40 250,70 400,70 C550,70 600,10 750,10 C850,10 880,30 900,40"/>
-    <circle id="pathDot2" class="path-dot" r="5" cx="0" cy="40"/>
-  </svg>
-</div>
-
-<!-- ─── DIAGNÓSTICO ─── -->
-<section id="diagnostico">
-  <div class="section-inner">
-    <div class="section-header reveal">
-      <span class="label">Diagnóstico CRC</span>
-      <span class="gold-rule"></span>
-      <h2>O que analisamos no Diagnóstico <em>(20–30 min)</em></h2>
-      <p class="section-sub">Você sai com um diagnóstico claro e 2–3 ajustes práticos para aplicar de imediato.</p>
-    </div>
-
-    <div class="steps-list reveal">
-      <div class="step">
-        <div class="step-num">1</div>
-        <div class="step-content">
-          <h3>Captação com intenção</h3>
-          <p>Se os tutores que chegam hoje têm perfil de compra ou só pedem preço e somem.</p>
-        </div>
-      </div>
-      <div class="step">
-        <div class="step-num">2</div>
-        <div class="step-content">
-          <h3>Agenda Viva</h3>
-          <p>Onde a agenda está vazando dinheiro (faltas, cancelamentos, buracos e encaixes caóticos).</p>
-        </div>
-      </div>
-      <div class="step">
-        <div class="step-num">3</div>
-        <div class="step-content">
-          <h3>Base Ativa</h3>
-          <p>Como reativar tutores antigos com campanhas simples (check-up, vacina, retorno, acompanhamento).</p>
-        </div>
-      </div>
-      <div class="step">
-        <div class="step-num">4</div>
-        <div class="step-content">
-          <h3>Conversão Clínica</h3>
-          <p>Se o atendimento e o WhatsApp conduzem decisão — e se existe follow-up que não falha.</p>
-        </div>
-      </div>
-      <div class="step">
-        <div class="step-num">5</div>
-        <div class="step-content">
-          <h3>Receita Contínua</h3>
-          <p>Como transformar esforço em previsibilidade com rotinas e indicadores simples.</p>
-        </div>
-      </div>
-    </div>
-
-    <div class="diag-note reveal">
-      <p>O diagnóstico não é uma aula. É um raio-x da sua operação.</p>
-    </div>
-  </div>
-</section>
-
-<!-- ─── MOTOR ─── -->
-<section id="motor" class="bg-surface">
-  <div class="orb-layer" aria-hidden="true">
-    <div class="orb orb-1" style="opacity:.09;right:-150px;top:-150px;"></div>
-  </div>
-  <div class="section-inner">
-    <div class="section-header reveal">
-      <span class="label">Motor de Receita Veterinária Previsível</span>
-      <span class="gold-rule"></span>
-      <h2>O mecanismo que transforma atendimento em <em>receita contínua</em></h2>
-      <p class="section-sub">Não é marketing. Não é atendimento. É engenharia de faturamento.</p>
-    </div>
-
-    <div class="motor-grid">
-      <div class="motor-list reveal">
-        <div class="motor-item">
-          <span class="motor-icon">◈</span>
-          <div>
-            <h3>Captação com Intenção</h3>
-            <p>Atrair demanda com potencial real de conversão — não curiosos.</p>
-          </div>
-        </div>
-        <div class="motor-item">
-          <span class="motor-icon">◈</span>
-          <div>
-            <h3>Agenda Viva</h3>
-            <p>Gestão ativa para reduzir faltas, cancelamentos e ociosidade.</p>
-          </div>
-        </div>
-        <div class="motor-item">
-          <span class="motor-icon">◈</span>
-          <div>
-            <h3>Base Ativa</h3>
-            <p>Reativação estruturada de tutores antigos como alavanca de crescimento.</p>
-          </div>
-        </div>
-        <div class="motor-item">
-          <span class="motor-icon">◈</span>
-          <div>
-            <h3>Conversão Clínica</h3>
-            <p>Atendimento que conduz decisão, com follow-up e linguagem correta.</p>
-          </div>
-        </div>
-        <div class="motor-item">
-          <span class="motor-icon">◈</span>
-          <div>
-            <h3>Receita Contínua</h3>
-            <p>Recorrência, previsibilidade e indicadores claros para decidir sem achismo.</p>
-          </div>
-        </div>
-      </div>
-
-      <!-- animated dashboard -->
-      <div class="motor-dashboard reveal reveal-delay-2" id="motorDash">
-        <div class="dash-label">Sistema ativo</div>
-
-        <div class="dash-metric">
-          <div class="dash-metric-head">
-            <span class="dash-metric-name">Ocupação da agenda</span>
-            <span class="dash-metric-val" data-target="87">0%</span>
-          </div>
-          <div class="dash-track">
-            <div class="dash-fill" data-width="87"></div>
-          </div>
-        </div>
-
-        <div class="dash-metric">
-          <div class="dash-metric-head">
-            <span class="dash-metric-name">Taxa de reativação</span>
-            <span class="dash-metric-val" data-target="64">0%</span>
-          </div>
-          <div class="dash-track">
-            <div class="dash-fill" data-width="64"></div>
-          </div>
-        </div>
-
-        <div class="dash-metric">
-          <div class="dash-metric-head">
-            <span class="dash-metric-name">Orçamentos convertidos</span>
-            <span class="dash-metric-val" data-target="73">0%</span>
-          </div>
-          <div class="dash-track">
-            <div class="dash-fill" data-width="73"></div>
-          </div>
-        </div>
-
-        <div class="dash-metric">
-          <div class="dash-metric-head">
-            <span class="dash-metric-name">Receita previsível</span>
-            <span class="dash-metric-val" data-target="91">0%</span>
-          </div>
-          <div class="dash-track">
-            <div class="dash-fill" data-width="91"></div>
-          </div>
-        </div>
-
-        <div class="dash-divider"></div>
-
-        <p class="dash-quote">
-          Sempre que a clínica tem sistema,<br>
-          <strong>o atendimento vira ativo financeiro.</strong>
-        </p>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- ─── QUEM SOMOS ─── -->
-<section id="quem">
-  <div class="section-inner">
-    <div class="section-header reveal">
-      <span class="label">Quem Somos</span>
-      <span class="gold-rule"></span>
-      <h2>Não somos uma agência <em>tradicional</em></h2>
-      <p class="section-sub">"A Sigma nasceu de uma convicção simples: clínica não precisa de barulho. Precisa de controle."</p>
-    </div>
-
-    <div class="quem-grid reveal">
-      <div class="quem-col do">
-        <h3>O que fazemos</h3>
-        <ul class="quem-list">
-          <li>Mapeamos vazamentos de agenda e faturamento</li>
-          <li>Implementamos rotinas de confirmação e recuperação</li>
-          <li>Criamos reativação de base e follow-up consistente</li>
-          <li>Organizamos indicadores simples para decisão</li>
-        </ul>
-      </div>
-      <div class="quem-col dont">
-        <h3>O que não fazemos</h3>
-        <ul class="quem-list">
-          <li>Promessa milagrosa</li>
-          <li>Ação solta sem processo</li>
-          <li>"Só tráfego" como solução</li>
-          <li>Depender de talento individual</li>
-        </ul>
-      </div>
-    </div>
-
-    <div class="quem-photos reveal">
-      <div class="quem-photo-frame">
-        <img src="https://images.unsplash.com/photo-1583512603806-077998240c7a?auto=format&fit=crop&w=800&q=80" alt="Veterinário atendendo paciente" loading="lazy" />
-        <span class="quem-photo-label">Atendimento</span>
-      </div>
-      <div class="quem-photo-frame">
-        <img src="https://images.unsplash.com/photo-1628009368231-7bb7cfcb0def?auto=format&fit=crop&w=800&q=80" alt="Clínica veterinária" loading="lazy" />
-        <span class="quem-photo-label">Sistema</span>
-      </div>
-    </div>
-
-    <div class="quem-insight reveal">
-      <p>Tem clínica que atende o dia inteiro, chega em casa esgotado… e o caixa continua com o mesmo gosto de "poderia ser melhor". Não é falta de esforço. <em>É falta de sistema.</em></p>
-    </div>
-  </div>
-</section>
-
-<!-- ─── RESULTADOS ─── -->
-<section id="resultados" class="bg-surface">
-  <div class="section-inner">
-    <div class="section-header reveal">
-      <span class="label">O Que Sua Clínica Passa a Ter</span>
-      <span class="gold-rule"></span>
-      <h2>Resultados tangíveis <em>(sem aumentar o caos)</em></h2>
-    </div>
-
-    <div class="results-grid">
-      <div class="result-item reveal reveal-delay-1">
-        <div class="result-check">✓</div>
-        <p>Agenda protegida (menos buracos e no-show)</p>
-      </div>
-      <div class="result-item reveal reveal-delay-2">
-        <div class="result-check">✓</div>
-        <p>Base de tutores ativa (reativação constante)</p>
-      </div>
-      <div class="result-item reveal reveal-delay-3">
-        <div class="result-check">✓</div>
-        <p>Atendimento padronizado (menos improviso)</p>
-      </div>
-      <div class="result-item reveal reveal-delay-1">
-        <div class="result-check">✓</div>
-        <p>Follow-up consistente (orçamento não morre)</p>
-      </div>
-      <div class="result-item reveal reveal-delay-2">
-        <div class="result-check">✓</div>
-        <p>Decisões baseadas em dados (sem achismo)</p>
-      </div>
-      <div class="result-item reveal reveal-delay-3">
-        <div class="result-check">✓</div>
-        <p>Crescimento sustentável (sem sobrecarregar equipe)</p>
-      </div>
-    </div>
-
-    <!-- Antes vs Depois -->
-    <div class="comparison-wrap reveal">
-      <div class="comp-col before">
-        <div class="comp-head bad">✕ &nbsp;Sem sistema</div>
-        <ul class="comp-list">
-          <li data-icon="✕">Agenda com buracos e no-show toda semana</li>
-          <li data-icon="✕">Orçamentos que somem sem resposta</li>
-          <li data-icon="✕">Tutores antigos que nunca voltam</li>
-          <li data-icon="✕">Caixa que não reflete a agenda cheia</li>
-          <li data-icon="✕">Decisões no feeling, sem indicador</li>
-          <li data-icon="✕">Urgência salvando o faturamento</li>
-        </ul>
-      </div>
-      <div class="comp-divider">
-        <span class="comp-divider-label">vs</span>
-      </div>
-      <div class="comp-col after">
-        <div class="comp-head good">◈ &nbsp;Com a Sigma</div>
-        <ul class="comp-list">
-          <li data-icon="◈">Agenda protegida e confirmada sistematicamente</li>
-          <li data-icon="◈">Follow-up ativo que converte orçamento esquecido</li>
-          <li data-icon="◈">Reativação contínua da base de tutores</li>
-          <li data-icon="◈">Receita previsível e controlada</li>
-          <li data-icon="◈">Indicadores claros para decidir sem achismo</li>
-          <li data-icon="◈">Crescimento sustentável sem aumentar o caos</li>
-        </ul>
-      </div>
-    </div>
-
-  </div>
-</section>
-
-<!-- ─── FAQ ─── -->
-<section id="faq">
-  <div class="section-inner">
-    <div class="section-header reveal">
-      <span class="label">Dúvidas Comuns</span>
-      <span class="gold-rule"></span>
-    </div>
-
-    <div class="faq-list reveal">
-      <div class="faq-item">
-        <button class="faq-q" aria-expanded="false">
-          Isso é consultoria de marketing?
-          <div class="faq-icon">+</div>
-        </button>
-        <div class="faq-a">
-          Não. A Sigma não entrega campanha, post ou tráfego pago. Entregamos sistema operacional: rotinas de agenda, reativação de base, follow-up de orçamento e indicadores para decidir com clareza. Marketing pode ser parte do contexto — mas nunca é o núcleo do trabalho.
-        </div>
-      </div>
-      <div class="faq-item">
-        <button class="faq-q" aria-expanded="false">
-          A auditoria é mesmo gratuita?
-          <div class="faq-icon">+</div>
-        </button>
-        <div class="faq-a">
-          Sim. O Diagnóstico CRC é uma conversa de 20 a 30 minutos sem custo e sem compromisso. Você sai com clareza sobre onde estão os principais vazamentos da sua operação — e 2–3 pontos concretos para aplicar de imediato, independente de continuar com a Sigma.
-        </div>
-      </div>
-      <div class="faq-item">
-        <button class="faq-q" aria-expanded="false">
-          Funciona para clínica que já tem movimento?
-          <div class="faq-icon">+</div>
-        </button>
-        <div class="faq-a">
-          Sim — e especialmente para essas. Clínicas ocupadas perdem mais por não ter sistema do que clínicas vazias. Quando a agenda está cheia mas o caixa não reflete isso, é sinal de vazamento operacional, não de falta de demanda.
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- ─── CTA ─── -->
-<section id="cta" class="bg-surface">
-  <div class="cta-bg-photo" aria-hidden="true"></div>
-  <div class="orb-layer" aria-hidden="true">
-    <div class="orb orb-1" style="opacity:.12;top:auto;bottom:-100px;right:50%;transform:translateX(50%);"></div>
-  </div>
-  <div class="section-inner" style="position:relative;text-align:center;z-index:1;">
-    <span class="label reveal" style="display:block;margin-bottom:1.25rem;">Próximo passo</span>
-    <h2 class="reveal">Pronto para parar de correr… e começar a <em>governar a receita?</em></h2>
-    <p class="cta-sub reveal">Bate-papo rápido. Sem compromisso. Sem teoria. Só diagnóstico claro + ação.</p>
-
-    <div class="testimonial-wrap reveal">
-      <div class="testimonial-card">
-        <div class="testimonial-stars">★★★★★</div>
-        <p class="testimonial-text">"Em 3 semanas aplicando o sistema, nossa taxa de no-show caiu pela metade e reativamos tutores que não apareciam há mais de 6 meses. O diagnóstico foi cirúrgico — apontou exatamente onde estávamos perdendo dinheiro sem perceber."</p>
-        <span class="testimonial-author">Dra. Fernanda — Hospital Veterinário, Paraná</span>
-      </div>
-    </div>
-
-    <a href="https://wa.me/554497345835?text=Olá!%20Vi%20o%20site%20da%20Sigma%20e%20quero%20saber%20mais%20sobre%20o%20diagnóstico%20para%20minha%20clínica." class="btn-gold reveal" target="_blank" style="font-size:.8rem;padding:1.1rem 2.75rem;letter-spacing:.16em;">
-      Agendar Bate-papo Gratuito →
-    </a>
-    <p class="cta-note reveal">"Se preferir, envie: nome da clínica + cidade + melhor horário."</p>
-  </div>
-</section>
-
-<!-- ─── FOOTER ─── -->
-<footer>
-  <div class="footer-inner">
-    <div class="footer-logo"><img src="sigma-logo.png" alt="Assessoria Sigma" style="height:36px;width:auto;" /></div>
-    <div class="footer-contact">
-      <span>E-mail: <a href="mailto:aagenciasigma@gmail.com">aagenciasigma@gmail.com</a></span>
-      <span>WhatsApp: <a href="https://wa.me/5544999251952" target="_blank">(44) 99925-1952</a></span>
-    </div>
-    <div class="footer-legal">
-      <span>© 2026 Assessoria Sigma. Todos os direitos reservados.</span>
-      <a href="/privacidade">Política de Privacidade</a>
-    </div>
-  </div>
-</footer>
 
 <script>
-/* ─── NAV SCROLL ─── */
-const nav = document.getElementById('nav');
-window.addEventListener('scroll', () => {
-  nav.classList.toggle('scrolled', window.scrollY > 40);
-}, { passive: true });
+(() => {
+  const slides = Array.from(document.querySelectorAll('.slide'));
+  const wrap = document.getElementById('slidesWrap');
+  const progress = document.getElementById('progress');
+  const currNum = document.getElementById('currNum');
+  const totalNum = document.getElementById('totalNum');
+  totalNum.textContent = String(slides.length).padStart(2, '0');
 
-/* ─── HERO TITLE: WORD-BY-WORD ─── */
-(function() {
-  const el = document.getElementById('heroTitle');
-  const lines = [
-    { text: 'Sua clínica não precisa', italic: false },
-    { text: 'de mais movimento.', italic: false },
-    { text: 'Precisa de sistema', italic: true, shimmer: false },
-    { text: 'de receita.', italic: true, shimmer: true },
-  ];
-  let html = '';
-  let delay = 0.05;
-  lines.forEach((line, li) => {
-    const words = line.text.split(' ');
-    words.forEach(word => {
-      const cls = line.shimmer ? 'word shimmer-text' : line.italic ? 'word' : 'word';
-      const style = `animation-delay:${delay.toFixed(2)}s`;
-      if (line.italic) {
-        html += `<em><span class="${cls}" style="${style}">${word}</span></em> `;
-      } else {
-        html += `<span class="${cls}" style="${style}">${word}</span> `;
-      }
-      delay += 0.07;
-    });
-    html += '<br>';
+  let idx = 0;
+
+  function go(n) {
+    n = Math.max(0, Math.min(slides.length - 1, n));
+    slides[idx].classList.remove('active');
+    idx = n;
+    slides[idx].classList.add('active');
+    progress.style.width = ((idx + 1) / slides.length * 100) + '%';
+    currNum.textContent = String(idx + 1).padStart(2, '0');
+    // Scroll slide content reset
+    slides[idx].scrollTop = 0;
+  }
+
+  function scaleStage() {
+    const targetW = 1920, targetH = 1080;
+    const w = window.innerWidth, h = window.innerHeight;
+    const scale = Math.min(w / targetW, h / targetH);
+    wrap.style.transform = `translate(-50%, -50%) scale(${scale})`;
+  }
+
+  window.addEventListener('resize', scaleStage);
+  scaleStage();
+
+  // Keyboard
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'ArrowRight' || e.key === ' ' || e.key === 'PageDown') { e.preventDefault(); go(idx + 1); }
+    else if (e.key === 'ArrowLeft' || e.key === 'PageUp') { e.preventDefault(); go(idx - 1); }
+    else if (e.key === 'Home') { e.preventDefault(); go(0); }
+    else if (e.key === 'End') { e.preventDefault(); go(slides.length - 1); }
+    else if (e.key === 'f' || e.key === 'F') { e.preventDefault(); toggleFullscreen(); }
   });
-  el.innerHTML = html;
+
+  // Click navigation buttons
+  document.getElementById('prevBtn').addEventListener('click', () => go(idx - 1));
+  document.getElementById('nextBtn').addEventListener('click', () => go(idx + 1));
+  document.getElementById('firstBtn').addEventListener('click', () => go(0));
+  document.getElementById('lastBtn').addEventListener('click', () => go(slides.length - 1));
+  document.getElementById('fsBtn').addEventListener('click', toggleFullscreen);
+
+  // Click anywhere on slide to advance (but not on nav)
+  document.querySelector('.stage').addEventListener('click', (e) => {
+    if (e.target.closest('.nav-bar') || e.target.closest('a') || e.target.closest('button')) return;
+    // Right side of screen advances, left side goes back
+    if (e.clientX > window.innerWidth / 2) go(idx + 1);
+    else go(idx - 1);
+  });
+
+  // Touch swipe
+  let touchX = null;
+  document.addEventListener('touchstart', (e) => { touchX = e.touches[0].clientX; }, { passive: true });
+  document.addEventListener('touchend', (e) => {
+    if (touchX === null) return;
+    const dx = e.changedTouches[0].clientX - touchX;
+    if (Math.abs(dx) > 50) { if (dx < 0) go(idx + 1); else go(idx - 1); }
+    touchX = null;
+  });
+
+  function toggleFullscreen() {
+    if (!document.fullscreenElement) {
+      document.documentElement.requestFullscreen().catch(() => {});
+    } else {
+      document.exitFullscreen();
+    }
+  }
+
+  // Init — support ?s=N or #N to start at a specific slide (for testing/sharing)
+  const params = new URLSearchParams(location.search);
+  const startParam = params.get('s') || location.hash.replace('#', '');
+  const startIdx = startParam ? Math.max(0, Math.min(slides.length - 1, parseInt(startParam, 10) - 1)) : 0;
+  go(isNaN(startIdx) ? 0 : startIdx);
 })();
-
-/* ─── HERO CARD BARS ─── */
-setTimeout(() => {
-  document.querySelectorAll('.card-bar[data-width]').forEach(bar => {
-    bar.style.width = bar.dataset.width + '%';
-  });
-}, 600);
-
-/* ─── REVEAL ON SCROLL ─── */
-const reveals = document.querySelectorAll('.reveal');
-const revealObs = new IntersectionObserver((entries) => {
-  entries.forEach(e => {
-    if (e.isIntersecting) {
-      e.target.classList.add('visible');
-      revealObs.unobserve(e.target);
-    }
-  });
-}, { threshold: 0.1 });
-reveals.forEach(el => revealObs.observe(el));
-
-/* ─── ANIMATED PATH DIVIDERS ─── */
-function initPath(lineId, dotId, wrapId) {
-  const line = document.getElementById(lineId);
-  const dot  = document.getElementById(dotId);
-  if (!line || !dot) return;
-
-  const pathEl = line; // it's already the path
-  const totalLength = 600; // approximate
-
-  const obs = new IntersectionObserver((entries) => {
-    if (entries[0].isIntersecting) {
-      // draw line
-      line.classList.add('drawn');
-      // animate dot along path
-      dot.classList.add('active');
-      let progress = 0;
-      const pathNode = line;
-      const length = pathNode.getTotalLength ? pathNode.getTotalLength() : 600;
-      const dur = 1800;
-      const start = performance.now();
-      function step(now) {
-        progress = Math.min((now - start) / dur, 1);
-        const eased = progress < .5 ? 2*progress*progress : -1+(4-2*progress)*progress;
-        const pt = pathNode.getPointAtLength ? pathNode.getPointAtLength(eased * length) : {x: eased*900, y:40};
-        dot.setAttribute('cx', pt.x);
-        dot.setAttribute('cy', pt.y);
-        if (progress < 1) requestAnimationFrame(step);
-        else dot.classList.remove('active');
-      }
-      requestAnimationFrame(step);
-      obs.disconnect();
-    }
-  }, { threshold: 0.5 });
-  obs.observe(document.getElementById(wrapId));
-}
-initPath('pathLine',  'pathDot',  'pathDiv');
-initPath('pathLine2', 'pathDot2', 'pathDiv2');
-
-/* ─── MOTOR DASHBOARD: fill bars + count up ─── */
-const motorDash = document.getElementById('motorDash');
-let motorFired = false;
-const motorObs = new IntersectionObserver((entries) => {
-  if (entries[0].isIntersecting && !motorFired) {
-    motorFired = true;
-    // fill bars
-    motorDash.querySelectorAll('.dash-fill[data-width]').forEach((bar, i) => {
-      setTimeout(() => {
-        bar.style.width = bar.dataset.width + '%';
-      }, i * 180);
-    });
-    // count up values
-    motorDash.querySelectorAll('.dash-metric-val[data-target]').forEach((el, i) => {
-      const target = parseInt(el.dataset.target);
-      const dur = 1200;
-      const startTime = performance.now() + i * 180;
-      function tick(now) {
-        const elapsed = Math.max(0, now - startTime);
-        const p = Math.min(elapsed / dur, 1);
-        const eased = 1 - Math.pow(1 - p, 3);
-        el.textContent = Math.round(eased * target) + '%';
-        if (p < 1) requestAnimationFrame(tick);
-      }
-      requestAnimationFrame(tick);
-    });
-    motorObs.disconnect();
-  }
-}, { threshold: 0.3 });
-motorObs.observe(motorDash);
-
-/* ─── FAQ ACCORDION ─── */
-document.querySelectorAll('.faq-q').forEach(btn => {
-  btn.addEventListener('click', () => {
-    const expanded = btn.getAttribute('aria-expanded') === 'true';
-    document.querySelectorAll('.faq-q').forEach(b => {
-      b.setAttribute('aria-expanded', 'false');
-      b.nextElementSibling.classList.remove('open');
-    });
-    if (!expanded) {
-      btn.setAttribute('aria-expanded', 'true');
-      btn.nextElementSibling.classList.add('open');
-    }
-  });
-});
-
-/* ─── STATS COUNT UP ─── */
-const statsEls = document.querySelectorAll('.stat-num[data-target]');
-const statsObs = new IntersectionObserver((entries) => {
-  entries.forEach(e => {
-    if (!e.isIntersecting) return;
-    const el = e.target;
-    const target = parseInt(el.dataset.target);
-    const prefix = el.dataset.prefix || '';
-    const suffix = el.dataset.suffix || '';
-    const dur = 1400;
-    const start = performance.now();
-    function tick(now) {
-      const p = Math.min((now - start) / dur, 1);
-      const eased = 1 - Math.pow(1 - p, 3);
-      el.textContent = prefix + Math.round(eased * target) + suffix;
-      if (p < 1) requestAnimationFrame(tick);
-    }
-    requestAnimationFrame(tick);
-    statsObs.unobserve(el);
-  });
-}, { threshold: 0.5 });
-statsEls.forEach(el => statsObs.observe(el));
-
-/* ─── SCROLL PROGRESS BAR ─── */
-const progressBar = document.createElement('div');
-progressBar.id = 'scroll-progress';
-progressBar.style.cssText = 'position:fixed;top:0;left:0;height:2px;width:0%;background:linear-gradient(90deg,#c49a3c,#f0d080,#c49a3c);z-index:9999;transition:width .1s linear;box-shadow:0 0 8px rgba(196,154,60,.6);';
-document.body.prepend(progressBar);
-window.addEventListener('scroll', () => {
-  const total = document.documentElement.scrollHeight - window.innerHeight;
-  progressBar.style.width = (window.scrollY / total * 100) + '%';
-}, { passive: true });
-
-/* ─── CURSOR GLOW ─── */
-const glow = document.createElement('div');
-glow.style.cssText = 'position:fixed;pointer-events:none;width:320px;height:320px;border-radius:50%;background:radial-gradient(circle,rgba(196,154,60,.07) 0%,transparent 70%);transform:translate(-50%,-50%);transition:left .18s ease,top .18s ease;z-index:998;';
-document.body.appendChild(glow);
-window.addEventListener('mousemove', e => {
-  glow.style.left = e.clientX + 'px';
-  glow.style.top  = e.clientY + 'px';
-}, { passive: true });
-
-/* ─── 3D TILT ON CARDS ─── */
-document.querySelectorAll('.pillar-card, .faq-item, .step-card').forEach(card => {
-  card.style.transition = 'transform .15s ease, box-shadow .15s ease';
-  card.addEventListener('mousemove', e => {
-    const r = card.getBoundingClientRect();
-    const x = (e.clientX - r.left) / r.width  - .5;
-    const y = (e.clientY - r.top)  / r.height - .5;
-    card.style.transform = `perspective(600px) rotateY(${x * 8}deg) rotateX(${-y * 8}deg) scale(1.02)`;
-  });
-  card.addEventListener('mouseleave', () => {
-    card.style.transform = 'perspective(600px) rotateY(0) rotateX(0) scale(1)';
-  });
-});
-
-/* ─── HERO PARALLAX ─── */
-const heroSection = document.getElementById('hero');
-window.addEventListener('scroll', () => {
-  if (window.scrollY < window.innerHeight) {
-    const orbs = heroSection.querySelectorAll('.orb');
-    orbs.forEach((orb, i) => {
-      const speed = .08 + i * .04;
-      orb.style.transform += ` translateY(${window.scrollY * speed}px)`;
-    });
-  }
-}, { passive: true });
 </script>
 </body>
 </html>
