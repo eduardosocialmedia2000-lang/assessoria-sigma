@@ -1,0 +1,371 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Política de Privacidade · Assessoria Sigma</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Fraunces:opsz,ital,wght@9..144,1,300..700&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --ink:        #0A1A12;
+    --ink-mid:    #1E2E24;
+    --sand:       #FAF7F0;
+    --terra:      #C4622D;
+    --muted:      #6B7280;
+    --border:     #E5E0D8;
+    --display:    'Fraunces', Georgia, serif;
+    --body:       'Inter', system-ui, sans-serif;
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: var(--body);
+    background: var(--sand);
+    color: var(--ink);
+    line-height: 1.7;
+    font-size: 16px;
+  }
+
+  /* NAV */
+  nav {
+    position: sticky; top: 0; z-index: 50;
+    background: rgba(250,247,240,.92);
+    backdrop-filter: blur(10px);
+    border-bottom: 1px solid var(--border);
+    padding: 0 24px;
+    display: flex; align-items: center; justify-content: space-between;
+    height: 64px;
+  }
+  .nav-logo {
+    font-family: var(--display);
+    font-size: 1.15rem; font-weight: 700;
+    color: var(--ink); text-decoration: none;
+  }
+  .nav-logo span { color: var(--terra); }
+  .nav-back {
+    font-size: 13px; color: var(--muted);
+    text-decoration: none;
+    display: flex; align-items: center; gap: 6px;
+    transition: color .15s;
+  }
+  .nav-back:hover { color: var(--ink); }
+
+  /* HERO */
+  .hero {
+    background: var(--ink);
+    color: #fff;
+    padding: 80px 24px 64px;
+    text-align: center;
+  }
+  .eyebrow {
+    font-size: 11px; font-weight: 700;
+    letter-spacing: .15em; text-transform: uppercase;
+    color: var(--terra); margin-bottom: 16px;
+  }
+  .hero h1 {
+    font-family: var(--display);
+    font-size: clamp(2rem, 5vw, 3.2rem);
+    font-weight: 700; line-height: 1.15;
+    margin-bottom: 16px;
+  }
+  .hero-sub {
+    color: rgba(255,255,255,.55);
+    font-size: 14px; max-width: 480px; margin: 0 auto;
+  }
+
+  /* CONTENT */
+  .container {
+    max-width: 760px;
+    margin: 0 auto;
+    padding: 64px 24px 96px;
+  }
+
+  .last-updated {
+    display: inline-block;
+    background: rgba(196,98,45,.1);
+    border: 1px solid rgba(196,98,45,.2);
+    color: var(--terra);
+    font-size: 12px; font-weight: 600;
+    padding: 4px 12px; border-radius: 100px;
+    margin-bottom: 48px;
+  }
+
+  .toc {
+    background: #fff;
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 24px 28px;
+    margin-bottom: 56px;
+  }
+  .toc-title {
+    font-size: 11px; font-weight: 700;
+    letter-spacing: .12em; text-transform: uppercase;
+    color: var(--muted); margin-bottom: 14px;
+  }
+  .toc ol {
+    padding-left: 20px;
+    display: flex; flex-direction: column; gap: 6px;
+  }
+  .toc li { font-size: 14px; }
+  .toc a { color: var(--terra); text-decoration: none; font-weight: 500; }
+  .toc a:hover { text-decoration: underline; }
+
+  section.policy {
+    margin-bottom: 56px;
+    scroll-margin-top: 80px;
+  }
+  section.policy h2 {
+    font-family: var(--display);
+    font-size: 1.5rem; font-weight: 700;
+    color: var(--ink); margin-bottom: 16px;
+    padding-bottom: 12px;
+    border-bottom: 2px solid var(--terra);
+    display: flex; align-items: baseline; gap: 10px;
+  }
+  .sec-num {
+    font-family: var(--body);
+    font-size: 12px; font-weight: 700;
+    color: var(--terra); letter-spacing: .08em;
+    flex-shrink: 0;
+  }
+  section.policy p {
+    color: #374151;
+    margin-bottom: 14px;
+    font-size: 15px;
+  }
+  section.policy ul, section.policy ol {
+    padding-left: 20px;
+    display: flex; flex-direction: column; gap: 8px;
+    margin-bottom: 14px;
+  }
+  section.policy li {
+    font-size: 15px; color: #374151;
+  }
+  section.policy strong { color: var(--ink); }
+  .highlight-box {
+    background: rgba(196,98,45,.06);
+    border-left: 3px solid var(--terra);
+    border-radius: 0 8px 8px 0;
+    padding: 16px 20px;
+    margin: 20px 0;
+    font-size: 14px; color: #374151;
+  }
+
+  /* FOOTER */
+  footer {
+    background: var(--ink);
+    color: rgba(255,255,255,.45);
+    text-align: center;
+    padding: 40px 24px;
+    font-size: 13px;
+  }
+  footer a { color: rgba(255,255,255,.6); text-decoration: none; }
+  footer a:hover { color: #fff; }
+  footer strong { color: rgba(255,255,255,.8); }
+
+  @media (max-width: 600px) {
+    .container { padding: 40px 20px 64px; }
+    .toc { padding: 20px; }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <a href="/" class="nav-logo">Sigma<span>.</span></a>
+  <a href="/" class="nav-back">← Voltar ao site</a>
+</nav>
+
+<!-- HERO -->
+<div class="hero">
+  <div class="eyebrow">Assessoria Sigma</div>
+  <h1>Política de Privacidade</h1>
+  <p class="hero-sub">Como coletamos, usamos e protegemos suas informações.</p>
+</div>
+
+<!-- CONTENT -->
+<div class="container">
+
+  <div class="last-updated">Última atualização: julho de 2026</div>
+
+  <!-- SUMÁRIO -->
+  <div class="toc">
+    <div class="toc-title">Índice</div>
+    <ol>
+      <li><a href="#s1">Quem somos</a></li>
+      <li><a href="#s2">Dados que coletamos</a></li>
+      <li><a href="#s3">Como usamos seus dados</a></li>
+      <li><a href="#s4">Base legal (LGPD)</a></li>
+      <li><a href="#s5">Compartilhamento de dados</a></li>
+      <li><a href="#s6">Cookies e rastreamento</a></li>
+      <li><a href="#s7">Armazenamento e segurança</a></li>
+      <li><a href="#s8">Seus direitos</a></li>
+      <li><a href="#s9">Retenção dos dados</a></li>
+      <li><a href="#s10">Alterações nesta política</a></li>
+      <li><a href="#s11">Contato e DPO</a></li>
+    </ol>
+  </div>
+
+  <!-- 1 -->
+  <section class="policy" id="s1">
+    <h2><span class="sec-num">01</span> Quem somos</h2>
+    <p>A <strong>Assessoria Sigma</strong> (doravante "Sigma", "nós" ou "nosso") é uma empresa especializada em sistemas de receita para clínicas e hospitais veterinários, com atuação em diagnóstico comercial, implementação de processos e gestão de tráfego pago.</p>
+    <p>Esta Política de Privacidade descreve como tratamos os dados pessoais de visitantes do site <strong>aagenciasigma.com.br</strong>, leads e clientes, em conformidade com a <strong>Lei Geral de Proteção de Dados Pessoais (LGPD — Lei nº 13.709/2018)</strong>.</p>
+    <div class="highlight-box">
+      <strong>Controladora dos dados:</strong> Assessoria Sigma<br>
+      <strong>E-mail:</strong> aagenciasigma@gmail.com<br>
+      <strong>WhatsApp:</strong> (44) 99925-1952
+    </div>
+  </section>
+
+  <!-- 2 -->
+  <section class="policy" id="s2">
+    <h2><span class="sec-num">02</span> Dados que coletamos</h2>
+    <p>Coletamos apenas os dados necessários para prestar nossos serviços e melhorar sua experiência. Os tipos de dados incluem:</p>
+    <ul>
+      <li><strong>Dados de identificação:</strong> nome completo, cargo e nome da clínica/hospital</li>
+      <li><strong>Dados de contato:</strong> endereço de e-mail, número de WhatsApp/telefone</li>
+      <li><strong>Dados de localização:</strong> cidade e estado (para segmentação regional)</li>
+      <li><strong>Dados de navegação:</strong> páginas visitadas, tempo de permanência, origem da visita (UTM), dispositivo e navegador</li>
+      <li><strong>Dados de interação:</strong> mensagens enviadas via WhatsApp ou e-mail, respostas a diagnósticos e formulários</li>
+      <li><strong>Dados de campanha:</strong> parâmetros de UTM, GCLID (Google Ads) e FBCLID (Meta Ads) quando você chega ao site via anúncio</li>
+    </ul>
+    <p>Não coletamos dados sensíveis (como dados de saúde, origem racial, crenças religiosas ou dados financeiros pessoais) de visitantes ou leads.</p>
+  </section>
+
+  <!-- 3 -->
+  <section class="policy" id="s3">
+    <h2><span class="sec-num">03</span> Como usamos seus dados</h2>
+    <p>Utilizamos seus dados para as seguintes finalidades:</p>
+    <ul>
+      <li>Entrar em contato após solicitação de diagnóstico gratuito ou bate-papo</li>
+      <li>Enviar propostas e materiais comerciais relacionados ao seu interesse</li>
+      <li>Realizar o acompanhamento (follow-up) de conversas iniciadas por você</li>
+      <li>Melhorar a performance de campanhas de Google Ads e Meta Ads que direcionam ao nosso site</li>
+      <li>Analisar o comportamento de navegação para otimizar o site (via Google Analytics)</li>
+      <li>Cumprir obrigações legais e regulatórias</li>
+    </ul>
+    <p>Não utilizamos seus dados para venda a terceiros, envio de spam ou comunicações não relacionadas ao contexto em que foram coletados.</p>
+  </section>
+
+  <!-- 4 -->
+  <section class="policy" id="s4">
+    <h2><span class="sec-num">04</span> Base legal (LGPD)</h2>
+    <p>O tratamento dos seus dados pessoais é fundamentado nas seguintes bases legais previstas no art. 7º da LGPD:</p>
+    <ul>
+      <li><strong>Consentimento (art. 7º, I):</strong> quando você preenche formulários, clica em botões de contato ou nos envia mensagem voluntariamente</li>
+      <li><strong>Execução de contrato (art. 7º, V):</strong> quando há relação comercial ativa entre você e a Sigma</li>
+      <li><strong>Legítimo interesse (art. 7º, IX):</strong> para análise de métricas de site e otimização de campanhas, desde que não prejudique seus direitos e liberdades fundamentais</li>
+      <li><strong>Cumprimento de obrigação legal (art. 7º, II):</strong> quando exigido por lei ou autoridade competente</li>
+    </ul>
+  </section>
+
+  <!-- 5 -->
+  <section class="policy" id="s5">
+    <h2><span class="sec-num">05</span> Compartilhamento de dados</h2>
+    <p>Seus dados podem ser compartilhados com terceiros apenas nas situações abaixo:</p>
+    <ul>
+      <li><strong>Google LLC:</strong> via Google Analytics (métricas de navegação) e Google Ads (rastreamento de conversões). Dados processados nos termos da política do Google.</li>
+      <li><strong>Meta Platforms Inc.:</strong> via Meta Pixel e Conversions API (rastreamento de eventos de campanha), quando você acessa o site via anúncio do Facebook/Instagram.</li>
+      <li><strong>WhatsApp (Meta):</strong> as conversas iniciadas por você via WhatsApp são processadas nos termos da política de privacidade do WhatsApp.</li>
+      <li><strong>Ferramentas internas de CRM:</strong> utilizamos sistemas de gestão de relacionamento para organizar contatos e acompanhamentos, com acesso restrito à equipe da Sigma.</li>
+      <li><strong>Autoridades públicas:</strong> quando exigido por lei, ordem judicial ou regulação aplicável.</li>
+    </ul>
+    <p>Não vendemos, alugamos ou compartilhamos seus dados com empresas de marketing ou terceiros não relacionados ao nosso serviço.</p>
+  </section>
+
+  <!-- 6 -->
+  <section class="policy" id="s6">
+    <h2><span class="sec-num">06</span> Cookies e rastreamento</h2>
+    <p>Nosso site utiliza cookies e tecnologias similares para:</p>
+    <ul>
+      <li><strong>Cookies analíticos:</strong> Google Analytics para entender o comportamento dos visitantes (páginas visitadas, tempo de sessão, origem)</li>
+      <li><strong>Cookies de publicidade:</strong> Google Ads e Meta Pixel para atribuição de conversões e criação de públicos de remarketing</li>
+      <li><strong>Cookies de sessão:</strong> necessários para o funcionamento básico do site</li>
+    </ul>
+    <p>Você pode gerenciar ou desativar cookies nas configurações do seu navegador. A desativação de cookies analíticos não impede o uso do site, mas pode reduzir nossa capacidade de medir a eficácia das campanhas.</p>
+    <div class="highlight-box">
+      Para saber como desativar cookies, consulte as configurações do seu navegador (Chrome, Safari, Firefox, Edge) ou acesse <strong>aboutmycookies.org</strong>.
+    </div>
+  </section>
+
+  <!-- 7 -->
+  <section class="policy" id="s7">
+    <h2><span class="sec-num">07</span> Armazenamento e segurança</h2>
+    <p>Seus dados são armazenados em servidores com padrões adequados de segurança. Adotamos medidas técnicas e organizacionais para proteger as informações contra acesso não autorizado, perda, alteração ou destruição, incluindo:</p>
+    <ul>
+      <li>Acesso restrito por autenticação</li>
+      <li>Comunicação criptografada (HTTPS)</li>
+      <li>Controle de acesso por função dentro da equipe</li>
+    </ul>
+    <p>Nenhum sistema é 100% seguro. Em caso de incidente de segurança que possa afetar seus dados, notificaremos as partes afetadas e a Autoridade Nacional de Proteção de Dados (ANPD) nos prazos legais.</p>
+  </section>
+
+  <!-- 8 -->
+  <section class="policy" id="s8">
+    <h2><span class="sec-num">08</span> Seus direitos</h2>
+    <p>Como titular dos dados, você tem os seguintes direitos garantidos pela LGPD (art. 18):</p>
+    <ul>
+      <li><strong>Confirmação e acesso:</strong> saber se tratamos seus dados e receber uma cópia</li>
+      <li><strong>Correção:</strong> solicitar a atualização de dados incompletos, inexatos ou desatualizados</li>
+      <li><strong>Anonimização, bloqueio ou eliminação:</strong> de dados desnecessários ou tratados em desconformidade com a LGPD</li>
+      <li><strong>Portabilidade:</strong> receber seus dados em formato estruturado e interoperável</li>
+      <li><strong>Eliminação:</strong> solicitar a exclusão dos dados tratados com base em consentimento</li>
+      <li><strong>Informação sobre compartilhamento:</strong> saber com quais entidades compartilhamos seus dados</li>
+      <li><strong>Revogação do consentimento:</strong> retirar seu consentimento a qualquer momento, sem prejuízo do tratamento anterior</li>
+      <li><strong>Oposição:</strong> opor-se a tratamentos baseados em legítimo interesse</li>
+    </ul>
+    <p>Para exercer qualquer desses direitos, entre em contato pelo e-mail <strong>aagenciasigma@gmail.com</strong>. Responderemos em até 15 dias úteis.</p>
+  </section>
+
+  <!-- 9 -->
+  <section class="policy" id="s9">
+    <h2><span class="sec-num">09</span> Retenção dos dados</h2>
+    <p>Mantemos seus dados pelo tempo necessário para as finalidades descritas nesta política, observados os seguintes critérios:</p>
+    <ul>
+      <li><strong>Leads que não avançaram:</strong> dados mantidos por até 24 meses a partir do último contato</li>
+      <li><strong>Clientes ativos:</strong> durante toda a vigência do contrato e por até 5 anos após o encerramento (para fins contábeis e legais)</li>
+      <li><strong>Dados de navegação (Analytics):</strong> conforme configuração do Google Analytics (padrão: 14 meses)</li>
+    </ul>
+    <p>Após os prazos acima, os dados são eliminados ou anonimizados de forma segura.</p>
+  </section>
+
+  <!-- 10 -->
+  <section class="policy" id="s10">
+    <h2><span class="sec-num">10</span> Alterações nesta política</h2>
+    <p>Esta política pode ser atualizada periodicamente para refletir mudanças em nossas práticas ou na legislação aplicável. A versão mais recente sempre estará disponível nesta página, com a data de última atualização indicada no topo.</p>
+    <p>Em caso de mudanças significativas que afetem o tratamento dos seus dados, comunicaremos por e-mail ou WhatsApp, se tivermos seus dados de contato.</p>
+  </section>
+
+  <!-- 11 -->
+  <section class="policy" id="s11">
+    <h2><span class="sec-num">11</span> Contato e DPO</h2>
+    <p>Para dúvidas, solicitações ou exercício dos seus direitos como titular, entre em contato com a Assessoria Sigma:</p>
+    <div class="highlight-box">
+      <strong>E-mail:</strong> aagenciasigma@gmail.com<br>
+      <strong>WhatsApp:</strong> <a href="https://wa.me/5544999251952" style="color:var(--terra);">(44) 99925-1952</a><br>
+      <strong>Site:</strong> aagenciasigma.com.br
+    </div>
+    <p>Esta política é regida pelas leis brasileiras, em especial a Lei nº 13.709/2018 (LGPD), o Código de Defesa do Consumidor e demais normas aplicáveis.</p>
+  </section>
+
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <p><strong>Assessoria Sigma</strong> — Sistema de Receita para Clínicas e Hospitais Veterinários</p>
+  <p style="margin-top:8px;">
+    <a href="mailto:aagenciasigma@gmail.com">aagenciasigma@gmail.com</a> ·
+    <a href="https://wa.me/5544999251952">(44) 99925-1952</a>
+  </p>
+  <p style="margin-top:16px; font-size:12px; opacity:.6;">© 2026 Assessoria Sigma. Todos os direitos reservados.</p>
+</footer>
+
+</body>
+</html>
