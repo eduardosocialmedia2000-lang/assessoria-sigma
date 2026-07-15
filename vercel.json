@@ -1,5 +1,6 @@
 {
   "rewrites": [
-    { "source": "/privacidade", "destination": "/privacidade.html" }
+    { "source": "/privacidade", "destination": "/privacidade.html" },
+    { "source": "/clinica-de-estetica", "destination": "/clinica-de-estetica.html" }
   ]
 }
