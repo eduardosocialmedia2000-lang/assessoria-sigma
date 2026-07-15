@@ -1058,7 +1058,7 @@
     <span class="stat-label">Taxa média de<br>ocupação da agenda</span>
   </div>
   <div class="stat-item reveal reveal-delay-1">
-    <span class="stat-num" data-target="34" data-prefix="+" data-suffix="%">0%</span>
+    <span class="stat-num" data-target="28" data-prefix="+" data-suffix="%">0%</span>
     <span class="stat-label">Receita com base<br>ativa reativada</span>
   </div>
   <div class="stat-item reveal reveal-delay-2">
@@ -1566,7 +1566,7 @@ document.querySelectorAll('.faq-q').forEach(btn => {
 });
 
 /* STATS */
-new IntersectionObserver(entries => {
+const statsObs = new IntersectionObserver(entries => {
   entries.forEach(e => {
     if (!e.isIntersecting) return;
     const el = e.target, target = parseInt(el.dataset.target);
@@ -1576,8 +1576,10 @@ new IntersectionObserver(entries => {
       el.textContent = prefix + Math.round((1 - Math.pow(1-p,3)) * target) + suffix;
       if (p < 1) requestAnimationFrame(tick);
     })(start);
+    statsObs.unobserve(el);
   });
-}, { threshold: 0.5 }).observe(document.querySelector('.stats-strip'));
+}, { threshold: 0.5 });
+document.querySelectorAll('.stat-num[data-target]').forEach(el => statsObs.observe(el));
 
 /* SCROLL PROGRESS */
 const bar = document.createElement('div');
